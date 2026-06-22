@@ -1,0 +1,842 @@
+[
+  {
+    "id": "beg_dc_001",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "Which of the following best describes the effect of a debit on an asset account?",
+    "options": ["Decreases it", "Increases it", "Has no effect", "Closes it"],
+    "correctIndex": 1,
+    "explanation": "Assets have a normal debit balance, meaning debits increase them and credits decrease them. Think of a debit as 'adding' to an asset like Cash or Equipment."
+  },
+  {
+    "id": "beg_dc_002",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "Credits increase liability accounts.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Liabilities have a normal credit balance. Credits increase liabilities; debits decrease them. This mirrors the right side of the accounting equation (Assets = Liabilities + Equity)."
+  },
+  {
+    "id": "beg_dc_003",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "When you record an expense by debiting an expense account, what happens to the balance?",
+    "options": ["It decreases", "It stays the same", "It increases", "It is eliminated"],
+    "correctIndex": 2,
+    "explanation": "Expense accounts have a normal debit balance. Debiting an expense account increases it — meaning the company has incurred more cost."
+  },
+  {
+    "id": "beg_dc_004",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "A credit entry to a revenue account...",
+    "options": ["Decreases it", "Increases it", "Has no effect", "Moves it to equity"],
+    "correctIndex": 1,
+    "explanation": "Revenue accounts have a normal credit balance. Credits increase revenue, just as they increase liabilities and equity."
+  },
+  {
+    "id": "beg_dc_005",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "Debits always decrease account balances.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Debits increase asset and expense accounts but decrease liability, equity, and revenue accounts. Whether a debit increases or decreases a balance depends entirely on the account type."
+  },
+  {
+    "id": "beg_dc_006",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "A debit to the Cash account means...",
+    "options": ["Cash has decreased", "Cash has increased", "The company owes money", "An expense has been paid"],
+    "correctIndex": 1,
+    "explanation": "Cash is an asset. Because assets have a normal debit balance, a debit to Cash increases the Cash balance."
+  },
+  {
+    "id": "beg_dc_007",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "What happens to Owner's Equity when a credit entry is recorded?",
+    "options": ["It decreases", "It increases", "It is unaffected", "It transfers to revenue"],
+    "correctIndex": 1,
+    "explanation": "Owner's Equity has a normal credit balance. Credits increase equity, just as they increase liabilities."
+  },
+  {
+    "id": "beg_dc_008",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "The normal balance of a liability account is a credit.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Liability accounts sit on the right side of the accounting equation (Assets = Liabilities + Equity), so their normal balance is a credit."
+  },
+  {
+    "id": "beg_dc_009",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "Which of the following account types has a normal debit balance?",
+    "options": ["Revenue", "Liabilities", "Expenses", "Owner's Equity"],
+    "correctIndex": 2,
+    "explanation": "Expenses have a normal debit balance. A helpful memory tool: DEAD CLIC — Dividends, Expenses, Assets, Drawings increase with Debits; Capital, Liabilities, Income, Credits increase with Credits."
+  },
+  {
+    "id": "beg_dc_010",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "If you credit Accounts Payable, what happens to that account?",
+    "options": ["It decreases", "It increases", "It transfers to expenses", "It moves to revenue"],
+    "correctIndex": 1,
+    "explanation": "Accounts Payable is a liability. Liabilities have a normal credit balance, so crediting Accounts Payable increases it — meaning you owe more money."
+  },
+  {
+    "id": "beg_dc_011",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "Revenue accounts are increased with debit entries.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Revenue accounts are increased with credit entries, not debits. Credits increase revenue, liabilities, and equity. Debits decrease them."
+  },
+  {
+    "id": "beg_dc_012",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "debits_credits",
+    "text": "Your company pays $800 in rent using cash. Which account is debited in this journal entry?",
+    "options": ["Cash", "Accounts Payable", "Rent Expense", "Rent Revenue"],
+    "correctIndex": 2,
+    "explanation": "Paying rent is an expense. You debit Rent Expense (the expense increases) and credit Cash (the asset decreases). The expense account always gets debited when a cost is incurred."
+  },
+  {
+    "id": "beg_acc_001",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Which of the following is a current asset?",
+    "options": ["Equipment", "Accounts Receivable", "Notes Payable", "Common Stock"],
+    "correctIndex": 1,
+    "explanation": "Accounts Receivable is a current asset — it represents money customers owe you that you expect to collect within a year. Equipment is a long-term asset; Notes Payable is a liability; Common Stock is equity."
+  },
+  {
+    "id": "beg_acc_002",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Notes Payable is classified as an asset account.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Notes Payable is a liability, not an asset. It represents money the company has borrowed and is obligated to repay — usually evidenced by a formal promissory note."
+  },
+  {
+    "id": "beg_acc_003",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "What type of account is Retained Earnings?",
+    "options": ["Asset", "Liability", "Equity", "Revenue"],
+    "correctIndex": 2,
+    "explanation": "Retained Earnings is an equity account. It represents the cumulative net income the company has kept (retained) rather than paid out as dividends."
+  },
+  {
+    "id": "beg_acc_004",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Which account represents money that customers owe to your business?",
+    "options": ["Accounts Payable", "Notes Payable", "Cash", "Accounts Receivable"],
+    "correctIndex": 3,
+    "explanation": "Accounts Receivable is the amount customers owe you for goods or services already delivered but not yet paid for. Accounts Payable is the opposite — money you owe to others."
+  },
+  {
+    "id": "beg_acc_005",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Inventory is classified as a current asset.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Inventory is a current asset because it is expected to be sold and converted to cash within one year. It appears on the balance sheet under current assets."
+  },
+  {
+    "id": "beg_acc_006",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "What does the Accounts Payable account represent?",
+    "options": [
+      "Money customers owe the business",
+      "Money the business owes to suppliers",
+      "Money held in the bank",
+      "Future revenue"
+    ],
+    "correctIndex": 1,
+    "explanation": "Accounts Payable represents short-term obligations — money owed to vendors or suppliers for goods or services received on credit."
+  },
+  {
+    "id": "beg_acc_007",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Which of the following would be classified as a long-term (non-current) asset?",
+    "options": ["Cash", "Accounts Receivable", "Prepaid Insurance", "Equipment"],
+    "correctIndex": 3,
+    "explanation": "Equipment is a long-term asset because it is used for more than one year. Cash, Accounts Receivable, and Prepaid Insurance are all current assets."
+  },
+  {
+    "id": "beg_acc_008",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Owner's Equity increases when a business reports a net loss.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "A net loss decreases Owner's Equity. Net income increases equity; net loss decreases it. This relationship is shown in the statement of retained earnings."
+  },
+  {
+    "id": "beg_acc_009",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Common Stock is classified as which type of account?",
+    "options": ["Asset", "Liability", "Revenue", "Equity"],
+    "correctIndex": 3,
+    "explanation": "Common Stock represents ownership in the company and is classified as an equity account. It appears in the stockholders' equity section of the balance sheet."
+  },
+  {
+    "id": "beg_acc_010",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "A customer pays you $500 in advance for a project you haven't started yet. What account should you credit?",
+    "options": ["Service Revenue", "Accounts Receivable", "Unearned Revenue", "Cash"],
+    "correctIndex": 2,
+    "explanation": "When a customer pays before you've delivered the service, you haven't earned the revenue yet. You credit Unearned Revenue (a liability) until you complete the work, then you transfer it to Revenue."
+  },
+  {
+    "id": "beg_acc_011",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Which of the following accounts would appear on the balance sheet?",
+    "options": ["Salaries Expense", "Sales Revenue", "Accounts Payable", "Cost of Goods Sold"],
+    "correctIndex": 2,
+    "explanation": "Accounts Payable is a liability account and appears on the balance sheet. Expenses and revenues appear on the income statement, not the balance sheet."
+  },
+  {
+    "id": "beg_acc_012",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "accounts",
+    "text": "Prepaid Insurance is classified as an asset.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Prepaid Insurance is a current asset. You've paid for insurance coverage in advance, so you have a future economic benefit — the right to coverage — which makes it an asset until the period expires."
+  },
+  {
+    "id": "beg_fs_001",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Which financial statement shows a company's assets, liabilities, and equity?",
+    "options": [
+      "Income Statement",
+      "Balance Sheet",
+      "Statement of Cash Flows",
+      "Statement of Retained Earnings"
+    ],
+    "correctIndex": 1,
+    "explanation": "The balance sheet (also called the Statement of Financial Position) shows what a company owns (assets), what it owes (liabilities), and the owner's stake (equity) at a specific point in time."
+  },
+  {
+    "id": "beg_fs_002",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Net income increases owner's equity.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Net income represents profit, and profit belongs to the owners. It flows from the income statement into retained earnings on the balance sheet, increasing owner's equity."
+  },
+  {
+    "id": "beg_fs_003",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Revenue minus expenses equals...",
+    "options": ["Gross Profit", "Net Income or Net Loss", "Cash Flow", "Total Assets"],
+    "correctIndex": 1,
+    "explanation": "Net Income (or Net Loss) = Revenue − Expenses. If revenue exceeds expenses, the result is net income. If expenses exceed revenue, the result is a net loss."
+  },
+  {
+    "id": "beg_fs_004",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "The income statement covers...",
+    "options": [
+      "A single point in time",
+      "A period of time (month, quarter, or year)",
+      "Only the current month",
+      "The entire life of the business"
+    ],
+    "correctIndex": 1,
+    "explanation": "The income statement shows revenues and expenses over a period of time. The balance sheet shows financial position at one specific date. Income statements cover periods; balance sheets cover points."
+  },
+  {
+    "id": "beg_fs_005",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "The balance sheet is prepared as of a specific date, not over a period of time.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "The balance sheet is a snapshot — it shows what the business owns and owes on one specific date (e.g., 'As of December 31, 2025'). The income statement and statement of cash flows both cover a time period."
+  },
+  {
+    "id": "beg_fs_006",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Which financial statement shows cash received and paid through operations, investing, and financing activities?",
+    "options": [
+      "Income Statement",
+      "Balance Sheet",
+      "Statement of Cash Flows",
+      "Statement of Retained Earnings"
+    ],
+    "correctIndex": 2,
+    "explanation": "The Statement of Cash Flows shows all cash inflows and outflows, divided into three sections: operating, investing, and financing activities."
+  },
+  {
+    "id": "beg_fs_007",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Gross profit is calculated as...",
+    "options": [
+      "Net Income minus Expenses",
+      "Revenue minus Cost of Goods Sold",
+      "Revenue minus All Expenses",
+      "Total Assets minus Total Liabilities"
+    ],
+    "correctIndex": 1,
+    "explanation": "Gross Profit = Revenue − Cost of Goods Sold (COGS). This is the profit before subtracting operating expenses like rent, salaries, and utilities."
+  },
+  {
+    "id": "beg_fs_008",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "The statement of retained earnings connects the income statement to the balance sheet.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "The statement of retained earnings starts with the prior balance, adds net income (from the income statement), subtracts dividends, and shows the ending retained earnings that flows to the balance sheet."
+  },
+  {
+    "id": "beg_fs_009",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Operating expenses appear on which financial statement?",
+    "options": [
+      "Balance Sheet",
+      "Statement of Cash Flows",
+      "Income Statement",
+      "Statement of Retained Earnings"
+    ],
+    "correctIndex": 2,
+    "explanation": "Operating expenses (rent, utilities, salaries, etc.) are costs of running the business. They are deducted from revenue on the income statement to calculate net income."
+  },
+  {
+    "id": "beg_fs_010",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "A company has total assets of $80,000 and total liabilities of $45,000. What is the owner's equity?",
+    "options": ["$125,000", "$80,000", "$45,000", "$35,000"],
+    "correctIndex": 3,
+    "explanation": "The accounting equation: Assets = Liabilities + Equity. Rearranging: Equity = Assets − Liabilities = $80,000 − $45,000 = $35,000."
+  },
+  {
+    "id": "beg_fs_011",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Which of the following is NOT a financial statement?",
+    "options": [
+      "Balance Sheet",
+      "Income Statement",
+      "Chart of Accounts",
+      "Statement of Cash Flows"
+    ],
+    "correctIndex": 2,
+    "explanation": "The Chart of Accounts is a list of all account names and numbers used by a business — it's an organizational tool, not a financial statement. The four main financial statements are: Balance Sheet, Income Statement, Statement of Cash Flows, and Statement of Retained Earnings."
+  },
+  {
+    "id": "beg_fs_012",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "financial_statements",
+    "text": "Revenues are reported on the balance sheet.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Revenues are reported on the income statement, not the balance sheet. Revenue flows into retained earnings (an equity account) on the balance sheet at period end, but revenues themselves live on the income statement."
+  },
+  {
+    "id": "beg_je_001",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "What is a journal entry?",
+    "options": [
+      "A summary of the ledger",
+      "A financial statement",
+      "A record of a transaction showing which accounts are debited and credited",
+      "A list of all company accounts"
+    ],
+    "correctIndex": 2,
+    "explanation": "A journal entry records a financial transaction in the accounting system. It shows the date, the accounts affected, the amounts debited and credited, and a brief description."
+  },
+  {
+    "id": "beg_je_002",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "Every journal entry must have at least one debit and one credit.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "This is the foundation of double-entry bookkeeping. Every transaction affects at least two accounts — at least one debit and one credit — and total debits must always equal total credits."
+  },
+  {
+    "id": "beg_je_003",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "If the debit side of a journal entry totals $800, the credit side must total...",
+    "options": ["$0", "$400", "$800", "$1,600"],
+    "correctIndex": 2,
+    "explanation": "In double-entry bookkeeping, debits must always equal credits. This keeps the accounting equation (Assets = Liabilities + Equity) in balance."
+  },
+  {
+    "id": "beg_je_004",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "Your company buys office supplies for $350 cash. Which account is debited?",
+    "options": ["Cash", "Accounts Payable", "Supplies", "Office Expense"],
+    "correctIndex": 2,
+    "explanation": "Buying supplies is an asset purchase. You debit Supplies (the asset increases) and credit Cash (the asset decreases). The supplies become an expense only as they are used."
+  },
+  {
+    "id": "beg_je_005",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "A compound journal entry is one that has...",
+    "options": [
+      "Exactly two debits and two credits",
+      "More than one debit or more than one credit",
+      "Only debits, no credits",
+      "Equal debits and credits in the same account"
+    ],
+    "correctIndex": 1,
+    "explanation": "A compound journal entry has more than two lines — it might have one debit and two credits, two debits and one credit, or multiple of each. Total debits must still equal total credits."
+  },
+  {
+    "id": "beg_je_006",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "Journal entries are first recorded in the ledger, then transferred to the journal.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "It's the opposite. Transactions are first recorded in the journal (book of original entry), then posted to the ledger. The order is: Source document → Journal → Ledger → Trial Balance."
+  },
+  {
+    "id": "beg_je_007",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "A customer pays $2,000 on their outstanding account balance. Which account is credited in this journal entry?",
+    "options": ["Cash", "Revenue", "Accounts Payable", "Accounts Receivable"],
+    "correctIndex": 3,
+    "explanation": "When a customer pays their balance, Cash is debited (increases) and Accounts Receivable is credited (decreases) because the customer no longer owes you that money."
+  },
+  {
+    "id": "beg_je_008",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "What is the correct order of steps in the accounting cycle?",
+    "options": [
+      "Ledger → Journal → Trial Balance",
+      "Trial Balance → Journal → Ledger",
+      "Journal → Ledger → Trial Balance",
+      "Source Document → Trial Balance → Journal"
+    ],
+    "correctIndex": 2,
+    "explanation": "The correct order: Identify the transaction → Record in the journal → Post to the ledger → Prepare a trial balance → Adjust → Prepare financial statements → Close the books."
+  },
+  {
+    "id": "beg_je_009",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "The general journal is sometimes called the 'book of original entry.'",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "The general journal is where transactions are first recorded — hence 'book of original entry.' From there, entries are posted to individual ledger accounts."
+  },
+  {
+    "id": "beg_je_010",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "At month end, your employees have earned $3,000 in wages that won't be paid until next week. Which account is credited in the adjusting journal entry?",
+    "options": ["Wages Expense", "Cash", "Wages Payable", "Prepaid Wages"],
+    "correctIndex": 2,
+    "explanation": "This is an accrual. The business has incurred wages but hasn't paid yet. You debit Wages Expense (to record the cost) and credit Wages Payable (a liability, showing you owe it)."
+  },
+  {
+    "id": "beg_je_011",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "What does 'posting' mean in bookkeeping?",
+    "options": [
+      "Sending financial statements to stakeholders",
+      "Transferring journal entries to the ledger",
+      "Recording a transaction in the journal",
+      "Closing temporary accounts at year end"
+    ],
+    "correctIndex": 1,
+    "explanation": "Posting is the process of transferring the amounts from journal entries into the appropriate accounts in the general ledger. Each account in the ledger accumulates its balance over time."
+  },
+  {
+    "id": "beg_je_012",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "journal_entries",
+    "text": "A debit to Accounts Receivable means a customer now owes your business more money.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Accounts Receivable is an asset with a normal debit balance. Debiting it increases the balance, meaning the amount customers owe your business has gone up."
+  },
+  {
+    "id": "beg_br_001",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "What is the primary purpose of a bank reconciliation?",
+    "options": [
+      "To record new transactions",
+      "To prepare financial statements",
+      "To verify the company's cash balance matches the bank statement",
+      "To calculate payroll"
+    ],
+    "correctIndex": 2,
+    "explanation": "A bank reconciliation compares the company's cash book balance to the bank statement balance and explains any differences. It's a key internal control to catch errors and detect fraud."
+  },
+  {
+    "id": "beg_br_002",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "Outstanding checks appear on the bank statement but have not yet been recorded in the company's books.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Outstanding checks are recorded in the company's books but have NOT yet cleared the bank. The bank hasn't processed them yet, so they appear in the books but not on the bank statement."
+  },
+  {
+    "id": "beg_br_003",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "A deposit in transit is best described as...",
+    "options": [
+      "A deposit that was lost",
+      "A deposit recorded in the company's books but not yet on the bank statement",
+      "A deposit recorded by the bank but not in the company's books",
+      "An automatic bank transfer"
+    ],
+    "correctIndex": 1,
+    "explanation": "A deposit in transit has been made and recorded in the company's books, but the bank hasn't processed it yet — often because it was deposited near the statement cut-off date."
+  },
+  {
+    "id": "beg_br_004",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "Bank service charges should be subtracted from the book balance during a bank reconciliation.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "Bank service charges are fees the bank deducts from your account. The company's book balance must be reduced to account for these charges since they reduce the true cash balance."
+  },
+  {
+    "id": "beg_br_005",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "The bank statement shows $6,000 and the company's book balance shows $5,850. A likely explanation for the $150 difference is...",
+    "options": [
+      "A deposit in transit",
+      "An outstanding check",
+      "A bank service charge not yet recorded in the books",
+      "A customer payment"
+    ],
+    "correctIndex": 2,
+    "explanation": "If the book balance is lower than the bank balance by $150, the company may have unrecorded bank charges. A $150 service fee that the bank deducted but the company hasn't recorded yet would explain the difference."
+  },
+  {
+    "id": "beg_br_006",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "Your company deposited $3,000 on December 31, but the bank didn't record it until January 2. On the December 31 bank reconciliation, this is called...",
+    "options": [
+      "An outstanding check",
+      "A bank error",
+      "A deposit in transit",
+      "An NSF check"
+    ],
+    "correctIndex": 2,
+    "explanation": "A deposit recorded in the books but not yet on the bank statement is a deposit in transit. In the reconciliation, you add it to the bank statement balance to arrive at the adjusted bank balance."
+  },
+  {
+    "id": "beg_br_007",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "How are outstanding checks treated in a bank reconciliation?",
+    "options": [
+      "Added to the book balance",
+      "Subtracted from the book balance",
+      "Added to the bank balance",
+      "Subtracted from the bank balance"
+    ],
+    "correctIndex": 3,
+    "explanation": "Outstanding checks have been recorded in the company's books (already reducing the book balance) but haven't cleared the bank yet. You subtract them from the bank statement balance to reconcile."
+  },
+  {
+    "id": "beg_br_008",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "An NSF (Non-Sufficient Funds) check increases the company's book balance.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "An NSF check means a customer's check bounced due to insufficient funds. The company must reverse the original deposit entry, which reduces Cash — decreasing the book balance."
+  },
+  {
+    "id": "beg_br_009",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "What does NSF stand for in banking?",
+    "options": [
+      "Net Statement of Funds",
+      "New Service Fee",
+      "Non-Sufficient Funds",
+      "Normal Statement Figure"
+    ],
+    "correctIndex": 2,
+    "explanation": "NSF stands for Non-Sufficient Funds. It means a check was returned because the check writer's account didn't have enough money to cover the amount."
+  },
+  {
+    "id": "beg_br_010",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "A bank reconciliation should only be prepared once a year.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Bank reconciliations should be prepared monthly at minimum. Reconciling regularly helps catch errors and fraud quickly. Most businesses reconcile as soon as the monthly bank statement arrives."
+  },
+  {
+    "id": "beg_br_011",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "Your bank charged $40 in service fees this month. In your bank reconciliation, where does this adjustment appear?",
+    "options": [
+      "Added to the bank balance",
+      "Subtracted from the bank balance",
+      "Added to the book balance",
+      "Subtracted from the book balance"
+    ],
+    "correctIndex": 3,
+    "explanation": "Bank service fees reduce your cash. Since the bank already deducted them, you adjust the book balance downward. You'll also record a journal entry: debit Bank Service Charges, credit Cash."
+  },
+  {
+    "id": "beg_br_012",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "bank_reconciliation",
+    "text": "After completing a bank reconciliation, what should always be true?",
+    "options": [
+      "The bank balance should be higher than the book balance",
+      "The adjusted bank balance and adjusted book balance should be equal",
+      "The book balance should match the original bank statement",
+      "The bank balance should match the original book balance"
+    ],
+    "correctIndex": 1,
+    "explanation": "The goal of a bank reconciliation is to arrive at the same adjusted (true) cash balance from both sides. After all adjustments, the adjusted bank balance must equal the adjusted book balance."
+  },
+  {
+    "id": "beg_pay_001",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Which payroll tax is split equally between the employer and the employee?",
+    "options": ["Federal Income Tax", "FUTA", "FICA (Social Security and Medicare)", "SUTA"],
+    "correctIndex": 2,
+    "explanation": "FICA taxes (Social Security at 6.2% and Medicare at 1.45%) are paid half by the employee (withheld from paycheck) and half by the employer (matched separately). FUTA and SUTA are employer-only taxes."
+  },
+  {
+    "id": "beg_pay_002",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Gross pay is the amount an employee takes home after all deductions.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Gross pay is total earnings before any deductions. Net pay (or take-home pay) is what the employee receives after taxes, benefits, and other deductions are subtracted."
+  },
+  {
+    "id": "beg_pay_003",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Net pay equals...",
+    "options": [
+      "Gross pay plus all taxes",
+      "Gross pay minus all deductions",
+      "Total hours times overtime rate",
+      "Gross pay plus employer contributions"
+    ],
+    "correctIndex": 1,
+    "explanation": "Net pay = Gross Pay − All Deductions (federal and state income tax withholding, FICA, health insurance, retirement contributions, etc.). This is the actual amount deposited into the employee's account."
+  },
+  {
+    "id": "beg_pay_004",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Employers are required to match the employee's Social Security tax contribution.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "The FICA Social Security tax rate is 6.2% for both the employee and the employer. The employer withholds 6.2% from the employee's paycheck and contributes an additional 6.2% from their own funds."
+  },
+  {
+    "id": "beg_pay_005",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "An employee earns $1,000 gross. Federal income tax withheld is $120, and total FICA withholding is $76.50. What is the employee's net pay?",
+    "options": ["$1,076.50", "$880.00", "$803.50", "$923.50"],
+    "correctIndex": 2,
+    "explanation": "Net pay = Gross Pay − Withholdings = $1,000 − $120 (federal tax) − $76.50 (FICA) = $803.50. Net pay is what the employee actually receives in their paycheck."
+  },
+  {
+    "id": "beg_pay_006",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "When recording payroll that has been earned but not yet paid, which account is credited?",
+    "options": ["Wages Expense", "Cash", "Prepaid Wages", "Wages Payable"],
+    "correctIndex": 3,
+    "explanation": "When wages are earned but unpaid at period end, you debit Wages Expense (recognizing the cost) and credit Wages Payable (a liability, showing you owe the money). Cash is credited only when wages are actually paid."
+  },
+  {
+    "id": "beg_pay_007",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Federal income tax withheld from employee paychecks is an expense paid by the employer.",
+    "options": ["True", "False"],
+    "correctIndex": 1,
+    "explanation": "Federal income tax withholding is the employee's own tax obligation. The employer acts as a withholding agent — collecting it from the employee's pay and remitting it to the IRS. It is not an employer expense."
+  },
+  {
+    "id": "beg_pay_008",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "FUTA is...",
+    "options": [
+      "A tax shared equally between employer and employee",
+      "A state unemployment tax",
+      "A federal tax paid by the employer only",
+      "A federal tax paid by the employee only"
+    ],
+    "correctIndex": 2,
+    "explanation": "FUTA (Federal Unemployment Tax Act) is a federal payroll tax paid entirely by the employer. Employees do not pay FUTA. It funds unemployment benefits at the federal level."
+  },
+  {
+    "id": "beg_pay_009",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "What is a W-2 form?",
+    "options": [
+      "A form employees fill out to claim withholding allowances",
+      "A quarterly employer tax deposit form",
+      "A form showing an employee's annual wages and taxes withheld",
+      "A payroll register"
+    ],
+    "correctIndex": 2,
+    "explanation": "A W-2 (Wage and Tax Statement) is issued by the employer to each employee at year end. It reports total wages paid and all taxes withheld. Employees use it to file their income tax return."
+  },
+  {
+    "id": "beg_pay_010",
+    "type": "true_false",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "SUTA refers to a state-level unemployment tax.",
+    "options": ["True", "False"],
+    "correctIndex": 0,
+    "explanation": "SUTA (State Unemployment Tax Act) is a state payroll tax paid by the employer to fund state unemployment insurance programs. Like FUTA, SUTA is an employer-only expense — employees do not pay it."
+  },
+  {
+    "id": "beg_pay_011",
+    "type": "scenario",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Your company records its weekly payroll. Wages Expense is debited for $5,000. Assuming withholdings for FICA and federal income tax, which account is most likely credited for the amount owed to employees?",
+    "options": [
+      "Wages Expense",
+      "Cash for the full $5,000",
+      "Wages Payable",
+      "FICA Receivable"
+    ],
+    "correctIndex": 2,
+    "explanation": "In a payroll journal entry, Wages Expense is debited for the gross amount. The credits are split across Wages Payable (net pay owed to employees), FICA Taxes Payable, Federal Income Tax Payable, and any other deductions."
+  },
+  {
+    "id": "beg_pay_012",
+    "type": "multiple_choice",
+    "level": "beginner",
+    "category": "payroll",
+    "text": "Which of the following is an employer-paid payroll tax (not withheld from employees)?",
+    "options": [
+      "Federal Income Tax withholding",
+      "Employee Social Security",
+      "Employee Medicare",
+      "FUTA"
+    ],
+    "correctIndex": 3,
+    "explanation": "FUTA (Federal Unemployment Tax) is paid entirely by the employer and is never deducted from employee paychecks. Federal income tax, Social Security, and Medicare are all withheld from employees (the employer also matches Social Security and Medicare)."
+  }
+]

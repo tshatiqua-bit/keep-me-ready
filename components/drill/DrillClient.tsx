@@ -1,0 +1,119 @@
+"use client";
+
+import { useState } from "react";
+import type { Question } from "@/types";
+import { selectDrillQuestions } from "@/lib/questions/selector";
+import { saveSession } from "@/lib/utils/progress";
+import DrillProgress from "./DrillProgress";
+import QuestionCard from "./QuestionCard";
+import AnswerOption from "./AnswerOption";
+import Explanation from "./Explanation";
+import ScoreDisplay from "./ScoreDisplay";
+
+type Phase = "answering" | "revealed" | "completed";
+
+function freshDrill(): Question[] {
+  return selectDrillQuestions({ count: 10 });
+}
+
+export default function DrillClient() {
+  const [questions, setQuestions] = useState<Question[]>(freshDrill);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [score, setScore] = useState(0);
+  const [answered, setAnswered] = useState(0);
+  const [phase, setPhase] = useState<Phase>("answering");
+
+  const current = questions[currentIndex];
+  const isLast = currentIndex === questions.length - 1;
+
+  function handleSelect(index: number) {
+    if (phase !== "answering") return;
+    const correct = index === current.correctIndex;
+    setSelectedIndex(index);
+    setPhase("revealed");
+    setAnswered((a) => a + 1);
+    if (correct) setScore((s) => s + 1);
+  }
+
+  function handleNext() {
+    if (isLast) {
+      saveSession(score, questions.length);
+      setPhase("completed");
+      syncToDb(score, questions.length).catch(() => {});
+      return;
+    }
+    setCurrentIndex((i) => i + 1);
+    setSelectedIndex(null);
+    setPhase("answering");
+  }
+
+  async function syncToDb(drillScore: number, total: number): Promise<void> {
+    const today = new Date().toISOString().slice(0, 10);
+    await fetch("/api/scores", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ score: drillScore, total, date: today }),
+    });
+  }
+
+  function handleRestart() {
+    setQuestions(freshDrill());
+    setCurrentIndex(0);
+    setSelectedIndex(null);
+    setScore(0);
+    setAnswered(0);
+    setPhase("answering");
+  }
+
+  if (phase === "completed") {
+    return <ScoreDisplay score={score} total={questions.length} onRestart={handleRestart} />;
+  }
+
+  return (
+    <div>
+      <DrillProgress
+        current={currentIndex + 1}
+        total={questions.length}
+        score={score}
+        answered={answered}
+      />
+
+      <div className="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 mb-4">
+        <QuestionCard question={current} />
+
+        <div className="mt-6 space-y-3">
+          {current.options.map((option, idx) => (
+            <AnswerOption
+              key={idx}
+              text={option}
+              index={idx}
+              selectedIndex={selectedIndex}
+              correctIndex={current.correctIndex}
+              phase={phase}
+              onSelect={handleSelect}
+            />
+          ))}
+        </div>
+
+        {phase === "revealed" && (
+          <Explanation
+            text={current.explanation}
+            isCorrect={selectedIndex === current.correctIndex}
+          />
+        )}
+      </div>
+
+      {phase === "revealed" && (
+        <div className="flex justify-end">
+          <button
+            onClick={handleNext}
+            className="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
+          >
+            {isLast ? "See Results" : "Next Question →"}
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
