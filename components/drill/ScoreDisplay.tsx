@@ -7,6 +7,7 @@ interface ScoreDisplayProps {
   total: number;
   topic: Topic;
   onRestart: () => void;
+  onReview: () => void;
 }
 
 function getMessage(score: number, total: number): { heading: string; body: string } {
@@ -32,7 +33,7 @@ function getMessage(score: number, total: number): { heading: string; body: stri
   };
 }
 
-export default function ScoreDisplay({ score, total, topic, onRestart }: ScoreDisplayProps) {
+export default function ScoreDisplay({ score, total, topic, onRestart, onReview }: ScoreDisplayProps) {
   const { heading, body } = getMessage(score, total);
   const pct = Math.round((score / total) * 100);
 
@@ -67,19 +68,27 @@ export default function ScoreDisplay({ score, total, topic, onRestart }: ScoreDi
         <p className="text-sm text-slate-700 leading-7">{topic.reflectionPrompt}</p>
       </div>
 
-      <div className="flex flex-col sm:flex-row gap-3 justify-center">
+      <div className="flex flex-col gap-3">
         <button
-          onClick={onRestart}
-          className="bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
+          onClick={onReview}
+          className="w-full bg-indigo-600 text-white font-semibold px-6 py-3 rounded-lg hover:bg-indigo-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
         >
-          Try Again
+          Review Lesson
         </button>
-        <Link
-          href="/dashboard"
-          className="bg-white text-slate-700 font-semibold px-6 py-3 rounded-lg border border-slate-200 hover:border-indigo-300 hover:text-indigo-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 text-center"
-        >
-          View Dashboard
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <button
+            onClick={onRestart}
+            className="bg-white text-slate-700 font-semibold px-6 py-3 rounded-lg border border-slate-200 hover:border-indigo-300 hover:text-indigo-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
+          >
+            Try Again
+          </button>
+          <Link
+            href="/dashboard"
+            className="bg-white text-slate-700 font-semibold px-6 py-3 rounded-lg border border-slate-200 hover:border-indigo-300 hover:text-indigo-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400 text-center"
+          >
+            View Dashboard
+          </Link>
+        </div>
       </div>
 
       <SaveProgressPrompt />

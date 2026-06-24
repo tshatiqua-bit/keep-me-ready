@@ -8,6 +8,7 @@ export interface Topic {
   commonConfusion: string;
   reviewNext: string;
   reflectionPrompt: string;
+  takeaways: string[];
 }
 
 const TOPICS: Record<QuestionCategory, Topic> = {
@@ -23,6 +24,13 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Journal Entries — Debits & Credits in Action",
     reflectionPrompt:
       "Think of a recent purchase your business made. Which two accounts were affected? Which side did each account move — and why?",
+    takeaways: [
+      "Debits increase assets and expenses; credits increase liabilities, equity, and revenue.",
+      "Every transaction touches at least two accounts — one debit and one credit, always equal.",
+      '"Debit" and "credit" carry no positive or negative meaning in bookkeeping — they only describe which side of an account is affected.',
+      "The normal balance of an account is the side that increases it — assets and expenses have debit normal balances; liabilities, equity, and revenue have credit normal balances.",
+      "If total debits do not equal total credits, there is an error somewhere in the entry.",
+    ],
   },
   accounts: {
     category: "accounts",
@@ -36,6 +44,13 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Financial Statements — How Accounts Tell the Story",
     reflectionPrompt:
       "Can you name one asset, one liability, and one expense account a small retail business would use? What would change in the chart of accounts for a service business instead?",
+    takeaways: [
+      "Every account belongs to one of five types: Assets, Liabilities, Equity, Revenue, or Expenses.",
+      "The chart of accounts is the master list — every transaction eventually lands in one or more of its accounts.",
+      "Accounts Receivable is money owed to you (asset); Accounts Payable is money you owe others (liability) — they are not interchangeable.",
+      "Miscategorizing a transaction affects the financial statements immediately and can mislead business decisions.",
+      "The same five account types appear in every business — only the specific accounts inside them differ.",
+    ],
   },
   financial_statements: {
     category: "financial_statements",
@@ -49,6 +64,13 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Journal Entries — How Transactions Become Financial Statements",
     reflectionPrompt:
       'If a business owner asks "Are we making money?", which statement do you show them first — and what would you also want them to see alongside it?',
+    takeaways: [
+      "The Income Statement shows profit or loss over a period of time; the Balance Sheet shows financial position at a single point in time.",
+      "The Balance Sheet must always balance: Assets = Liabilities + Equity.",
+      "Net income from the Income Statement flows into Equity on the Balance Sheet, connecting the two reports.",
+      "Profit and cash are not the same — a profitable business can still run out of cash if customers are slow to pay.",
+      "The Cash Flow Statement explains where cash came from and where it went — always read it alongside the Income Statement.",
+    ],
   },
   journal_entries: {
     category: "journal_entries",
@@ -62,6 +84,13 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Bank Reconciliation — Catching Errors in Your Entries",
     reflectionPrompt:
       "Walk through the journal entry for paying a $300 utility bill by check. Which accounts move, in which direction, and by how much on each side?",
+    takeaways: [
+      "Every journal entry includes a date, the accounts affected, the amounts, and which side each account moves.",
+      "Total debits must equal total credits in every entry — without exception.",
+      "Recording a credit sale and recording the cash receipt are two separate entries, not one.",
+      "Errors in journal entries ripple through the ledger, trial balance, and financial statements — catching them early saves significant time.",
+      "Compound entries have multiple lines but still balance; simple entries have exactly one debit and one credit.",
+    ],
   },
   bank_reconciliation: {
     category: "bank_reconciliation",
@@ -75,6 +104,13 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Debits & Credits — Understanding What Moves Your Cash Balance",
     reflectionPrompt:
       "Your books show $5,200 in cash but the bank statement shows $4,900. What are three possible explanations for that $300 difference?",
+    takeaways: [
+      "A bank reconciliation compares your internal cash records to the bank statement and explains every difference.",
+      "Outstanding checks have left your books but not yet cleared the bank — a timing difference, not an error.",
+      "Deposits in transit have been recorded internally but not yet processed by the bank.",
+      "Bank fees and interest discovered on the statement must be recorded in your books after reconciling.",
+      "Regular reconciliation — monthly at minimum — is the first line of defense against errors and fraud.",
+    ],
   },
   payroll: {
     category: "payroll",
@@ -88,6 +124,13 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Accounts — Where Payroll Liabilities Live on the Balance Sheet",
     reflectionPrompt:
       "An employee earns $1,000 gross and takes home $750 after deductions. What is the total cost to the business — and where do the extra dollars beyond $750 actually go?",
+    takeaways: [
+      "Gross pay is what an employee earned; net pay is what they receive after all deductions.",
+      "The employer owes payroll taxes on top of the employee's gross wage — the total cost to the business is higher than gross pay alone.",
+      "Withheld taxes are a liability until remitted to the government — they must be tracked separately in the books.",
+      "Misclassifying an employee as a contractor avoids short-term paperwork but creates serious compliance and penalty risk.",
+      "Payroll entries affect both expense accounts (wages) and liability accounts (taxes payable) simultaneously.",
+    ],
   },
 };
 

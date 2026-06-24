@@ -12,8 +12,9 @@ import AnswerOption from "./AnswerOption";
 import Explanation from "./Explanation";
 import ScoreDisplay from "./ScoreDisplay";
 import LessonCard from "./LessonCard";
+import LessonReview from "./LessonReview";
 
-type Phase = "lesson" | "answering" | "revealed" | "completed";
+type Phase = "lesson" | "answering" | "revealed" | "completed" | "review";
 
 const BALANCE_MOTIF_CATEGORIES = new Set([
   "debits_credits",
@@ -34,13 +35,16 @@ export default function DrillClient() {
     () => ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]
   );
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [selectedAnswers, setSelectedAnswers] = useState<(number | null)[]>(
+    () => new Array(10).fill(null)
+  );
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(0);
   const [phase, setPhase] = useState<Phase>("lesson");
 
   const current = questions[currentIndex];
   const isLast = currentIndex === questions.length - 1;
+  const selectedIndex = selectedAnswers[currentIndex] ?? null;
 
   function handleStart() {
     setPhase("answering");
@@ -49,7 +53,11 @@ export default function DrillClient() {
   function handleSelect(index: number) {
     if (phase !== "answering") return;
     const correct = index === current.correctIndex;
-    setSelectedIndex(index);
+    setSelectedAnswers((prev) => {
+      const next = [...prev];
+      next[currentIndex] = index;
+      return next;
+    });
     setPhase("revealed");
     setAnswered((a) => a + 1);
     if (correct) setScore((s) => s + 1);
@@ -63,7 +71,6 @@ export default function DrillClient() {
       return;
     }
     setCurrentIndex((i) => i + 1);
-    setSelectedIndex(null);
     setPhase("answering");
   }
 
@@ -77,9 +84,10 @@ export default function DrillClient() {
   }
 
   function handleRestart() {
-    setQuestions(freshQuestions(meta.topic));
+    const newQs = freshQuestions(meta.topic);
+    setQuestions(newQs);
     setCurrentIndex(0);
-    setSelectedIndex(null);
+    setSelectedAnswers(new Array(newQs.length).fill(null));
     setScore(0);
     setAnswered(0);
     setPhase("lesson");
@@ -103,6 +111,19 @@ export default function DrillClient() {
       <ScoreDisplay
         score={score}
         total={questions.length}
+        topic={meta.topic}
+        onRestart={handleRestart}
+        onReview={() => setPhase("review")}
+      />
+    );
+  }
+
+  if (phase === "review") {
+    return (
+      <LessonReview
+        questions={questions}
+        answers={selectedAnswers}
+        score={score}
         topic={meta.topic}
         onRestart={handleRestart}
       />
