@@ -60,7 +60,7 @@ export default function LessonCard({
         onClick={onStart}
         className="w-full sm:w-auto bg-indigo-600 text-white font-semibold px-8 py-3.5 rounded-lg hover:bg-indigo-700 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-400"
       >
-        Start Drill →
+        I Understand. Let&apos;s Practice. →
       </button>
     </div>
   );
