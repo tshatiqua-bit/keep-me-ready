@@ -5,10 +5,10 @@ export default function Home() {
   return (
     <div className="max-w-3xl mx-auto px-4 py-16">
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold tracking-tight text-slate-900 mb-4">
+        <h1 className="text-5xl font-extrabold tracking-tight text-slate-900 mb-4">
           Sharpen your bookkeeping skills.
           <br />
-          <span className="text-indigo-600">Ten minutes a day.</span>
+          <span className="text-3xl sm:text-5xl text-indigo-600">Ten minutes a day.</span>
         </h1>
         <p className="text-lg text-slate-500 max-w-xl mx-auto">
           Daily drills, instant feedback, and plain-English explanations to
