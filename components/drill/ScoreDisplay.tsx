@@ -37,8 +37,8 @@ export default function ScoreDisplay({ score, total, topic, onRestart }: ScoreDi
   const pct = Math.round((score / total) * 100);
 
   return (
-    <div className="max-w-lg mx-auto py-10" aria-label="Drill results" role="region">
-      <div className="text-center mb-10">
+    <div className="max-w-lg mx-auto py-6 sm:py-10" aria-label="Drill results" role="region">
+      <div className="text-center mb-7 sm:mb-10">
         <div
           className="text-6xl font-bold text-indigo-600 mb-2"
           aria-label={`Score: ${score} out of ${total}`}
@@ -53,14 +53,14 @@ export default function ScoreDisplay({ score, total, topic, onRestart }: ScoreDi
         <p className="text-slate-500 leading-7">{body}</p>
       </div>
 
-      <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl px-5 py-5 mb-4">
+      <div className="border-l-4 border-indigo-400 bg-indigo-50 rounded-r-xl px-4 py-4 sm:px-5 sm:py-5 mb-4">
         <p className="text-xs font-semibold uppercase tracking-wide text-indigo-700 mb-2">
           What to review next
         </p>
         <p className="text-sm text-indigo-900 leading-6">{topic.reviewNext}</p>
       </div>
 
-      <div className="border-l-4 border-slate-300 bg-slate-50 rounded-r-xl px-5 py-5 mb-10">
+      <div className="border-l-4 border-slate-300 bg-slate-50 rounded-r-xl px-4 py-4 sm:px-5 sm:py-5 mb-7 sm:mb-10">
         <p className="text-xs font-semibold uppercase tracking-wide text-slate-500 mb-2">
           One reflection to sit with
         </p>
