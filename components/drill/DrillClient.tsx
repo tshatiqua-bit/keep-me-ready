@@ -3,7 +3,7 @@
 import { useState } from "react";
 import type { Question } from "@/types";
 import { selectDrillQuestions } from "@/lib/questions/selector";
-import { getTodaysTopic } from "@/lib/questions/topics";
+import { getTodaysMeta, ENCOURAGEMENTS } from "@/lib/questions/topics";
 import type { Topic } from "@/lib/questions/topics";
 import { saveSession } from "@/lib/utils/progress";
 import DrillProgress from "./DrillProgress";
@@ -20,9 +20,12 @@ function freshQuestions(topic: Topic): Question[] {
 }
 
 export default function DrillClient() {
-  const [topic] = useState<Topic>(getTodaysTopic);
+  const [meta] = useState(getTodaysMeta);
   const [questions, setQuestions] = useState<Question[]>(() =>
-    freshQuestions(getTodaysTopic())
+    freshQuestions(meta.topic)
+  );
+  const [encouragement] = useState(
+    () => ENCOURAGEMENTS[Math.floor(Math.random() * ENCOURAGEMENTS.length)]
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
@@ -68,7 +71,7 @@ export default function DrillClient() {
   }
 
   function handleRestart() {
-    setQuestions(freshQuestions(topic));
+    setQuestions(freshQuestions(meta.topic));
     setCurrentIndex(0);
     setSelectedIndex(null);
     setScore(0);
@@ -77,7 +80,15 @@ export default function DrillClient() {
   }
 
   if (phase === "lesson") {
-    return <LessonCard topic={topic} onStart={handleStart} />;
+    return (
+      <LessonCard
+        topic={meta.topic}
+        topicIndex={meta.topicIndex}
+        dayOfYear={meta.dayOfYear}
+        encouragement={encouragement}
+        onStart={handleStart}
+      />
+    );
   }
 
   if (phase === "completed") {
@@ -85,7 +96,7 @@ export default function DrillClient() {
       <ScoreDisplay
         score={score}
         total={questions.length}
-        topic={topic}
+        topic={meta.topic}
         onRestart={handleRestart}
       />
     );

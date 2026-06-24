@@ -100,11 +100,29 @@ const CATEGORY_ORDER: QuestionCategory[] = [
   "payroll",
 ];
 
-export function getTodaysTopic(): Topic {
+export const TOTAL_TOPICS = CATEGORY_ORDER.length;
+
+export const ENCOURAGEMENTS = [
+  "Today's topic is one of the building blocks of bookkeeping mastery.",
+  "Five minutes here can save hours of confusion later.",
+  "Every expert started by learning one concept at a time.",
+  "Small daily repetitions create long-term confidence.",
+  "Understanding grows through practice, not perfection.",
+];
+
+export function getTodaysMeta(): {
+  topic: Topic;
+  topicIndex: number;
+  dayOfYear: number;
+} {
   const startOfYear = new Date(new Date().getFullYear(), 0, 0).getTime();
   const dayOfYear = Math.floor((Date.now() - startOfYear) / 86_400_000);
-  const category = CATEGORY_ORDER[dayOfYear % CATEGORY_ORDER.length];
-  return TOPICS[category];
+  const topicIndex = dayOfYear % CATEGORY_ORDER.length;
+  return { topic: TOPICS[CATEGORY_ORDER[topicIndex]], topicIndex, dayOfYear };
+}
+
+export function getTodaysTopic(): Topic {
+  return getTodaysMeta().topic;
 }
 
 export { TOPICS };
