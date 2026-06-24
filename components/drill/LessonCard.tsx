@@ -6,6 +6,7 @@ interface LessonCardProps {
   topicIndex: number;
   dayOfYear: number;
   encouragement: string;
+  showMotif?: boolean;
   onStart: () => void;
 }
 
@@ -38,11 +39,12 @@ export default function LessonCard({
   topicIndex,
   dayOfYear,
   encouragement,
+  showMotif = false,
   onStart,
 }: LessonCardProps) {
   return (
     <div className="relative overflow-hidden bg-slate-900 border border-slate-700 rounded-2xl p-5 sm:p-8 lg:p-10">
-      <BalanceScaleMotif />
+      {showMotif && <BalanceScaleMotif />}
 
       <div className="relative">
         {/* Encouragement + journey indicator */}

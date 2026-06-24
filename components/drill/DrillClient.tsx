@@ -15,6 +15,12 @@ import LessonCard from "./LessonCard";
 
 type Phase = "lesson" | "answering" | "revealed" | "completed";
 
+const BALANCE_MOTIF_CATEGORIES = new Set([
+  "debits_credits",
+  "financial_statements",
+  "bank_reconciliation",
+]);
+
 function freshQuestions(topic: Topic): Question[] {
   return selectDrillQuestions({ count: 10, category: topic.category });
 }
@@ -86,6 +92,7 @@ export default function DrillClient() {
         topicIndex={meta.topicIndex}
         dayOfYear={meta.dayOfYear}
         encouragement={encouragement}
+        showMotif={BALANCE_MOTIF_CATEGORIES.has(meta.topic.category)}
         onStart={handleStart}
       />
     );
