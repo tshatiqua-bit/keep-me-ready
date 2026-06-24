@@ -3,29 +3,39 @@
 import { useState } from "react";
 import type { Question } from "@/types";
 import { selectDrillQuestions } from "@/lib/questions/selector";
+import { getTodaysTopic } from "@/lib/questions/topics";
+import type { Topic } from "@/lib/questions/topics";
 import { saveSession } from "@/lib/utils/progress";
 import DrillProgress from "./DrillProgress";
 import QuestionCard from "./QuestionCard";
 import AnswerOption from "./AnswerOption";
 import Explanation from "./Explanation";
 import ScoreDisplay from "./ScoreDisplay";
+import LessonCard from "./LessonCard";
 
-type Phase = "answering" | "revealed" | "completed";
+type Phase = "lesson" | "answering" | "revealed" | "completed";
 
-function freshDrill(): Question[] {
-  return selectDrillQuestions({ count: 10 });
+function freshQuestions(topic: Topic): Question[] {
+  return selectDrillQuestions({ count: 10, category: topic.category });
 }
 
 export default function DrillClient() {
-  const [questions, setQuestions] = useState<Question[]>(freshDrill);
+  const [topic] = useState<Topic>(getTodaysTopic);
+  const [questions, setQuestions] = useState<Question[]>(() =>
+    freshQuestions(getTodaysTopic())
+  );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(0);
-  const [phase, setPhase] = useState<Phase>("answering");
+  const [phase, setPhase] = useState<Phase>("lesson");
 
   const current = questions[currentIndex];
   const isLast = currentIndex === questions.length - 1;
+
+  function handleStart() {
+    setPhase("answering");
+  }
 
   function handleSelect(index: number) {
     if (phase !== "answering") return;
@@ -58,16 +68,27 @@ export default function DrillClient() {
   }
 
   function handleRestart() {
-    setQuestions(freshDrill());
+    setQuestions(freshQuestions(topic));
     setCurrentIndex(0);
     setSelectedIndex(null);
     setScore(0);
     setAnswered(0);
-    setPhase("answering");
+    setPhase("lesson");
+  }
+
+  if (phase === "lesson") {
+    return <LessonCard topic={topic} onStart={handleStart} />;
   }
 
   if (phase === "completed") {
-    return <ScoreDisplay score={score} total={questions.length} onRestart={handleRestart} />;
+    return (
+      <ScoreDisplay
+        score={score}
+        total={questions.length}
+        topic={topic}
+        onRestart={handleRestart}
+      />
+    );
   }
 
   return (
@@ -100,6 +121,7 @@ export default function DrillClient() {
           <Explanation
             text={current.explanation}
             isCorrect={selectedIndex === current.correctIndex}
+            questionIndex={currentIndex}
           />
         )}
       </div>
