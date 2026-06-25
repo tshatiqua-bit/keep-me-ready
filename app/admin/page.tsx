@@ -50,9 +50,34 @@ export default async function AdminPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
+  // Not logged in → send to login page
+  if (!user) {
+    redirect("/auth/login");
+  }
+
   const adminEmail = process.env.ADMIN_EMAIL;
-  if (!user || !adminEmail || user.email !== adminEmail) {
-    redirect("/");
+
+  // Env var missing or email mismatch → show a clear error (never leak adminEmail value)
+  if (!adminEmail || user.email !== adminEmail) {
+    return (
+      <div className="max-w-md mx-auto px-4 py-20 text-center">
+        <p className="text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3">
+          Access Denied
+        </p>
+        <h1 className="text-xl font-bold text-slate-900 mb-3">
+          Not an administrator
+        </h1>
+        <p className="text-sm text-slate-500 mb-2">
+          You are signed in as{" "}
+          <strong className="text-slate-700">{user.email}</strong>.
+        </p>
+        <p className="text-sm text-slate-500">
+          {!adminEmail
+            ? "The ADMIN_EMAIL environment variable is not set on this deployment."
+            : "This account does not match the configured admin email."}
+        </p>
+      </div>
+    );
   }
 
   // Admin client bypasses RLS for cross-user analytics
