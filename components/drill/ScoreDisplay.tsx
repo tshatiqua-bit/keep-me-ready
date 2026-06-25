@@ -162,7 +162,7 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
             {/* Learning Journal prompt */}
             <div>
               <p className="text-sm font-medium text-slate-700 mb-0.5">
-                After reading this, what would you add or change about your original thinking?
+                How has your thinking shifted after comparing perspectives?
               </p>
               <p className="text-xs text-slate-400 mb-3">
                 Optional — saved to your Learning Journal
@@ -181,13 +181,18 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
                   onClick={saveToJournal}
                   className="mt-2 w-full text-sm font-medium text-indigo-700 border border-indigo-300 bg-white rounded-lg px-4 py-2.5 hover:bg-indigo-50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-400"
                 >
-                  Save to Learning Journal
+                  Save This Insight
                 </button>
               )}
               {saved && (
-                <p className="mt-2 text-center text-sm text-green-700 font-medium">
-                  Saved to your Learning Journal
-                </p>
+                <div className="mt-3 text-center">
+                  <p className="text-sm font-medium text-green-700">
+                    ✅ Added to your Learning Journal
+                  </p>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Every reflection you save becomes part of your professional growth.
+                  </p>
+                </div>
               )}
             </div>
           </div>
