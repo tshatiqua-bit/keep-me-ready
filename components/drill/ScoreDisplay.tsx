@@ -21,6 +21,7 @@ interface JournalEntry {
   text: string;
   date: string;
   savedAt: string;
+  conceptId: string;
 }
 
 function getMessage(score: number, total: number): { heading: string; body: string } {
@@ -58,6 +59,7 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
     const entry: JournalEntry = {
       id: `${topic.category}-${Date.now()}`,
       category: topic.category,
+      conceptId: topic.category,
       topicTitle: topic.title,
       prompt: topic.reflectionPrompt,
       text: journalText.trim(),
@@ -121,7 +123,7 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
           >
             ▾
           </span>
-          {expanded ? "Hide" : "Show a Strong Response"}
+          {expanded ? "Hide" : "Compare Perspectives"}
         </button>
 
         {expanded && (
