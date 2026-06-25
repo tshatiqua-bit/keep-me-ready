@@ -1,41 +1,51 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 export default function AuthCallbackPage() {
   const router = useRouter();
-  const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    // Read params client-side so the browser client has access to the
-    // PKCE code_verifier stored in localStorage by signInWithOtp.
-    // A server-side Route Handler can only read cookies, not localStorage,
-    // so exchangeCodeForSession fails silently when the verifier is there.
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
     const next = params.get("next") ?? "/dashboard";
+    const supabase = createClient();
 
-    if (!code) {
-      setFailed(true);
-      router.replace("/auth/login?error=auth_failed");
+    if (code) {
+      // PKCE flow: Supabase sent ?code= — exchange it for a session.
+      supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
+        router.replace(!error ? next : "/auth/login?error=auth_failed");
+      });
       return;
     }
 
-    createClient()
-      .auth.exchangeCodeForSession(code)
-      .then(({ error }) => {
-        if (error) {
-          setFailed(true);
-          router.replace("/auth/login?error=auth_failed");
-        } else {
-          router.replace(next);
-        }
-      });
-  }, [router]);
+    // Implicit flow: tokens arrive as URL hash fragments (#access_token=...).
+    // createBrowserClient parses the hash automatically and emits SIGNED_IN.
+    // We wait for that event before redirecting; give up after 4 s.
+    let timeoutId: ReturnType<typeof setTimeout>;
 
-  if (failed) return null;
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
+        clearTimeout(timeoutId);
+        subscription.unsubscribe();
+        router.replace(next);
+      }
+    });
+
+    timeoutId = setTimeout(() => {
+      subscription.unsubscribe();
+      router.replace("/auth/login?error=auth_failed");
+    }, 4000);
+
+    return () => {
+      subscription.unsubscribe();
+      clearTimeout(timeoutId);
+    };
+  }, [router]);
 
   return (
     <div className="flex items-center justify-center py-24">
