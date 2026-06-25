@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 import type { Question } from "@/types";
 import type { Topic } from "@/lib/questions/topics";
@@ -41,11 +44,20 @@ function QuestionReviewCard({
   learnerAnswer: number | null;
   questionNumber: number;
 }) {
+  const [expanded, setExpanded] = useState<Set<number>>(new Set());
   const isCorrect = learnerAnswer === question.correctIndex;
   const headerIdx = (questionNumber - 1) % 5;
   const coachHeader = isCorrect
     ? CORRECT_HEADERS[headerIdx]
     : INCORRECT_HEADERS[headerIdx];
+
+  function toggleExpand(idx: number) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      next.has(idx) ? next.delete(idx) : next.add(idx);
+      return next;
+    });
+  }
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-5 sm:p-6">
@@ -134,6 +146,37 @@ function QuestionReviewCard({
             );
           }
 
+          const optionNote = question.optionExplanations?.[idx];
+          const isOpen = expanded.has(idx);
+          if (optionNote) {
+            return (
+              <div key={idx} className="rounded-xl overflow-hidden">
+                <button
+                  onClick={() => toggleExpand(idx)}
+                  className="w-full flex items-center justify-between px-4 py-3 text-left hover:bg-slate-50 transition-colors group"
+                  aria-expanded={isOpen}
+                >
+                  <p className="text-sm text-slate-400 group-hover:text-slate-500 transition-colors">
+                    {option}
+                  </p>
+                  <span
+                    className="ml-3 shrink-0 text-slate-300 group-hover:text-slate-400 transition-transform duration-200"
+                    style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                    aria-hidden="true"
+                  >
+                    ▾
+                  </span>
+                </button>
+                {isOpen && (
+                  <div className="px-4 pb-3 pt-0">
+                    <p className="text-xs text-slate-500 leading-6 border-l-2 border-slate-200 pl-3">
+                      {optionNote}
+                    </p>
+                  </div>
+                )}
+              </div>
+            );
+          }
           return (
             <div key={idx} className="px-4 py-3">
               <p className="text-sm text-slate-400">{option}</p>

@@ -18,6 +18,7 @@ export interface Question {
   options: string[];        // 2 options for true/false, 4 for MC and scenario
   correctIndex: number;     // 0-based index into options[]
   explanation: string;
+  optionExplanations?: (string | null)[]; // parallel to options[]; null at correctIndex
 }
 
 export interface DrillSession {
