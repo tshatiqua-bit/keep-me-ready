@@ -9,6 +9,8 @@ export interface Topic {
   reviewNext: string;
   reflectionPrompt: string;
   takeaways: string[];
+  reflectionBullets: string[];
+  reflectionModelResponse: string;
 }
 
 const TOPICS: Record<QuestionCategory, Topic> = {
@@ -24,6 +26,15 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Journal Entries — Debits & Credits in Action",
     reflectionPrompt:
       "Think of a recent purchase your business made. Which two accounts were affected? Which side did each account move — and why?",
+    reflectionBullets: [
+      "Every purchase affects at least two accounts: one for what you received (an asset or expense) and one for how you paid (cash or a new liability).",
+      "If you paid cash, Cash decreases — that is a credit to Cash because assets decrease on the credit side.",
+      "If you charged it, Accounts Payable increases — that is a credit to a liability because liabilities increase on the credit side.",
+      "The account receiving the benefit (supplies, equipment, an expense) always increases — that is a debit.",
+      "The debit and credit amounts must be equal, no matter how complex the transaction.",
+    ],
+    reflectionModelResponse:
+      "Say the business bought $400 of office supplies and paid by check. Two accounts move: Office Supplies Expense (debit $400 — the expense goes up) and Cash (credit $400 — cash goes down). If the supplies were bought on credit instead, Cash stays out of it entirely: debit Office Supplies Expense $400, credit Accounts Payable $400. Same debit amount, different credit account depending on how payment works.",
     takeaways: [
       "Debits increase assets and expenses; credits increase liabilities, equity, and revenue.",
       "Every transaction touches at least two accounts — one debit and one credit, always equal.",
@@ -44,6 +55,15 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Financial Statements — How Accounts Tell the Story",
     reflectionPrompt:
       "Can you name one asset, one liability, and one expense account a small retail business would use? What would change in the chart of accounts for a service business instead?",
+    reflectionBullets: [
+      "A retail business needs Inventory as an asset — a service business typically carries no inventory at all.",
+      "Both types of businesses share common liabilities like Accounts Payable and any loans they carry.",
+      "Expense accounts follow what the business actually spends money on — a retailer has Cost of Goods Sold; a service firm has Labor or Contractor Fees instead.",
+      "The five account types (Assets, Liabilities, Equity, Revenue, Expenses) never change — only the specific accounts inside them differ by business model.",
+      "Tailoring the chart of accounts to the business makes the financials meaningful rather than generic.",
+    ],
+    reflectionModelResponse:
+      "A small retail store might use Inventory (asset), Accounts Payable (liability), and Cost of Goods Sold (expense). A bookkeeping firm would swap Inventory for Supplies or Prepaid Software, replace Cost of Goods Sold with Wages Expense, and add accounts like Professional Liability Insurance that a retailer may not need. The five categories stay constant — the accounts inside them reflect what the business actually does.",
     takeaways: [
       "Every account belongs to one of five types: Assets, Liabilities, Equity, Revenue, or Expenses.",
       "The chart of accounts is the master list — every transaction eventually lands in one or more of its accounts.",
@@ -64,6 +84,15 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Journal Entries — How Transactions Become Financial Statements",
     reflectionPrompt:
       'If a business owner asks "Are we making money?", which statement do you show them first — and what would you also want them to see alongside it?',
+    reflectionBullets: [
+      "The Income Statement answers the question directly — it shows revenue minus expenses over a period of time.",
+      "Profit on the Income Statement does not equal cash in the bank; always pair it with the Cash Flow Statement.",
+      "A high Accounts Receivable balance on the Balance Sheet often explains why a profitable business feels cash-poor.",
+      "Comparing statements across periods — month over month, year over year — tells a richer story than any single report.",
+      "Owners often fixate on the bottom line; a bookkeeper's value is showing them what the number means in context.",
+    ],
+    reflectionModelResponse:
+      "Start with the Income Statement — it directly answers the question. Then immediately show the Cash Flow Statement. A business can look profitable while running out of cash if customers are slow to pay. If the owner seems surprised by a cash shortfall despite strong income, pull up the Balance Sheet and point to Accounts Receivable: 'Here is the money you have earned but have not collected yet.' That conversation is where bookkeeping becomes genuinely useful.",
     takeaways: [
       "The Income Statement shows profit or loss over a period of time; the Balance Sheet shows financial position at a single point in time.",
       "The Balance Sheet must always balance: Assets = Liabilities + Equity.",
@@ -84,6 +113,15 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Bank Reconciliation — Catching Errors in Your Entries",
     reflectionPrompt:
       "Walk through the journal entry for paying a $300 utility bill by check. Which accounts move, in which direction, and by how much on each side?",
+    reflectionBullets: [
+      "Two accounts are affected: Utilities Expense (an expense) and Cash (an asset).",
+      "Paying the bill increases the expense — Utilities Expense is debited $300.",
+      "Paying by check decreases Cash — Cash is credited $300.",
+      "Debits equal credits ($300 each) — the entry balances.",
+      "If the bill had already been recorded as Accounts Payable, the debit goes to Accounts Payable instead — you clear the liability rather than recording the expense again.",
+    ],
+    reflectionModelResponse:
+      "Debit Utilities Expense $300, Credit Cash $300. Utilities Expense goes up (expenses increase with debits), Cash goes down (assets decrease with credits), and both sides balance at $300. One nuance worth noting: if the utility bill was already recorded when it arrived — debit Utilities Expense, credit Accounts Payable — then paying it later is a separate entry: debit Accounts Payable $300, credit Cash $300. The expense was already captured; this second entry just clears the liability.",
     takeaways: [
       "Every journal entry includes a date, the accounts affected, the amounts, and which side each account moves.",
       "Total debits must equal total credits in every entry — without exception.",
@@ -104,6 +142,15 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Debits & Credits — Understanding What Moves Your Cash Balance",
     reflectionPrompt:
       "Your books show $5,200 in cash but the bank statement shows $4,900. What are three possible explanations for that $300 difference?",
+    reflectionBullets: [
+      "Outstanding checks: you recorded checks in your books that the bank has not yet cleared — a timing difference, not an error.",
+      "Deposits in transit: you recorded a deposit that arrived after the bank statement was cut — your books are higher because the bank has not posted it yet.",
+      "Bank fees or charges: the bank deducted fees your books do not reflect yet — the bank's balance is lower than your records show.",
+      "Data entry errors: a transaction entered with a wrong amount or on the wrong side can create exactly this kind of gap.",
+      "NSF (returned) checks: a customer payment bounced after you recorded it — the bank reversed the deposit but your books still show it.",
+    ],
+    reflectionModelResponse:
+      "The most common explanation for your books running $300 higher than the bank: outstanding checks you issued that have not cleared yet. You recorded the payment; the bank has not processed it. Other strong answers: a deposit made after the statement date (in your books, not the bank's yet), or a bank service charge your books do not reflect. To find the actual cause, work through each item systematically — outstanding checks first, then deposits in transit, then bank-only charges — until both sides agree.",
     takeaways: [
       "A bank reconciliation compares your internal cash records to the bank statement and explains every difference.",
       "Outstanding checks have left your books but not yet cleared the bank — a timing difference, not an error.",
@@ -124,6 +171,15 @@ const TOPICS: Record<QuestionCategory, Topic> = {
     reviewNext: "Accounts — Where Payroll Liabilities Live on the Balance Sheet",
     reflectionPrompt:
       "An employee earns $1,000 gross and takes home $750 after deductions. What is the total cost to the business — and where do the extra dollars beyond $750 actually go?",
+    reflectionBullets: [
+      "The $250 gap between gross ($1,000) and net ($750) is withheld tax — the employee owes it, but the employer collects and remits it to the government.",
+      "Withheld amounts sit as a liability in the books until remitted — they are not the business's money to spend.",
+      "The employer also owes its own share of payroll taxes (Social Security and Medicare matching) on top of the $1,000 gross — roughly $76.50.",
+      "The true total cost to the business is approximately $1,076.50, not $1,000.",
+      "The payroll journal entry reflects all of this: wages expense, net pay cash out, and multiple tax liability accounts created simultaneously.",
+    ],
+    reflectionModelResponse:
+      "The business's total cost is higher than the $1,000 gross. The employee pockets $750; the remaining $250 is withheld tax the employer holds temporarily and sends to the IRS on the employee's behalf — it never belonged to the business. On top of that, the employer owes its own share of Social Security and Medicare, roughly $76.50 on a $1,000 wage. Real cost: about $1,076.50. The payroll entry captures all of it: debit Wages Expense $1,000 and Payroll Tax Expense ~$76.50, credit Cash $750, credit Employee Tax Withholding Payable $250, credit Employer Payroll Tax Payable ~$76.50.",
     takeaways: [
       "Gross pay is what an employee earned; net pay is what they receive after all deductions.",
       "The employer owes payroll taxes on top of the employee's gross wage — the total cost to the business is higher than gross pay alone.",
