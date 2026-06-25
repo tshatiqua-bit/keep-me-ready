@@ -34,7 +34,7 @@ export default function SessionHistory({ sessions }: SessionHistoryProps) {
   if (sessions.length === 0) {
     return (
       <div className="bg-white border border-slate-200 rounded-2xl p-6">
-        <h2 className="font-semibold text-slate-800 mb-4">Recent Sessions</h2>
+        <h2 className="font-semibold text-slate-800 dark:text-slate-300 mb-4">Recent Sessions</h2>
         <p className="text-sm text-slate-400 text-center py-8">
           No drills completed yet.{" "}
           <Link href="/drill" className="text-indigo-600 hover:underline">
@@ -47,7 +47,7 @@ export default function SessionHistory({ sessions }: SessionHistoryProps) {
 
   return (
     <div className="bg-white border border-slate-200 rounded-2xl p-6">
-      <h2 className="font-semibold text-slate-800 mb-4">Recent Sessions</h2>
+      <h2 className="font-semibold text-slate-800 dark:text-slate-300 mb-4">Recent Sessions</h2>
       <div className="space-y-1">
         {sessions.map((s) => {
           const total = s.total || 10;

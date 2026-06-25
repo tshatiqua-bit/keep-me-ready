@@ -50,7 +50,7 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
           </span>
         </div>
         <div className="text-sm font-medium text-slate-400 mb-6">{pct}% correct</div>
-        <h2 className="text-xl font-semibold text-slate-800 mb-3 leading-snug">{heading}</h2>
+        <h2 className="text-xl font-semibold text-slate-800 dark:text-slate-300 mb-3 leading-snug">{heading}</h2>
         <p className="text-slate-500 leading-7">{body}</p>
       </div>
 

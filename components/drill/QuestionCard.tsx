@@ -30,7 +30,7 @@ export default function QuestionCard({ question }: QuestionCardProps) {
           {CATEGORY_LABELS[question.category]}
         </span>
       </div>
-      <h2 className="text-lg font-semibold text-slate-800 leading-snug">
+      <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-300 leading-snug">
         {question.text}
       </h2>
     </div>

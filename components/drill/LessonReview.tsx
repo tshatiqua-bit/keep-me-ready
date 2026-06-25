@@ -183,7 +183,7 @@ export default function LessonReview({
         <p className="text-xs font-semibold uppercase tracking-widest text-slate-500 mb-1">
           Lesson Review
         </p>
-        <h2 className="text-2xl font-bold text-slate-900 mb-1">
+        <h2 className="text-2xl font-bold text-slate-900 dark:text-slate-400 mb-1">
           {topic.title}
         </h2>
         <p className="text-sm text-slate-500">

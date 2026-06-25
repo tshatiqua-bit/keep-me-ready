@@ -49,7 +49,7 @@ export default function Home() {
           },
         ].map(({ title, body }) => (
           <div key={title} className="bg-white border border-slate-200 rounded-xl p-5">
-            <h3 className="font-semibold text-slate-800 mb-1">{title}</h3>
+            <h3 className="font-semibold text-slate-800 dark:text-slate-300 mb-1">{title}</h3>
             <p className="text-sm text-slate-500">{body}</p>
           </div>
         ))}

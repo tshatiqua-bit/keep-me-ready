@@ -51,7 +51,7 @@ export default function DashboardView({ user, dbData }: Props) {
     // Brief loading state for anonymous users
     return (
       <div className="max-w-3xl mx-auto px-4 py-12">
-        <h1 className="text-2xl font-bold text-slate-900 mb-8">Your Progress</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-400 mb-8">Your Progress</h1>
         <div className="animate-pulse space-y-4">
           <div className="h-24 bg-slate-100 rounded-2xl" />
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -68,7 +68,7 @@ export default function DashboardView({ user, dbData }: Props) {
   return (
     <div className="max-w-3xl mx-auto px-4 py-12">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-slate-900">Your Progress</h1>
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-400">Your Progress</h1>
         {!user && (
           <Link
             href="/auth/login"
