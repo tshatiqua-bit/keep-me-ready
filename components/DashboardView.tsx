@@ -7,6 +7,7 @@ import { loadProgress, getAccuracyPct } from "@/lib/utils/progress";
 import StreakBadge from "@/components/dashboard/StreakBadge";
 import ProgressStats from "@/components/dashboard/ProgressStats";
 import SessionHistory from "@/components/dashboard/SessionHistory";
+import LearningJournal from "@/components/dashboard/LearningJournal";
 import type { SessionRow } from "@/components/dashboard/SessionHistory";
 
 export interface DbDashboardData {
@@ -100,6 +101,10 @@ export default function DashboardView({ user, dbData }: Props) {
           </Link>
         </div>
       )}
+
+      <div className="mt-6">
+        <LearningJournal />
+      </div>
     </div>
   );
 }
