@@ -41,12 +41,14 @@ export default function DrillClient() {
   const [score, setScore] = useState(0);
   const [answered, setAnswered] = useState(0);
   const [phase, setPhase] = useState<Phase>("lesson");
+  const [drillStartedAt, setDrillStartedAt] = useState<string | null>(null);
 
   const current = questions[currentIndex];
   const isLast = currentIndex === questions.length - 1;
   const selectedIndex = selectedAnswers[currentIndex] ?? null;
 
   function handleStart() {
+    setDrillStartedAt(new Date().toISOString());
     setPhase("answering");
   }
 
@@ -76,10 +78,22 @@ export default function DrillClient() {
 
   async function syncToDb(drillScore: number, total: number): Promise<void> {
     const today = new Date().toISOString().slice(0, 10);
+    const answers = questions.map((q, i) => ({
+      questionId: q.id,
+      category: q.category,
+      wasCorrect: selectedAnswers[i] === q.correctIndex,
+    }));
     await fetch("/api/scores", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ score: drillScore, total, date: today }),
+      body: JSON.stringify({
+        score: drillScore,
+        total,
+        date: today,
+        category: meta.topic.category,
+        startedAt: drillStartedAt,
+        answers,
+      }),
     });
   }
 
