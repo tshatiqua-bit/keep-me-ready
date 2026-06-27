@@ -1,0 +1,1576 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>Keep Me Ready — Product Requirements Document v1</title>
+<style>
+  @page { margin: 2.2cm 2.5cm; }
+  body { font-family: 'Georgia', serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
+  h1 { font-size: 1.9em; color: #1e1b4b; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; margin-top: 0; }
+  h2 { font-size: 1.35em; color: #312e81; margin-top: 2.4em; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; page-break-after: avoid; }
+  h3 { font-size: 1.05em; color: #3730a3; margin-top: 1.6em; page-break-after: avoid; }
+  p { margin: 0.7em 0; }
+  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.82em; color: #1e293b; }
+  pre { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 16px; overflow-x: auto; page-break-inside: avoid; margin: 1em 0; }
+  pre code { background: none; padding: 0; font-size: 0.8em; }
+  table { border-collapse: collapse; width: 100%; margin: 1.2em 0; page-break-inside: avoid; font-size: 0.9em; }
+  th { background: #4f46e5; color: #ffffff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  blockquote { border-left: 4px solid #4f46e5; margin: 1em 0; padding: 4px 16px; color: #475569; background: #f8f8ff; }
+  hr { border: none; border-top: 1px solid #cbd5e1; margin: 2em 0; }
+  a { color: #4338ca; text-decoration: none; }
+  ul, ol { padding-left: 1.6em; margin: 0.6em 0; }
+  li { margin: 0.35em 0; }
+  strong { color: #1e293b; }
+</style>
+</head>
+<body>
+<h1 id="keep-me-ready-product-requirements-document-v1">Keep Me Ready —
+Product Requirements Document v1</h1>
+<p><strong>Prepared:</strong> June 2026<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Status:</strong> Active — v1.0 shipped<br />
+<strong>Owner:</strong> Founder / Product<br />
+<strong>Reviewers:</strong> Engineering, Design<br />
+<strong>Related documents:</strong> <a
+href="Keep%20Me%20Ready%20Founder%20Vision%20v1.md">Founder Vision
+v1</a> · <a
+href="Keep%20Me%20Ready%20Founder%20Technical%20Blueprint%20v1.md">Technical
+Blueprint v1</a></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#1-document-purpose">Document Purpose</a></li>
+<li><a href="#2-problem-statement">Problem Statement</a></li>
+<li><a href="#3-user-personas">User Personas</a></li>
+<li><a href="#4-goals-and-non-goals">Goals and Non-Goals</a></li>
+<li><a href="#5-mvp-features">MVP Features</a></li>
+<li><a href="#6-future-features">Future Features</a></li>
+<li><a href="#7-user-flows">User Flows</a></li>
+<li><a href="#8-success-metrics">Success Metrics</a></li>
+<li><a href="#9-technical-assumptions">Technical Assumptions</a></li>
+<li><a href="#10-release-plan">Release Plan</a></li>
+<li><a href="#11-risks">Risks</a></li>
+</ol>
+<hr />
+<h2 id="document-purpose">1. Document Purpose</h2>
+<p>This PRD defines the product requirements for Keep Me Ready — a daily
+bookkeeping practice platform for job seekers, early-career
+professionals, and small business owners. It captures what has been
+built (v1.0 shipped), what must be built next (v1.1–v1.3), and what is
+planned for future phases.</p>
+<p>This document is the source of truth for prioritization decisions.
+The <a href="Keep%20Me%20Ready%20Founder%20Vision%20v1.md">Founder
+Vision v1</a> covers strategic intent. The <a
+href="Keep%20Me%20Ready%20Founder%20Technical%20Blueprint%20v1.md">Technical
+Blueprint v1</a> covers implementation detail. This PRD bridges
+them.</p>
+<h3 id="scope">Scope</h3>
+<p>This document covers:</p>
+<ul>
+<li>The learner-facing drill and dashboard experience</li>
+<li>The instructor-facing analytics dashboard</li>
+<li>Authentication, data persistence, and cross-device sync</li>
+<li>Question bank content and structure</li>
+<li>Habit and retention mechanics</li>
+</ul>
+<p>This document does not cover:</p>
+<ul>
+<li>Infrastructure configuration (see Technical Blueprint)</li>
+<li>Founding rationale and market context (see Founder Vision)</li>
+<li>Visual design specifications (to be defined in a separate design
+spec)</li>
+</ul>
+<hr />
+<h2 id="problem-statement">2. Problem Statement</h2>
+<h3 id="the-gap">The gap</h3>
+<p>Bookkeeping professionals — job seekers, freelancers, early-career
+employees, and self-taught business owners — acquire foundational skills
+through certification programs, online courses, and on-the-job
+experience. Those skills decay without regular practice. There is no
+low-friction, daily-habit tool designed specifically for maintaining
+professional bookkeeping competence.</p>
+<p>Existing alternatives fail in specific ways:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Alternative</th>
+<th>Why it fails this need</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Certification prep courses</td>
+<td>Optimized for passing a one-time exam, not daily maintenance.
+Expensive and time-intensive to return to.</td>
+</tr>
+<tr class="even">
+<td>Flashcard apps (e.g. Anki)</td>
+<td>No coaching layer, no contextual explanations, no professional
+framing. Requires users to build their own deck.</td>
+</tr>
+<tr class="odd">
+<td>YouTube videos</td>
+<td>Passive, non-retrievable, no structured repetition, no progress
+tracking.</td>
+</tr>
+<tr class="even">
+<td>Textbooks and workbooks</td>
+<td>High friction, no interactivity, no feedback mechanism.</td>
+</tr>
+<tr class="odd">
+<td>Practice tests from certification programs</td>
+<td>Framed as assessments with pass/fail stakes. Discourages regular
+re-use.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-core-need">The core need</h3>
+<p>Users need a tool that is:</p>
+<ol type="1">
+<li><strong>Fast to start</strong> — no friction between arriving and
+practicing (≤2 taps to first question)</li>
+<li><strong>Coaching-oriented</strong> — explains concepts without
+making users feel judged</li>
+<li><strong>Habit-forming</strong> — provides daily structure and
+visible progress over time</li>
+<li><strong>Professionally framed</strong> — speaks to professionals
+maintaining a skill, not students acquiring one</li>
+</ol>
+<h3 id="the-specific-moment-of-need">The specific moment of need</h3>
+<p>The user’s highest-need moments are: - During a job search (weeks to
+months between employment) - During a gap between freelance client
+engagements - While enrolled in a certification program and needing
+supplemental daily practice - Any time a professional suspects their
+fundamentals are drifting</p>
+<hr />
+<h2 id="user-personas">3. User Personas</h2>
+<h3 id="persona-1-sarah-the-job-seeker-in-transition">Persona 1 — Sarah:
+The Job Seeker in Transition</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Role</td>
+<td>Completed bookkeeping certification, actively job searching</td>
+</tr>
+<tr class="even">
+<td>Time available</td>
+<td>10–20 minutes per day, usually mornings</td>
+</tr>
+<tr class="odd">
+<td>Technical comfort</td>
+<td>Moderate — uses apps daily, not technical</td>
+</tr>
+<tr class="even">
+<td>Primary device</td>
+<td>Mobile (phone)</td>
+</tr>
+<tr class="odd">
+<td>Key goal</td>
+<td>Maintain confidence and fluency while searching, feel ready for
+interviews</td>
+</tr>
+<tr class="even">
+<td>Key frustration</td>
+<td>Certification prep felt like cramming; she passed but isn’t sure the
+knowledge stuck</td>
+</tr>
+<tr class="odd">
+<td>Trigger</td>
+<td>Upcoming interview or a question she couldn’t answer
+confidently</td>
+</tr>
+<tr class="even">
+<td>Success state</td>
+<td>Walks into an interview and can explain any foundational concept
+without hesitation</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design implications:</strong> Mobile-first layout, fast
+session start, encouraging score framing, interview-relevant question
+wording.</p>
+<hr />
+<h3 id="persona-2-marcus-the-freelancer-between-engagements">Persona 2 —
+Marcus: The Freelancer Between Engagements</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Role</td>
+<td>Freelance bookkeeper, 1–3 active clients at a time</td>
+</tr>
+<tr class="even">
+<td>Time available</td>
+<td>15 minutes over morning coffee, on weekdays</td>
+</tr>
+<tr class="odd">
+<td>Technical comfort</td>
+<td>High — uses multiple SaaS tools for client work</td>
+</tr>
+<tr class="even">
+<td>Primary device</td>
+<td>Laptop, occasionally tablet</td>
+</tr>
+<tr class="odd">
+<td>Key goal</td>
+<td>Maintain sharpness and professional confidence during client
+gaps</td>
+</tr>
+<tr class="even">
+<td>Key frustration</td>
+<td>Nothing exists between “take another course” and “do nothing”</td>
+</tr>
+<tr class="odd">
+<td>Trigger</td>
+<td>A client engagement ending, leaving a skill-maintenance gap</td>
+</tr>
+<tr class="even">
+<td>Success state</td>
+<td>Enters a new client engagement feeling as sharp as when the last one
+ended</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design implications:</strong> Streak and session history
+visibility (shows consistency), topic rotation (keeps practice varied),
+efficiency (no unnecessary UI friction for an experienced user).</p>
+<hr />
+<h3 id="persona-3-priya-the-career-changer-building-credibility">Persona
+3 — Priya: The Career Changer Building Credibility</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Role</td>
+<td>Mid-career pivot from retail management into accounting
+services</td>
+</tr>
+<tr class="even">
+<td>Time available</td>
+<td>20–30 minutes daily, evenings</td>
+</tr>
+<tr class="odd">
+<td>Technical comfort</td>
+<td>Moderate — comfortable with apps but not power user</td>
+</tr>
+<tr class="even">
+<td>Primary device</td>
+<td>Laptop at home</td>
+</tr>
+<tr class="odd">
+<td>Key goal</td>
+<td>Reinforce what she’s learning in her program, build retention and
+confidence</td>
+</tr>
+<tr class="even">
+<td>Key frustration</td>
+<td>Volume of new concepts feels overwhelming; she doesn’t trust her own
+recall</td>
+</tr>
+<tr class="odd">
+<td>Trigger</td>
+<td>Finishing a study module and wanting to solidify it before moving
+on</td>
+</tr>
+<tr class="even">
+<td>Success state</td>
+<td>Can explain any concept she’s studied without hesitating or
+second-guessing herself</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design implications:</strong> Lesson cards before each drill
+(orient before drilling), detailed per-answer explanations, Learning
+Journal (externalizes evolving understanding), topic filter on
+dashboard.</p>
+<hr />
+<h3 id="persona-4-david-the-self-taught-business-owner">Persona 4 —
+David: The Self-Taught Business Owner</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Role</td>
+<td>Small business owner who manages his own bookkeeping</td>
+</tr>
+<tr class="even">
+<td>Time available</td>
+<td>10 minutes, irregular schedule</td>
+</tr>
+<tr class="odd">
+<td>Technical comfort</td>
+<td>Low to moderate — uses basic tools, not comfortable with
+complexity</td>
+</tr>
+<tr class="even">
+<td>Primary device</td>
+<td>Phone</td>
+</tr>
+<tr class="odd">
+<td>Key goal</td>
+<td>Fill gaps in self-taught knowledge, reduce anxiety about his own
+financials</td>
+</tr>
+<tr class="even">
+<td>Key frustration</td>
+<td>Doesn’t know what he doesn’t know; no one to ask</td>
+</tr>
+<tr class="odd">
+<td>Trigger</td>
+<td>Confusion during a CPA meeting, an unfamiliar term on a report, a
+bookkeeping error</td>
+</tr>
+<tr class="even">
+<td>Success state</td>
+<td>Feels in control of his own books and can have a real conversation
+with his accountant</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design implications:</strong> Plain-English explanations
+without jargon, true/false and scenario questions grounded in real
+business situations, no intimidating interface complexity.</p>
+<hr />
+<h3 id="persona-5-instructoradmin-the-program-director">Persona 5 —
+Instructor/Admin: The Program Director</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Attribute</th>
+<th>Detail</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Role</td>
+<td>Director at a bookkeeping certification program or accounting
+firm</td>
+</tr>
+<tr class="even">
+<td>Time available</td>
+<td>Reviews analytics weekly or on demand</td>
+</tr>
+<tr class="odd">
+<td>Technical comfort</td>
+<td>High — uses LMS and SaaS analytics tools</td>
+</tr>
+<tr class="even">
+<td>Primary device</td>
+<td>Desktop</td>
+</tr>
+<tr class="odd">
+<td>Key goal</td>
+<td>Understand where learners or staff are struggling, identify
+curriculum gaps</td>
+</tr>
+<tr class="even">
+<td>Key frustration</td>
+<td>Existing LMS tools show completion rates but not comprehension
+patterns</td>
+</tr>
+<tr class="odd">
+<td>Trigger</td>
+<td>Before a cohort check-in, after a batch of learners completes a
+module</td>
+</tr>
+<tr class="even">
+<td>Success state</td>
+<td>Can identify the top 3 struggling topics for any cohort and act on
+them</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Design implications:</strong> Admin dashboard with per-topic
+difficulty ranking, most-missed questions, weekly trend chart,
+eventually cohort-level filtering.</p>
+<hr />
+<h2 id="goals-and-non-goals">4. Goals and Non-Goals</h2>
+<h3 id="product-goals-v1.0-shipped">Product goals (v1.0 — shipped)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Goal</th>
+<th>How measured</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G1</td>
+<td>Any user can complete a full drill session without creating an
+account</td>
+<td>Anonymous drill completion rate</td>
+</tr>
+<tr class="even">
+<td>G2</td>
+<td>Signed-in users have persistent progress across sessions and
+devices</td>
+<td>Session count and streak accuracy for DB-backed users</td>
+</tr>
+<tr class="odd">
+<td>G3</td>
+<td>Every answer receives a meaningful coaching explanation, not just a
+correct/incorrect indicator</td>
+<td>100% of questions have explanation text and per-option coaching
+notes</td>
+</tr>
+<tr class="even">
+<td>G4</td>
+<td>The admin/instructor can view aggregate performance analytics</td>
+<td>Admin dashboard renders 9 metrics without errors</td>
+</tr>
+<tr class="odd">
+<td>G5</td>
+<td>The app is accessible and usable on mobile at 375px viewport</td>
+<td>Tap targets ≥44px, keyboard navigable, passes contrast checks</td>
+</tr>
+</tbody>
+</table>
+<h3 id="product-goals-v1.1v1.3-next-phases">Product goals (v1.1–v1.3 —
+next phases)</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>#</th>
+<th>Goal</th>
+<th>How measured</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>G6</td>
+<td>Learning Journal entries persist across devices</td>
+<td>Journal entries stored in Supabase, readable on any signed-in
+device</td>
+</tr>
+<tr class="even">
+<td>G7</td>
+<td>Users can practice at beginner, intermediate, and advanced
+levels</td>
+<td>Three populated question banks, level selector in UI</td>
+</tr>
+<tr class="odd">
+<td>G8</td>
+<td>The product can measurably demonstrate skill improvement</td>
+<td>Per-user accuracy delta visible on dashboard after ≥10 sessions</td>
+</tr>
+<tr class="even">
+<td>G9</td>
+<td>Instructors can manage named cohorts and view group-level
+analytics</td>
+<td>Cohort management UI, per-cohort analytics view</td>
+</tr>
+</tbody>
+</table>
+<h3 id="non-goals-explicitly-out-of-scope-for-v1.x">Non-goals
+(explicitly out of scope for v1.x)</h3>
+<ul>
+<li><strong>Real-time multiplayer or competitive features</strong> —
+Keep Me Ready is a personal practice tool. Leaderboards and head-to-head
+competition are incompatible with the coaching-not-assessment
+principle.</li>
+<li><strong>AI-generated question content</strong> — All questions,
+explanations, and coaching notes are human-authored for quality control.
+Automated generation is a future research area, not a v1
+requirement.</li>
+<li><strong>Native mobile app (iOS/Android)</strong> — The web app is
+mobile-first and serves mobile users adequately. A native app requires
+separate development resources and is a future phase decision.</li>
+<li><strong>Social or community features</strong> — No public profiles,
+sharing, or social feeds in v1.x.</li>
+<li><strong>Content beyond bookkeeping</strong> — Tax prep, payroll, and
+adjacent domains are vision-level priorities, not v1 or v1.x
+requirements.</li>
+<li><strong>Offline-first architecture</strong> — Service worker caching
+for offline drill play is deferred until the core web experience is
+proven.</li>
+</ul>
+<hr />
+<h2 id="mvp-features">5. MVP Features</h2>
+<p>The following features define the v1.0 MVP. All are shipped and live
+at <code>keep-me-ready.vercel.app</code>.</p>
+<h3 id="f1-daily-drill-engine">F1 — Daily Drill Engine</h3>
+<p><strong>Summary:</strong> The core loop. Users complete a focused
+10-question drill session on a daily rotating topic.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R1.1: Each drill session presents exactly 10 questions drawn from
+the day’s topic category</li>
+<li>R1.2: Topic rotates daily based on a deterministic day-of-year
+formula — all users see the same topic on any given day</li>
+<li>R1.3: Three question types supported: multiple choice (4 options),
+true/false (2 options), scenario (4 options)</li>
+<li>R1.4: Each question is preceded by a Lesson Card explaining the
+topic, why it matters, and a common misconception</li>
+<li>R1.5: After each answer, the correct answer is revealed immediately
+with a plain-English coaching explanation</li>
+<li>R1.6: Incorrect answer choices each have a coaching note explaining
+the misconception they represent</li>
+<li>R1.7: Session score is tracked and displayed at completion</li>
+</ul>
+<p><strong>Acceptance criteria:</strong> - A new anonymous user can
+complete a full drill from homepage in under 2 minutes without creating
+an account - All 72 beginner questions have non-empty
+<code>explanation</code> and <code>optionExplanations</code> fields -
+Topic rotation produces a consistent category for a given calendar date
+across all users and sessions</p>
+<p><strong>Status:</strong> Shipped</p>
+<hr />
+<h3 id="f2-score-screen-and-reflection-layer">F2 — Score Screen and
+Reflection Layer</h3>
+<p><strong>Summary:</strong> After the 10th question, the learner sees
+their score with coaching context and reflection tools.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R2.1: Score screen shows numeric score (e.g. “8 / 10”) with a
+contextual coaching message that varies by score band — not a grade, but
+an observation</li>
+<li>R2.2: Score screen includes a “What to review next” recommendation
+card</li>
+<li>R2.3: “Compare Perspectives” expandable section shows 4–5 key idea
+bullets for the topic and a plain-English model response</li>
+<li>R2.4: “One Reflection to Sit With” card contains a written
+reflection prompt specific to the session’s topic</li>
+<li>R2.5: Learning Journal textarea allows the learner to write a
+free-text insight</li>
+<li>R2.6: “Save This Insight” saves the entry to
+<code>localStorage["kmr-journal"]</code> with the shape:
+<code>{ id, category, conceptId, topicTitle, prompt, text, date, savedAt }</code></li>
+<li>R2.7: Confirmation message on save must use coaching language
+(“Every reflection you save becomes part of your professional growth”) —
+not a generic “Saved!”</li>
+<li>R2.8: “Review Lesson” button navigates to the full post-drill
+review</li>
+</ul>
+<p><strong>Acceptance criteria:</strong> - Saving a journal entry shows
+the confirmation message without page reload - Journal entries appear on
+the dashboard <code>LearningJournal</code> section on next visit - Score
+of 0/10 and 10/10 produce distinct, appropriately toned coaching
+messages</p>
+<p><strong>Status:</strong> Shipped</p>
+<hr />
+<h3 id="f3-post-drill-lesson-review">F3 — Post-Drill Lesson Review</h3>
+<p><strong>Summary:</strong> A full per-question review that the learner
+can walk through after completing a session.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R3.1: Review shows all 10 questions in order</li>
+<li>R3.2: Each question shows all answer options with color coding:
+learner’s correct answer (green), learner’s wrong answer (red), correct
+answer if different from learner’s selection (green)</li>
+<li>R3.3: Each incorrect option has an expandable coaching note
+explaining the misconception</li>
+<li>R3.4: A “Key Lesson Takeaways” block appears at the bottom of the
+review</li>
+<li>R3.5: The review is navigable without completing another drill</li>
+</ul>
+<p><strong>Acceptance criteria:</strong> - Learner who answered 10/10
+correctly sees all green; no red indicators - Coaching notes for wrong
+answers are expandable and do not display by default (reduces visual
+noise)</p>
+<p><strong>Status:</strong> Shipped</p>
+<hr />
+<h3 id="f4-progress-dashboard">F4 — Progress Dashboard</h3>
+<p><strong>Summary:</strong> A personal dashboard showing the learner’s
+history, streak, accuracy, and Learning Journal.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R4.1: Dashboard shows current streak (consecutive days with at least
+one completed drill)</li>
+<li>R4.2: Dashboard shows 4 summary stats: total drills, total questions
+answered, total correct, overall accuracy %</li>
+<li>R4.3: Session history list shows recent drills with date, topic,
+score, and accuracy bar</li>
+<li>R4.4: Learning Journal section shows all saved entries newest-first
+with date, topic label, and insight text</li>
+<li>R4.5: When journal entries span multiple topics, topic filter pills
+appear automatically</li>
+<li>R4.6: For signed-in users, stats are loaded from Supabase
+(<code>drill_sessions</code> table) server-side</li>
+<li>R4.7: For anonymous users, stats are loaded from
+<code>localStorage["kmr-progress"]</code> client-side</li>
+<li>R4.8: The UI handles both data sources transparently — no visible
+difference in layout between logged-in and anonymous views</li>
+</ul>
+<p><strong>Acceptance criteria:</strong> - Streak increments by 1 on the
+next calendar day after a completed drill - Streak resets to 1 (not 0)
+if a calendar day is skipped and then a drill is completed - Completing
+a second drill on the same calendar day does not increment the streak -
+Dashboard renders correctly for a brand-new user with zero sessions</p>
+<p><strong>Status:</strong> Shipped</p>
+<hr />
+<h3 id="f5-authentication-email-magic-link">F5 — Authentication (Email
+Magic Link)</h3>
+<p><strong>Summary:</strong> Optional account creation and sign-in via
+email magic link.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R5.1: Any user can use the full app without an account — account
+creation is never required</li>
+<li>R5.2: Sign-in is via email magic link only (no password)</li>
+<li>R5.3: Magic link redirects to <code>/auth/callback</code> and
+completes sign-in client-side without user action beyond clicking the
+link</li>
+<li>R5.4: On sign-in, the nav updates immediately to show the user’s
+email and a sign-out option</li>
+<li>R5.5: Sign-out clears the session and redirects to the homepage</li>
+<li>R5.6: If a user has anonymous localStorage progress when they sign
+in, a “Save your progress” prompt appears — merging is not automatic in
+v1.0 but is prompted</li>
+</ul>
+<p><strong>Acceptance criteria:</strong> - Entering a valid email and
+clicking the magic link signs the user in within one browser action -
+Signing out immediately removes the user email from the nav - An
+anonymous user who signs in still has access to their localStorage-based
+drill history on the same device</p>
+<p><strong>Status:</strong> Shipped</p>
+<hr />
+<h3 id="f6-instructor-analytics-dashboard">F6 — Instructor Analytics
+Dashboard</h3>
+<p><strong>Summary:</strong> A protected analytics view for the
+administrator showing aggregate learner performance.</p>
+<p><strong>Requirements:</strong></p>
+<ul>
+<li>R6.1: Dashboard is protected — accessible only to the user whose
+email matches the <code>ADMIN_EMAIL</code> environment variable</li>
+<li>R6.2: Non-admin signed-in users see an “Access Denied” page with
+their current email shown (diagnostic aid)</li>
+<li>R6.3: Unauthenticated users are redirected to
+<code>/auth/login</code></li>
+<li>R6.4: Dashboard displays 9 metrics: Total Users, Active Today,
+Drills Completed, Average Score, 30-Day Active Rate, Average
+Improvement, Average Completion Time, Most Difficult Topics, Most Missed
+Questions</li>
+<li>R6.5: Metrics requiring Migration 002
+(<code>drill_question_answers</code>) display gracefully if the
+migration has not been applied</li>
+<li>R6.6: Dashboard is read-only — no admin actions in v1.0</li>
+</ul>
+<p><strong>Acceptance criteria:</strong> - Admin dashboard renders
+without errors using only Migration 001 data (5 core metrics visible, 4
+advanced metrics show a “pending migration” notice) - Admin dashboard
+renders fully with both migrations applied - A non-admin signed-in user
+cannot access any admin data via direct URL navigation</p>
+<p><strong>Status:</strong> Shipped</p>
+<hr />
+<h2 id="future-features">6. Future Features</h2>
+<p>Features are grouped by phase and ordered by priority within each
+phase. Priority is based on user impact and strategic importance, not
+technical complexity.</p>
+<h3 id="phase-1-retention-and-persistence-v1.1">Phase 1 — Retention and
+Persistence (v1.1)</h3>
+<p><strong>P1-F1: Learning Journal — Supabase Sync</strong>
+<em>(Priority: Critical)</em></p>
+<p>Persist journal entries to Supabase so they survive browser clears
+and are accessible across devices. This is the single most important
+near-term feature because journal entries are irreplaceable — losing
+them destroys a core value proposition.</p>
+<ul>
+<li>New table: <code>learning_journal</code> with columns matching the
+current localStorage entry shape</li>
+<li>On first sign-in, merge existing
+<code>localStorage["kmr-journal"]</code> entries to Supabase</li>
+<li>Read from Supabase for signed-in users; maintain localStorage
+fallback for anonymous users</li>
+<li><code>conceptId</code> field already present in the entry shape —
+enables future mastery analytics</li>
+</ul>
+<p><strong>P1-F2: Learning Journal — Milestone Acknowledgments</strong>
+<em>(Priority: High)</em></p>
+<p>Quiet, non-intrusive celebrations at 25, 50, 100, and 250 journal
+entries. Framed around accumulated understanding, not gamification.
+Example: “You’ve captured 50 insights. That’s 50 moments of real
+professional growth.”</p>
+<p><strong>P1-F3: Streak Visualization Improvement</strong>
+<em>(Priority: High)</em></p>
+<p>The streak number is displayed but not viscerally felt. Add a simple
+calendar heatmap (GitHub-style) to the dashboard showing drill days over
+the past 90 days. This makes the compounding effect of consistency
+visible.</p>
+<p><strong>P1-F4: Daily Digest Email</strong> <em>(Priority:
+Medium)</em></p>
+<p>An opt-in morning email for signed-in users. Shows tomorrow’s topic,
+current streak, and one recent journal entry. Earns its open rate by
+being genuinely useful, not a nudge. Must not be a streak-expiry anxiety
+message.</p>
+<hr />
+<h3 id="phase-2-depth-and-differentiation-v1.2">Phase 2 — Depth and
+Differentiation (v1.2)</h3>
+<p><strong>P2-F1: Intermediate Question Bank</strong> <em>(Priority:
+Critical)</em></p>
+<p>72+ intermediate questions across the 6 existing categories.
+Intermediate questions introduce variance, edge cases, and multi-step
+reasoning (e.g. “Given this partial trial balance, identify the error”).
+Requires a level selector in the drill UI.</p>
+<p><strong>P2-F2: Advanced Question Bank</strong> <em>(Priority:
+High)</em></p>
+<p>72+ advanced questions requiring professional judgment, scenario
+complexity, and multi-concept integration. Targeted at professionals
+with 2+ years of experience who want to stay sharp on edge cases.</p>
+<p><strong>P2-F3: Level Selector UI</strong> <em>(Priority:
+High)</em></p>
+<p>A simple level picker on the homepage or drill entry point: Beginner
+/ Intermediate / Advanced. Defaults to Beginner for new users. Remembers
+the last selection.</p>
+<p><strong>P2-F4: Adaptive Question Selection</strong> <em>(Priority:
+Medium)</em></p>
+<p>Weight question selection toward categories and question types where
+the learner has historically underperformed. Use
+<code>drill_question_answers</code> data (already captured) to bias the
+selector. Not full spaced repetition in v1.2 — a weighted random
+approach is sufficient.</p>
+<p><strong>P2-F5: Mastery Tracking per Concept</strong> <em>(Priority:
+Medium)</em></p>
+<p>Use <code>conceptId</code> (already stored in journal entries and
+question metadata) to show per-topic mastery levels on the dashboard. A
+simple 3-level indicator (Needs Practice / Building / Strong) is enough
+for v1.2.</p>
+<hr />
+<h3 id="phase-3-institutional-layer-v1.3">Phase 3 — Institutional Layer
+(v1.3)</h3>
+<p><strong>P3-F1: Multi-Instructor Support</strong> <em>(Priority:
+Critical for institutional tier)</em></p>
+<p>Replace the single <code>ADMIN_EMAIL</code> gate with a
+<code>user_roles</code> table supporting multiple admins and
+instructors. Each instructor can access the full analytics
+dashboard.</p>
+<p><strong>P3-F2: Cohort Management</strong> <em>(Priority: Critical for
+institutional tier)</em></p>
+<p>Instructors can create named cohorts (e.g. “Spring 2026 Cohort”), add
+learners by email, and view aggregate analytics filtered to that cohort.
+Analytics views identical to the current admin dashboard but scoped to
+cohort members.</p>
+<p><strong>P3-F3: Curriculum Assignment</strong> <em>(Priority: High for
+institutional tier)</em></p>
+<p>Instructors can set the active topic sequence for a cohort,
+overriding the default daily rotation. Enables instructors to align the
+drill topics with their course curriculum.</p>
+<p><strong>P3-F4: Learner Progress Reports</strong> <em>(Priority:
+Medium)</em></p>
+<p>Exportable per-learner progress summary (CSV or PDF). Shows drill
+count, accuracy by topic, streak history, and journal entry count.
+Useful for instructors evaluating learner engagement.</p>
+<hr />
+<h3 id="future-phases-post-v1.3-not-yet-scheduled">Future Phases
+(post-v1.3, not yet scheduled)</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Social OAuth (Google, Apple, Microsoft)</td>
+<td>Reduces sign-in friction; current magic link is functional but
+slower than OAuth</td>
+</tr>
+<tr class="even">
+<td>PWA / offline drill capability</td>
+<td>Serves Marcus persona who may want to practice without reliable
+connectivity</td>
+</tr>
+<tr class="odd">
+<td>Content management admin UI</td>
+<td>Add and edit questions, coaching notes, and topics without a code
+deploy</td>
+</tr>
+<tr class="even">
+<td>Certification prep tracks</td>
+<td>Curated sequences aligned to QuickBooks ProAdvisor, NACPB, and
+Bookkeeper Launch</td>
+</tr>
+<tr class="odd">
+<td>Public API</td>
+<td>Allow third-party accounting educators to integrate Keep Me Ready
+drills</td>
+</tr>
+<tr class="even">
+<td>Expansion to adjacent domains</td>
+<td>Tax preparation, payroll, accounts receivable — same daily-practice
+model</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="user-flows">7. User Flows</h2>
+<h3 id="flow-1-anonymous-learner-first-visit-to-drill-completion">Flow 1
+— Anonymous Learner: First Visit to Drill Completion</h3>
+<pre><code>1. User arrives at homepage (keep-me-ready.vercel.app)
+   → Sees today&#39;s topic, streak = 0, &quot;Start Today&#39;s Drill&quot; CTA
+
+2. User taps &quot;Start Today&#39;s Drill&quot;
+   → Lesson Card loads for today&#39;s topic
+   → Shows: topic title, lesson text, why it matters, common misconception, encouragement
+
+3. User taps &quot;Start Drill&quot;
+   → Phase transitions: lesson → answering
+   → Question 1 of 10 renders
+
+4. For each question (×10):
+   a. User selects an answer option
+   b. Answer revealed: correct option highlighted green, incorrect option(s) shown
+   c. Coaching explanation displays below the question
+   d. &quot;Next&quot; button advances to the next question
+   e. After question 10: &quot;See Results&quot; button appears
+
+5. User taps &quot;See Results&quot;
+   → Session saved to localStorage[&quot;kmr-progress&quot;]
+   → Score screen renders: score, coaching message, &quot;What to review next&quot;
+
+6. User optionally expands &quot;Compare Perspectives&quot;
+   → Reads key idea bullets and model response
+
+7. User optionally writes a journal insight and taps &quot;Save This Insight&quot;
+   → Entry saved to localStorage[&quot;kmr-journal&quot;]
+   → Confirmation: &quot;Added to your Learning Journal&quot;
+
+8. User taps &quot;Review Lesson&quot;
+   → Lesson Review loads all 10 questions with per-option coaching
+
+9. User sees &quot;Save your progress&quot; prompt to create an account
+   → Can dismiss and continue anonymously</code></pre>
+<p><strong>Key decision points:</strong> - If user skips Lesson Card:
+drill starts immediately from question 1 (no gate) - If user closes the
+tab mid-drill: progress is lost (acceptable for MVP; session autosave is
+a future feature) - If user has already drilled today: “Start Another
+Drill” CTA available with same topic</p>
+<hr />
+<h3 id="flow-2-signed-in-learner-dashboard-visit">Flow 2 — Signed-In
+Learner: Dashboard Visit</h3>
+<pre><code>1. User navigates to /dashboard
+   → Server component fetches drill_sessions for this user from Supabase
+   → DashboardView receives server-fetched data as props
+
+2. Dashboard renders:
+   a. StreakBadge — current streak with contextual message
+   b. ProgressStats — 4 stat cards (drills, questions, correct, accuracy)
+   c. SessionHistory — recent sessions list with accuracy bars
+   d. LearningJournal — entries from localStorage, newest first
+
+3. If user has journal entries spanning 2+ topics:
+   → Topic filter pills appear above the journal list
+   → User can tap a topic pill to filter entries
+
+4. User taps &quot;Start Today&#39;s Drill&quot;
+   → Navigates to /drill
+   → Full anonymous flow (Flow 1) executes
+   → On completion, session synced to Supabase via POST /api/scores
+   → User returns to dashboard; stats reflect the new session</code></pre>
+<hr />
+<h3 id="flow-3-new-user-magic-link-sign-in">Flow 3 — New User: Magic
+Link Sign-In</h3>
+<pre><code>1. User navigates to /auth/login
+   → Sees email input and &quot;Send Magic Link&quot; button
+   (Google OAuth button visible but not active in v1.0)
+
+2. User enters email and submits
+   → LoginForm calls supabase.auth.signInWithOtp()
+   → Confirmation message: &quot;Check your email for a sign-in link&quot;
+
+3. User opens email and clicks the magic link
+   → Browser navigates to Supabase verification endpoint
+   → Supabase verifies token, redirects to /auth/callback#access_token=...
+
+4. /auth/callback page loads (client component)
+   → createBrowserClient detects hash token
+   → onAuthStateChange fires with event &quot;SIGNED_IN&quot;
+   → router.replace(&quot;/dashboard&quot;) executes
+
+5. Dashboard loads for the newly signed-in user
+   → NavUser updates: shows email + &quot;Sign out&quot;
+   → Dashboard stats reflect zero sessions (first-time user empty state)
+   → &quot;Save your progress&quot; prompt shown if localStorage contains prior anonymous sessions</code></pre>
+<p><strong>Edge cases:</strong> - Expired magic link: Supabase returns
+an error; callback page redirects to <code>/auth/login</code> with an
+error param - User opens magic link in a different browser: auth
+completes in that browser; original browser remains anonymous</p>
+<hr />
+<h3 id="flow-4-instructor-admin-dashboard">Flow 4 — Instructor: Admin
+Dashboard</h3>
+<pre><code>1. Instructor navigates to /admin
+   → Server component calls supabase.auth.getUser() via server client
+   → If no session: redirect to /auth/login
+
+2. Server compares user.email to process.env.ADMIN_EMAIL
+   → If no match: render &quot;Access Denied&quot; page showing the current email
+
+3. If match:
+   → Service role client fetches all drill_sessions and drill_question_answers
+   → TypeScript computes 9 metrics
+   → InstructorDashboard renders:
+      Row 1: 5 stat cards (Users, Active Today, Drills, Avg Score, 30-Day Active)
+      Row 2: Improvement card + Completion Time card
+      Row 3: Weekly trend bar chart (last 8 weeks of drill counts)
+      Row 4: Most Difficult Topics + Most Missed Questions panels
+
+4. If Migration 002 not yet applied:
+   → Amber warning banner explains which metrics are inactive
+   → Core metrics (rows 1–2) render normally
+   → Rows 3–4 show &quot;Requires migration 002&quot; placeholder</code></pre>
+<hr />
+<h3
+id="flow-5-anonymous-to-signed-in-progress-continuity-v1.1-behavior">Flow
+5 — Anonymous to Signed-In: Progress Continuity (v1.1 behavior)</h3>
+<pre><code>1. Anonymous user has completed 15 drills; localStorage has:
+   - kmr-progress: 15 sessions with scores and dates
+   - kmr-journal: 8 Learning Journal entries
+
+2. User creates an account and signs in for the first time
+   → &quot;Save your progress&quot; prompt appears with CTA: &quot;Sync my progress&quot;
+
+3. User taps &quot;Sync my progress&quot;
+   → App reads all localStorage sessions and posts them to POST /api/scores in batch
+   → App reads all localStorage journal entries and posts them to new /api/journal endpoint
+   → localStorage data cleared (to avoid duplication on re-read)
+
+4. Dashboard reloads with merged Supabase data
+   → Streak computed from merged session dates
+   → Journal entries show all 8 prior entries plus any future entries</code></pre>
+<p><em>Note: Flow 5 is a v1.1 requirement. In v1.0, the “Save your
+progress” prompt exists but the merge step is manual — the user is
+directed to sign in; their anonymous progress is not automatically
+merged.</em></p>
+<hr />
+<h2 id="success-metrics">8. Success Metrics</h2>
+<h3 id="primary-metrics-north-star">Primary metrics (north star)</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Definition</th>
+<th>Target (30 days post-launch)</th>
+<th>Target (90 days)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Day-2 retention</strong></td>
+<td>% of new signed-in users who return the next day</td>
+<td>&gt; 40%</td>
+<td>&gt; 45%</td>
+</tr>
+<tr class="even">
+<td><strong>30-day daily active rate</strong></td>
+<td>% of signed-in users active on any given day within their first 30
+days</td>
+<td>&gt; 25%</td>
+<td>&gt; 30%</td>
+</tr>
+<tr class="odd">
+<td><strong>Drill completion rate</strong></td>
+<td>% of started drill sessions that reach the score screen</td>
+<td>&gt; 85%</td>
+<td>&gt; 88%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="engagement-depth-metrics">Engagement depth metrics</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Definition</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Journal adoption rate</strong></td>
+<td>% of users who have saved at least one journal entry</td>
+<td>&gt; 30% within first 5 sessions</td>
+</tr>
+<tr class="even">
+<td><strong>Avg journal entries per active user</strong></td>
+<td>Mean entries among users who have written at least one</td>
+<td>&gt; 5 at 30 days, &gt; 15 at 90 days</td>
+</tr>
+<tr class="odd">
+<td><strong>Compare Perspectives open rate</strong></td>
+<td>% of score screens where “Compare Perspectives” is expanded</td>
+<td>&gt; 50%</td>
+</tr>
+<tr class="even">
+<td><strong>Post-drill review rate</strong></td>
+<td>% of completed sessions where “Review Lesson” is tapped</td>
+<td>&gt; 30%</td>
+</tr>
+</tbody>
+</table>
+<h3 id="learning-outcome-metrics">Learning outcome metrics</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Metric</th>
+<th>Definition</th>
+<th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Accuracy delta (60-day)</strong></td>
+<td>Avg accuracy in sessions 1–5 vs. sessions 11–15 for users with ≥15
+sessions</td>
+<td>+8 percentage points</td>
+</tr>
+<tr class="even">
+<td><strong>Streak consistency</strong></td>
+<td>% of signed-in users with a streak ≥ 7 days at day 14</td>
+<td>&gt; 20%</td>
+</tr>
+<tr class="odd">
+<td><strong>Session cadence</strong></td>
+<td>% of users who complete a drill on 4 or more days per week</td>
+<td>&gt; 25% among users active at day 14</td>
+</tr>
+</tbody>
+</table>
+<h3 id="instrumentation-requirements">Instrumentation requirements</h3>
+<p>To track these metrics, the following data must be available:</p>
+<ul>
+<li><code>drill_sessions.started_at</code> and
+<code>drill_sessions.completed_at</code> — captures completion time and
+drill start (already stored via Migration 002)</li>
+<li><code>drill_question_answers</code> — enables per-question and
+per-topic accuracy tracking (already stored via Migration 002)</li>
+<li>Journal entry count per user — requires Learning Journal Supabase
+sync (v1.1)</li>
+<li>Score screen interaction events (Compare Perspectives expand, Review
+Lesson tap) — requires lightweight event tracking in v1.1; browser
+console logging is acceptable for v1.0</li>
+</ul>
+<h3 id="qualitative-signals-not-instrumented-but-monitored">Qualitative
+signals (not instrumented, but monitored)</h3>
+<ul>
+<li>User emails or social posts referencing the product helping with an
+interview or client engagement</li>
+<li>Unsolicited feature requests in community forums (signal of active
+engaged users)</li>
+<li>Instructor or program director inquiries about the admin/cohort
+tier</li>
+</ul>
+<hr />
+<h2 id="technical-assumptions">9. Technical Assumptions</h2>
+<p>These are the constraints and decisions the product is built around.
+Changing any of them has architectural implications documented in the <a
+href="Keep%20Me%20Ready%20Founder%20Technical%20Blueprint%20v1.md">Technical
+Blueprint v1</a>.</p>
+<h3 id="a1-static-question-bank-not-dynamic">A1 — Static question bank,
+not dynamic</h3>
+<p>All questions are stored in JSON files in
+<code>data/questions/</code>. Questions are loaded at build time. There
+is no CMS or database-backed question management in v1.0.</p>
+<p><strong>Implication for product:</strong> Adding or editing questions
+requires a code deploy. Question IDs must be stable
+(<code>question_id</code> in <code>drill_question_answers</code>
+references these IDs). Deleting a question that has been answered by
+users will leave orphaned <code>question_id</code> references.</p>
+<p><strong>Future change required:</strong> A content management admin
+UI (post-v1.3) will need to migrate questions to a database table while
+preserving the existing <code>question_id</code> references.</p>
+<hr />
+<h3
+id="a2-localstorage-for-anonymous-users-supabase-for-signed-in-users">A2
+— LocalStorage for anonymous users, Supabase for signed-in users</h3>
+<p>Anonymous progress is stored client-side in
+<code>localStorage</code>. Signed-in progress is stored in Supabase.
+There is no automatic merge in v1.0.</p>
+<p><strong>Implication for product:</strong> Anonymous users who clear
+their browser data or switch devices lose all progress. The “Save your
+progress” merge flow (v1.1) is a mitigation, not a solution — users must
+actively choose to merge before clearing data.</p>
+<p><strong>Future change required:</strong> Batch upload of localStorage
+data to Supabase on first sign-in (v1.1, detailed in Flow 5).</p>
+<hr />
+<h3 id="a3-single-admin-via-environment-variable">A3 — Single admin via
+environment variable</h3>
+<p>Admin access is controlled by the <code>ADMIN_EMAIL</code>
+environment variable. There is no roles table. Only one admin email is
+supported per deployment.</p>
+<p><strong>Implication for product:</strong> Adding a second
+administrator requires a new deployment with a different env var.
+Sharing admin access requires sharing credentials, which is a security
+risk.</p>
+<p><strong>Future change required:</strong> <code>user_roles</code>
+table with admin/instructor roles (Phase 3, P3-F1).</p>
+<hr />
+<h3 id="a4-magic-link-auth-only-no-oauth-in-v1.0">A4 — Magic link auth
+only (no OAuth in v1.0)</h3>
+<p>Authentication uses Supabase email magic links with implicit flow.
+Google, Apple, and Microsoft OAuth are wired in the UI
+(<code>LoginForm.tsx</code>) but inactive — the OAuth buttons are
+present but non-functional in v1.0.</p>
+<p><strong>Implication for product:</strong> Users who lose access to
+their email cannot recover their account. Users who dislike magic links
+(they can land in spam) may abandon sign-in. The friction is slightly
+higher than OAuth.</p>
+<p><strong>Future change required:</strong> Enable OAuth providers in
+Supabase Auth settings and activate the existing UI buttons
+(medium-term, no structural changes needed).</p>
+<hr />
+<h3 id="a5-daily-topic-rotation-is-deterministic-and-global">A5 — Daily
+topic rotation is deterministic and global</h3>
+<p>All users see the same topic on any given calendar date. The rotation
+formula is <code>dayOfYear % 6</code> mapping to one of 6 topic
+categories.</p>
+<p><strong>Implication for product:</strong> Topic personalization (user
+selects their own category) is not possible without overriding this
+formula. The determinism is also a feature — it creates a shared daily
+experience and simplifies the question selection logic.</p>
+<p><strong>Future change required:</strong> Level selector (v1.2) will
+introduce a per-user preference that may interact with the daily
+rotation. Implementation must preserve determinism within a given
+level.</p>
+<hr />
+<h3 id="a6-no-test-suite">A6 — No test suite</h3>
+<p>The v1.0 codebase has no automated tests. All testing is manual.</p>
+<p><strong>Implication for product:</strong> Regressions are possible on
+any deploy. Confidence in releases depends on the discipline of manual
+smoke testing (defined in the deployment checklist in the Technical
+Blueprint).</p>
+<p><strong>Future change required:</strong> Vitest unit tests for
+critical logic (question selector, streak computation, score
+calculation) and Playwright end-to-end tests for the full drill flow are
+recommended before the v1.2 deploy.</p>
+<hr />
+<h3 id="a7-no-error-monitoring">A7 — No error monitoring</h3>
+<p>There is no Sentry, Datadog, or equivalent. Server errors surface
+only in Vercel function logs.</p>
+<p><strong>Implication for product:</strong> Silent failures (failed
+Supabase writes, broken API routes) will not alert anyone. Users
+experiencing errors may churn without the team knowing.</p>
+<p><strong>Future change required:</strong> Add Sentry (or equivalent)
+before the v1.1 release, which introduces new database writes that must
+be reliable.</p>
+<hr />
+<h2 id="release-plan">10. Release Plan</h2>
+<h3 id="v1.0-mvp-shipped-june-2026">v1.0 — MVP (Shipped: June 2026)</h3>
+<p><strong>Theme:</strong> Prove the drill loop.</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Daily drill engine (10 questions, 3 types, 6 topics, lesson
+card)</td>
+<td>Shipped</td>
+</tr>
+<tr class="even">
+<td>Per-answer coaching explanations with per-option coaching notes</td>
+<td>Shipped</td>
+</tr>
+<tr class="odd">
+<td>Post-drill lesson review (all 10 questions with coaching)</td>
+<td>Shipped</td>
+</tr>
+<tr class="even">
+<td>Score screen with Compare Perspectives and reflection prompt</td>
+<td>Shipped</td>
+</tr>
+<tr class="odd">
+<td>Learning Journal (localStorage)</td>
+<td>Shipped</td>
+</tr>
+<tr class="even">
+<td>Dashboard: streak, stats, session history, journal view</td>
+<td>Shipped</td>
+</tr>
+<tr class="odd">
+<td>Anonymous play (localStorage-backed, no account required)</td>
+<td>Shipped</td>
+</tr>
+<tr class="even">
+<td>Magic link authentication</td>
+<td>Shipped</td>
+</tr>
+<tr class="odd">
+<td>Signed-in progress sync to Supabase</td>
+<td>Shipped</td>
+</tr>
+<tr class="even">
+<td>Instructor analytics dashboard (9 metrics)</td>
+<td>Shipped</td>
+</tr>
+<tr class="odd">
+<td>Mobile-first responsive layout, accessible tap targets</td>
+<td>Shipped</td>
+</tr>
+<tr class="even">
+<td>Dark mode heading and input contrast</td>
+<td>Shipped</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Known gaps going into v1.1:</strong> - Learning Journal is
+localStorage-only (cross-device risk) - Anonymous → signed-in progress
+merge not automatic - No error monitoring - No test suite</p>
+<hr />
+<h3 id="v1.1-retention-and-persistence-target-q3-2026">v1.1 — Retention
+and Persistence (Target: Q3 2026)</h3>
+<p><strong>Theme:</strong> Make what exists trustworthy and sticky.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Priority</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Learning Journal — Supabase sync</td>
+<td>Critical</td>
+<td>New <code>learning_journal</code> table + merge-on-first-sign-in
+flow</td>
+</tr>
+<tr class="even">
+<td>Learning Journal — milestone acknowledgments</td>
+<td>High</td>
+<td>At 25, 50, 100, 250 entries</td>
+</tr>
+<tr class="odd">
+<td>Streak calendar heatmap</td>
+<td>High</td>
+<td>90-day grid on dashboard</td>
+</tr>
+<tr class="even">
+<td>Opt-in daily digest email</td>
+<td>Medium</td>
+<td>Triggered via Supabase Edge Functions or external email
+provider</td>
+</tr>
+<tr class="odd">
+<td>Anonymous → signed-in progress merge (batch)</td>
+<td>High</td>
+<td>Executes once on first sign-in</td>
+</tr>
+<tr class="even">
+<td>Sentry error monitoring</td>
+<td>High</td>
+<td>Add before v1.1 deploy</td>
+</tr>
+<tr class="odd">
+<td>Vitest unit tests for selector, streak, score logic</td>
+<td>Medium</td>
+<td>Reduces regression risk for v1.2+</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exit criteria for v1.1:</strong> - Journal entries survive a
+browser data clear for signed-in users - Day-2 retention ≥ 35% for
+signed-in users</p>
+<hr />
+<h3 id="v1.2-depth-and-differentiation-target-q4-2026">v1.2 — Depth and
+Differentiation (Target: Q4 2026)</h3>
+<p><strong>Theme:</strong> Serve the full range of bookkeeping
+professionals.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Priority</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Intermediate question bank (72+ questions)</td>
+<td>Critical</td>
+<td>All 6 categories, per-option coaching notes required</td>
+</tr>
+<tr class="even">
+<td>Level selector UI</td>
+<td>Critical</td>
+<td>Defaults to Beginner; persists preference</td>
+</tr>
+<tr class="odd">
+<td>Advanced question bank (72+ questions)</td>
+<td>High</td>
+<td>Professional judgment and multi-concept scenarios</td>
+</tr>
+<tr class="even">
+<td>Adaptive question selection (weighted random)</td>
+<td>Medium</td>
+<td>Based on <code>drill_question_answers</code> accuracy data</td>
+</tr>
+<tr class="odd">
+<td>Mastery tracking per concept (3-level indicator)</td>
+<td>Medium</td>
+<td>Uses <code>conceptId</code> already stored in entry shape</td>
+</tr>
+<tr class="even">
+<td>Playwright end-to-end tests for drill flow</td>
+<td>Medium</td>
+<td>Reduces manual testing burden</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exit criteria for v1.2:</strong> - All three question banks
+populated with ≥72 questions each, all questions reviewed for coaching
+quality - Level selector works without breaking deterministic topic
+rotation - Accuracy delta (60-day) metric measurable from real user
+data</p>
+<hr />
+<h3 id="v1.3-institutional-layer-target-q1-2027">v1.3 — Institutional
+Layer (Target: Q1 2027)</h3>
+<p><strong>Theme:</strong> Enable the instructor/program director use
+case.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Priority</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Multi-instructor support (<code>user_roles</code> table)</td>
+<td>Critical</td>
+<td>Replace <code>ADMIN_EMAIL</code> env var</td>
+</tr>
+<tr class="even">
+<td>Cohort management UI</td>
+<td>Critical</td>
+<td>Create/manage cohorts, add learners</td>
+</tr>
+<tr class="odd">
+<td>Cohort-scoped analytics</td>
+<td>Critical</td>
+<td>Existing admin dashboard filtered by cohort</td>
+</tr>
+<tr class="even">
+<td>Curriculum assignment</td>
+<td>High</td>
+<td>Override daily topic rotation per cohort</td>
+</tr>
+<tr class="odd">
+<td>Learner progress report export (CSV)</td>
+<td>Medium</td>
+<td>Per-learner summary exportable by instructor</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Exit criteria for v1.3:</strong> - At least one pilot
+institution (certification program or accounting firm) running an active
+cohort - Cohort analytics shows data for ≥10 learners with ≥30 drills
+each</p>
+<hr />
+<h2 id="risks">11. Risks</h2>
+<h3
+id="r1-learning-journal-data-loss-likelihood-high-impact-critical">R1 —
+Learning Journal data loss (Likelihood: High | Impact: Critical)</h3>
+<p><strong>Description:</strong> Journal entries currently live in
+<code>localStorage</code>. If a signed-in user clears browser data,
+switches devices, or switches browsers, all journal entries are
+permanently lost. This is the most likely cause of serious user
+disappointment in v1.0.</p>
+<p><strong>Current mitigation:</strong> “Save your progress” prompt at
+the end of each drill reminds users to create an account — but account
+creation does not currently sync journal entries.</p>
+<p><strong>Required mitigation (v1.1):</strong> Supabase sync for
+journal entries. This is the top v1.1 priority.</p>
+<p><strong>Monitoring:</strong> Add a “journal entries lost” user report
+category to any feedback mechanism. Track journal entry counts per user
+in admin analytics.</p>
+<hr />
+<h3 id="r2-magic-link-deliverability-likelihood-medium-impact-high">R2 —
+Magic link deliverability (Likelihood: Medium | Impact: High)</h3>
+<p><strong>Description:</strong> Magic link emails can land in spam,
+especially for users on strict corporate email filters. A failed magic
+link is a complete sign-in blocker — the user has no password fallback.
+This creates a conversion bottleneck at the highest-intent moment (when
+a user has decided to create an account).</p>
+<p><strong>Current mitigation:</strong> Supabase’s email deliverability
+infrastructure is reliable for most consumer email providers. The
+sign-in page sets expectations (“Check your email — it may take a
+moment”).</p>
+<p><strong>Required mitigation (medium-term):</strong> Enable Google
+OAuth and Apple Sign-In as alternative paths. The UI already has the
+buttons; they need to be activated in Supabase Auth settings.</p>
+<p><strong>Monitoring:</strong> Track sign-in initiation vs. sign-in
+completion conversion. A ratio below 60% suggests deliverability
+issues.</p>
+<hr />
+<h3 id="r3-question-quality-decay-likelihood-medium-impact-high">R3 —
+Question quality decay (Likelihood: Medium | Impact: High)</h3>
+<p><strong>Description:</strong> The coaching layer (per-answer
+explanations and per-option coaching notes) is the primary
+differentiator from flashcard apps. If questions are added without the
+same level of coaching depth — in intermediate and advanced banks, or in
+future content additions — the product’s educational value degrades
+silently.</p>
+<p><strong>Current mitigation:</strong> All 72 beginner questions have
+been written with this standard. The question shape
+(<code>explanation</code>, <code>optionExplanations</code>) enforces the
+structure at the type level.</p>
+<p><strong>Required mitigation (v1.2):</strong> A content review
+checklist for all new questions before they are added to the bank. At
+minimum: is the explanation coaching-toned? Does every incorrect option
+have a non-empty coaching note? Does the scenario feel professionally
+realistic?</p>
+<p><strong>Monitoring:</strong> Admin “Most Missed Questions” panel can
+surface questions with anomalously high miss rates — a signal that a
+question may be ambiguously worded.</p>
+<hr />
+<h3 id="r4-streak-anxiety-likelihood-medium-impact-medium">R4 — Streak
+anxiety (Likelihood: Medium | Impact: Medium)</h3>
+<p><strong>Description:</strong> Streak mechanics, if not carefully
+designed, can flip from motivating to anxiety-producing. A user who
+misses one day and loses a 45-day streak may stop using the product
+entirely. This is a well-documented failure mode in habit-forming
+apps.</p>
+<p><strong>Current mitigation:</strong> Streaks reset to 1 (not 0) on
+return after a missed day, softening the loss. Score screen and coaching
+language explicitly does not shame low scores or breaks.</p>
+<p><strong>Required mitigation (v1.1):</strong> Streak protection
+feature (1 free “grace day” per 30-day period) before the streak
+calendar heatmap ships — the heatmap makes gaps visible, which increases
+the risk of discouragement.</p>
+<p><strong>Monitoring:</strong> Track session frequency distribution. If
+weekly session counts show a spike on day 1 after a gap (users
+restarting) and a high churn rate following that, streak anxiety is
+likely.</p>
+<hr />
+<h3
+id="r5-admin-dashboard-performance-at-scale-likelihood-low-impact-medium">R5
+— Admin dashboard performance at scale (Likelihood: Low | Impact:
+Medium)</h3>
+<p><strong>Description:</strong> The admin dashboard fetches all
+<code>drill_sessions</code> and <code>drill_question_answers</code> rows
+via the service role client on every page load, with no caching or
+pagination. At low user volumes this is fine. At tens of thousands of
+users with daily drill completions, this query will become slow or
+fail.</p>
+<p><strong>Current mitigation:</strong> Acceptable at current scale. The
+dashboard is accessed infrequently (by a single admin user).</p>
+<p><strong>Required mitigation (pre-scale):</strong> Introduce
+materialized views or Supabase Edge Functions that pre-aggregate
+analytics on a schedule (e.g. hourly). Alternatively, add pagination and
+date-range filtering to the dashboard queries. This should be addressed
+before the v1.3 institutional launch, which will significantly increase
+data volume.</p>
+<p><strong>Monitoring:</strong> Track admin dashboard page load time in
+Vercel function logs. Alert if it exceeds 5 seconds.</p>
+<hr />
+<h3
+id="r6-scope-creep-diluting-the-core-experience-likelihood-medium-impact-high">R6
+— Scope creep diluting the core experience (Likelihood: Medium | Impact:
+High)</h3>
+<p><strong>Description:</strong> The product’s strength is its focused
+simplicity. As feature requests accumulate — social features,
+leaderboards, AI-generated questions, gamification mechanics — each
+individually reasonable addition can collectively erode the
+coaching-not-assessment identity of the product.</p>
+<p><strong>Current mitigation:</strong> The “What We Will Not Do”
+section of the Founder Vision defines explicit constraints. This PRD’s
+non-goals section reinforces them.</p>
+<p><strong>Required mitigation (ongoing):</strong> Every new feature
+proposal must be evaluated against the product principles in Section 4
+of the Founder Vision. The default answer to new feature requests is
+“no, unless it demonstrably serves the existing personas without
+compromising the coaching identity.”</p>
+<hr />
+<p><em>Keep Me Ready — Practice makes permanent.</em></p>
+</body></html>
