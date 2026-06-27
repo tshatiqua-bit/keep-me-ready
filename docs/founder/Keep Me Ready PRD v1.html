@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='utf-8'>
+<meta charset="utf-8">
 <title>Keep Me Ready — Product Requirements Document v1</title>
 <style>
   @page { margin: 2.2cm 2.5cm; }
-  body { font-family: 'Georgia', serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
+  body { font-family: Georgia, serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
   h1 { font-size: 1.9em; color: #1e1b4b; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; margin-top: 0; }
   h2 { font-size: 1.35em; color: #312e81; margin-top: 2.4em; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; page-break-after: avoid; }
   h3 { font-size: 1.05em; color: #3730a3; margin-top: 1.6em; page-break-after: avoid; }
   p { margin: 0.7em 0; }
-  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.82em; color: #1e293b; }
+  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: "Courier New", monospace; font-size: 0.82em; color: #1e293b; }
   pre { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 16px; overflow-x: auto; page-break-inside: avoid; margin: 1em 0; }
   pre code { background: none; padding: 0; font-size: 0.8em; }
   table { border-collapse: collapse; width: 100%; margin: 1.2em 0; page-break-inside: avoid; font-size: 0.9em; }
-  th { background: #4f46e5; color: #ffffff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  th { background: #4f46e5; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
   td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
   tr:nth-child(even) td { background: #f8fafc; }
   blockquote { border-left: 4px solid #4f46e5; margin: 1em 0; padding: 4px 16px; color: #475569; background: #f8f8ff; }
@@ -645,7 +645,7 @@ appear automatically</li>
 <li>R4.6: For signed-in users, stats are loaded from Supabase
 (<code>drill_sessions</code> table) server-side</li>
 <li>R4.7: For anonymous users, stats are loaded from
-<code>localStorage["kmr-progress"]</code> client-side</li>
+<code>localStorage["kmr_progress"]</code> client-side</li>
 <li>R4.8: The UI handles both data sources transparently — no visible
 difference in layout between logged-in and anonymous views</li>
 </ul>
@@ -877,7 +877,7 @@ model</td>
    e. After question 10: &quot;See Results&quot; button appears
 
 5. User taps &quot;See Results&quot;
-   → Session saved to localStorage[&quot;kmr-progress&quot;]
+   → Session saved to localStorage[&quot;kmr_progress&quot;]
    → Score screen renders: score, coaching message, &quot;What to review next&quot;
 
 6. User optionally expands &quot;Compare Perspectives&quot;
@@ -975,7 +975,7 @@ Dashboard</h3>
 id="flow-5-anonymous-to-signed-in-progress-continuity-v1.1-behavior">Flow
 5 — Anonymous to Signed-In: Progress Continuity (v1.1 behavior)</h3>
 <pre><code>1. Anonymous user has completed 15 drills; localStorage has:
-   - kmr-progress: 15 sessions with scores and dates
+   - kmr_progress: 15 sessions with scores and dates
    - kmr-journal: 8 Learning Journal entries
 
 2. User creates an account and signs in for the first time

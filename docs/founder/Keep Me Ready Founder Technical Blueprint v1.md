@@ -58,7 +58,7 @@ Browser
   │     └── PostgreSQL — drill_sessions, drill_question_answers
   │
   └── localStorage (browser)
-        ├── kmr-progress — anonymous learner progress
+        ├── kmr_progress — anonymous learner progress
         └── kmr-journal  — Learning Journal entries
 ```
 
@@ -394,7 +394,7 @@ Homepage → Start Drill
   → Dashboard (stats from localStorage)
 ```
 
-Progress (streak, accuracy, session history) is stored in `localStorage["kmr-progress"]`. A "Sign in to save your progress" prompt appears on the score screen.
+Progress (streak, accuracy, session history) is stored in `localStorage["kmr_progress"]`. A "Sign in to save your progress" prompt appears on the score screen.
 
 ### Authenticated learner (signed in)
 Same flow, with these additions:

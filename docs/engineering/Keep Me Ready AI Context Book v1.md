@@ -364,7 +364,7 @@ export interface UserProgress {
 
 ```typescript
 interface JournalEntry {
-  id: string;           // `${Date.now()}`
+  id: string;           // `${topic.category}-${Date.now()}`
   category: string;     // QuestionCategory slug
   topicTitle: string;   // e.g. "Debits & Credits — The Foundation..."
   prompt: string;       // The reflection prompt from topics.ts

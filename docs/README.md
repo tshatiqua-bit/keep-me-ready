@@ -19,8 +19,8 @@ Work through these documents in sequence. Each one builds on the last.
 | 1 | **Founder Vision v1** | `founder/` | Why this product exists, who it is for, and what it will become. Read this first — it is the lens through which every other decision should be understood. |
 | 2 | **Product Requirements Document (PRD) v1** | `founder/` | What gets built, when, and why. Personas, feature specs with acceptance criteria, user flows, success metrics, release plan, and risks. |
 | 3 | **Founder Technical Blueprint v1** | `founder/` | How the current application is built. Architecture, file structure, component responsibilities, database schema, auth flow, deployment process, and known limitations. |
-| 4 | **Developer Onboarding Guide** | `engineering/` | *(Coming soon)* Step-by-step guide to setting up a local development environment, running the app, connecting to Supabase, and making your first change. |
-| 5 | **AI Context Book** | `engineering/` | *(Coming soon)* A structured briefing document written specifically for AI coding assistants. Contains the information an AI needs to work effectively in this codebase without deriving it from scratch. |
+| 4 | **Developer Onboarding Guide v1** | `engineering/Keep Me Ready Developer Onboarding Guide v1.md` | Prerequisites, cloning, Supabase setup, running migrations, smoke-test checklist, project orientation, Next.js 16 breaking changes, and 7 common issues with fixes. |
+| 5 | **AI Context Book v1** | `engineering/Keep Me Ready AI Context Book v1.md` | Dense reference for AI coding assistants: 12 non-obvious constraints, full file inventory, exact TypeScript types, data model, component props, API routes, 8 code patterns to copy, product rules, and copy/tone guidelines. |
 | 6 | **Architecture** | `architecture/` | *(Coming soon)* Diagrams and written explanations of system architecture, data flow, component boundaries, and integration points. |
 | 7 | **Engineering** | `engineering/` | *(Coming soon)* Coding standards, testing strategy, PR process, deployment checklist, and patterns used across the codebase. |
 | 8 | **Database** | `database/` | *(Coming soon)* Schema reference, migration history, RLS policy explanations, and query patterns. |
@@ -48,7 +48,13 @@ docs/
 │   └── Keep Me Ready Founder Technical Blueprint v1.pdf
 │
 ├── engineering/                       ← Developer guides and standards
-│   └── (Developer Onboarding Guide, AI Context Book, Engineering Standards — coming soon)
+│   ├── Keep Me Ready Developer Onboarding Guide v1.md
+│   ├── Keep Me Ready Developer Onboarding Guide v1.html
+│   ├── Keep Me Ready Developer Onboarding Guide v1.pdf
+│   ├── Keep Me Ready AI Context Book v1.md
+│   ├── Keep Me Ready AI Context Book v1.html
+│   ├── Keep Me Ready AI Context Book v1.pdf
+│   └── (Engineering Standards — coming soon)
 │
 ├── architecture/                      ← System design and diagrams
 │   └── (Architecture Decision Records, system diagrams — coming soon)
@@ -76,6 +82,8 @@ docs/
 3. **Founder Technical Blueprint v1** — understand the current codebase: every file, every component, the database schema, the auth flow, the deployment process, and the known limitations. This is the source of truth for how things work today.
 
 Only after reading all three should you open a code file.
+
+**AI assistants** should also read the AI Context Book (`engineering/`) before making any changes — it documents 12 non-obvious constraints specific to this codebase (Next.js 16 breaking changes, localStorage key formats, Supabase client rules, and more) that are not derivable from the code alone.
 
 This is not bureaucracy. These documents exist precisely so that contributors can move faster and with more confidence, because the context that usually lives only in someone's head has been written down.
 

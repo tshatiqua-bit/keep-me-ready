@@ -286,7 +286,7 @@ The following features define the v1.0 MVP. All are shipped and live at `keep-me
 - R4.4: Learning Journal section shows all saved entries newest-first with date, topic label, and insight text
 - R4.5: When journal entries span multiple topics, topic filter pills appear automatically
 - R4.6: For signed-in users, stats are loaded from Supabase (`drill_sessions` table) server-side
-- R4.7: For anonymous users, stats are loaded from `localStorage["kmr-progress"]` client-side
+- R4.7: For anonymous users, stats are loaded from `localStorage["kmr_progress"]` client-side
 - R4.8: The UI handles both data sources transparently — no visible difference in layout between logged-in and anonymous views
 
 **Acceptance criteria:**
@@ -453,7 +453,7 @@ Exportable per-learner progress summary (CSV or PDF). Shows drill count, accurac
    e. After question 10: "See Results" button appears
 
 5. User taps "See Results"
-   → Session saved to localStorage["kmr-progress"]
+   → Session saved to localStorage["kmr_progress"]
    → Score screen renders: score, coaching message, "What to review next"
 
 6. User optionally expands "Compare Perspectives"
@@ -566,7 +566,7 @@ Exportable per-learner progress summary (CSV or PDF). Shows drill count, accurac
 
 ```
 1. Anonymous user has completed 15 drills; localStorage has:
-   - kmr-progress: 15 sessions with scores and dates
+   - kmr_progress: 15 sessions with scores and dates
    - kmr-journal: 8 Learning Journal entries
 
 2. User creates an account and signs in for the first time

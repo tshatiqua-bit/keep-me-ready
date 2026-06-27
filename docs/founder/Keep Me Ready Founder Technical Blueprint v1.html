@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html lang='en'>
+<html lang="en">
 <head>
-<meta charset='utf-8'>
+<meta charset="utf-8">
 <title>Keep Me Ready — Founder Technical Blueprint v1</title>
 <style>
   @page { margin: 2.2cm 2.5cm; }
-  body { font-family: 'Georgia', serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
+  body { font-family: Georgia, serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
   h1 { font-size: 1.9em; color: #1e1b4b; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; margin-top: 0; }
   h2 { font-size: 1.35em; color: #312e81; margin-top: 2.4em; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; page-break-after: avoid; }
   h3 { font-size: 1.05em; color: #3730a3; margin-top: 1.6em; page-break-after: avoid; }
   p { margin: 0.7em 0; }
-  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.82em; color: #1e293b; }
+  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: "Courier New", monospace; font-size: 0.82em; color: #1e293b; }
   pre { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 16px; overflow-x: auto; page-break-inside: avoid; margin: 1em 0; }
   pre code { background: none; padding: 0; font-size: 0.8em; }
   table { border-collapse: collapse; width: 100%; margin: 1.2em 0; page-break-inside: avoid; font-size: 0.9em; }
-  th { background: #4f46e5; color: #ffffff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  th { background: #4f46e5; color: #fff; padding: 8px 12px; text-align: left; font-weight: 600; }
   td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
   tr:nth-child(even) td { background: #f8fafc; }
   blockquote { border-left: 4px solid #4f46e5; margin: 1em 0; padding: 4px 16px; color: #475569; background: #f8f8ff; }
@@ -26,40 +26,66 @@
 </style>
 </head>
 <body>
-<h1>Keep Me Ready — Founder Technical Blueprint v1</h1>
-<p><strong>Prepared:</strong> June 2026<br><strong>Version:</strong> 1.0<br><strong>Repository:</strong> <code>git@github.com:tshatiqua-bit/keep-me-ready.git</code><br><strong>Live URL:</strong> <code>https://keep-me-ready.vercel.app</code></p>
-<hr>
-<h2>Table of Contents</h2>
-<ol>
+<h1 id="keep-me-ready-founder-technical-blueprint-v1">Keep Me Ready —
+Founder Technical Blueprint v1</h1>
+<p><strong>Prepared:</strong> June 2026<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Repository:</strong>
+<code>git@github.com:tshatiqua-bit/keep-me-ready.git</code><br />
+<strong>Live URL:</strong>
+<code>https://keep-me-ready.vercel.app</code></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
 <li><a href="#1-project-purpose">Project Purpose</a></li>
-<li><a href="#2-current-app-architecture">Current App Architecture</a></li>
-<li><a href="#3-folder-and-file-structure">Folder and File Structure</a></li>
-<li><a href="#4-key-components-and-what-they-do">Key Components and What They Do</a></li>
+<li><a href="#2-current-app-architecture">Current App
+Architecture</a></li>
+<li><a href="#3-folder-and-file-structure">Folder and File
+Structure</a></li>
+<li><a href="#4-key-components-and-what-they-do">Key Components and What
+They Do</a></li>
 <li><a href="#5-supabase-setup">Supabase Setup</a></li>
-<li><a href="#6-database-tables-and-migrations">Database Tables and Migrations</a></li>
+<li><a href="#6-database-tables-and-migrations">Database Tables and
+Migrations</a></li>
 <li><a href="#7-authentication-flow">Authentication Flow</a></li>
 <li><a href="#8-admin-dashboard-logic">Admin Dashboard Logic</a></li>
-<li><a href="#9-vercel-deployment-process">Vercel Deployment Process</a></li>
+<li><a href="#9-vercel-deployment-process">Vercel Deployment
+Process</a></li>
 <li><a href="#10-environment-variables">Environment Variables</a></li>
 <li><a href="#11-current-learner-flow">Current Learner Flow</a></li>
-<li><a href="#12-current-instructoradmin-flow">Current Instructor/Admin Flow</a></li>
-<li><a href="#13-recent-features-implemented">Recent Features Implemented</a></li>
+<li><a href="#12-current-instructoradmin-flow">Current Instructor/Admin
+Flow</a></li>
+<li><a href="#13-recent-features-implemented">Recent Features
+Implemented</a></li>
 <li><a href="#14-known-limitations">Known Limitations</a></li>
 <li><a href="#15-future-roadmap">Future Roadmap</a></li>
 </ol>
-<hr>
-<h2>1. Project Purpose</h2>
-<p><strong>Keep Me Ready</strong> is a daily bookkeeping refresher platform designed for job seekers, bookkeeping students, and early-career professionals who need to stay sharp between jobs, certifications, or client engagements.</p>
-<p>The core philosophy is that professional competence is built through consistent, low-friction daily repetition — not cramming. Every design and product decision reflects three principles:</p>
+<hr />
+<h2 id="project-purpose">1. Project Purpose</h2>
+<p><strong>Keep Me Ready</strong> is a daily bookkeeping refresher
+platform designed for job seekers, bookkeeping students, and
+early-career professionals who need to stay sharp between jobs,
+certifications, or client engagements.</p>
+<p>The core philosophy is that professional competence is built through
+consistent, low-friction daily repetition — not cramming. Every design
+and product decision reflects three principles:</p>
 <ul>
-<li><strong>Practice, not testing.</strong> Drills are coaching moments, not assessments.</li>
-<li><strong>Reflection builds mastery.</strong> Learners are encouraged to compare perspectives and document their evolving thinking.</li>
-<li><strong>Progress compounds.</strong> Small daily habits, tracked over time, produce lasting professional confidence.</li>
+<li><strong>Practice, not testing.</strong> Drills are coaching moments,
+not assessments.</li>
+<li><strong>Reflection builds mastery.</strong> Learners are encouraged
+to compare perspectives and document their evolving thinking.</li>
+<li><strong>Progress compounds.</strong> Small daily habits, tracked
+over time, produce lasting professional confidence.</li>
 </ul>
-<p><strong>Primary audience:</strong> Bookkeepers, accounting assistants, and small-business owners who want to stay current with foundational concepts across debits and credits, accounts, financial statements, journal entries, bank reconciliation, and payroll.</p>
-<hr>
-<h2>2. Current App Architecture</h2>
-<p>Keep Me Ready is a <strong>Next.js 16 App Router</strong> application deployed on <strong>Vercel</strong>, backed by <strong>Supabase</strong> for authentication and PostgreSQL storage.</p>
+<p><strong>Primary audience:</strong> Bookkeepers, accounting
+assistants, and small-business owners who want to stay current with
+foundational concepts across debits and credits, accounts, financial
+statements, journal entries, bank reconciliation, and payroll.</p>
+<hr />
+<h2 id="current-app-architecture">2. Current App Architecture</h2>
+<p>Keep Me Ready is a <strong>Next.js 16 App Router</strong> application
+deployed on <strong>Vercel</strong>, backed by <strong>Supabase</strong>
+for authentication and PostgreSQL storage.</p>
 <pre><code>Browser
   │
   ├── Next.js 16 (App Router, React 19, TypeScript)
@@ -72,19 +98,30 @@
   │     └── PostgreSQL — drill_sessions, drill_question_answers
   │
   └── localStorage (browser)
-        ├── kmr-progress — anonymous learner progress
-        └── kmr-journal  — Learning Journal entries
-</code></pre>
+        ├── kmr_progress — anonymous learner progress
+        └── kmr-journal  — Learning Journal entries</code></pre>
 <p><strong>Key architectural decisions:</strong></p>
 <ul>
-<li><strong>App Router with Server Components</strong> for pages that need server-side data (dashboard, admin). Client Components only where interactivity or browser APIs are required.</li>
-<li><strong>Dual data path:</strong> Logged-in users get data from Supabase; anonymous users get data from localStorage. The UI handles both transparently.</li>
-<li><strong>Auth uses Supabase implicit flow.</strong> The magic link delivers hash-fragment tokens (<code>#access_token=…</code>) that are processed client-side by <code>createBrowserClient</code>. The callback page listens for <code>onAuthStateChange</code> rather than exchanging a server-side code.</li>
-<li><strong>Middleware via <code>proxy.ts</code></strong> (Next.js 16 convention) refreshes Supabase sessions on every request to prevent expiry during active use.</li>
-<li><strong>Admin gate is env-var-based</strong> — no roles table. The <code>ADMIN_EMAIL</code> environment variable is compared server-side against the authenticated user&#39;s email.</li>
+<li><strong>App Router with Server Components</strong> for pages that
+need server-side data (dashboard, admin). Client Components only where
+interactivity or browser APIs are required.</li>
+<li><strong>Dual data path:</strong> Logged-in users get data from
+Supabase; anonymous users get data from localStorage. The UI handles
+both transparently.</li>
+<li><strong>Auth uses Supabase implicit flow.</strong> The magic link
+delivers hash-fragment tokens (<code>#access_token=…</code>) that are
+processed client-side by <code>createBrowserClient</code>. The callback
+page listens for <code>onAuthStateChange</code> rather than exchanging a
+server-side code.</li>
+<li><strong>Middleware via <code>proxy.ts</code></strong> (Next.js 16
+convention) refreshes Supabase sessions on every request to prevent
+expiry during active use.</li>
+<li><strong>Admin gate is env-var-based</strong> — no roles table. The
+<code>ADMIN_EMAIL</code> environment variable is compared server-side
+against the authenticated user’s email.</li>
 </ul>
-<hr>
-<h2>3. Folder and File Structure</h2>
+<hr />
+<h2 id="folder-and-file-structure">3. Folder and File Structure</h2>
 <pre><code>keep-me-ready/
 │
 ├── app/                          # Next.js App Router pages and routes
@@ -168,187 +205,249 @@
 ├── next.config.ts                # Next.js configuration
 ├── .env.local                    # Local secrets — never committed
 ├── .env.local.example            # Template for required environment variables
-└── package.json
-</code></pre>
-<hr>
-<h2>4. Key Components and What They Do</h2>
-<h3><code>DrillClient.tsx</code></h3>
-<p>The heart of the drill experience. A client-side state machine managing five phases:</p>
+└── package.json</code></pre>
+<hr />
+<h2 id="key-components-and-what-they-do">4. Key Components and What They
+Do</h2>
+<h3 id="drillclient.tsx"><code>DrillClient.tsx</code></h3>
+<p>The heart of the drill experience. A client-side state machine
+managing five phases:</p>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Phase</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><code>lesson</code></td>
-<td>Shows the <code>LessonCard</code> — topic overview, why it matters, common confusion</td>
+<td>Shows the <code>LessonCard</code> — topic overview, why it matters,
+common confusion</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>answering</code></td>
 <td>Active question — learner selects an answer</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>revealed</code></td>
 <td>Answer shown — correct/incorrect state, coaching explanation</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>completed</code></td>
-<td>Score screen (<code>ScoreDisplay</code>) with reflection and Learning Journal</td>
+<td>Score screen (<code>ScoreDisplay</code>) with reflection and
+Learning Journal</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>review</code></td>
-<td>Full <code>LessonReview</code> of all 10 questions with per-option coaching</td>
+<td>Full <code>LessonReview</code> of all 10 questions with per-option
+coaching</td>
 </tr>
-</tbody></table>
-<p>State tracked: <code>selectedAnswers</code> (array of 10), <code>score</code>, <code>currentIndex</code>, <code>phase</code>, <code>drillStartedAt</code>. On completion, syncs to Supabase via <code>/api/scores</code>.</p>
-<h3><code>LessonCard.tsx</code></h3>
-<p>Displayed before the drill begins. Shows topic title, lesson text, why it matters, common confusion, and an encouragement message. Learner taps &quot;Start Drill&quot; to enter the <code>answering</code> phase.</p>
-<h3><code>ScoreDisplay.tsx</code></h3>
-<p>Results screen after all 10 questions. Shows score, a contextual coaching message, a &quot;What to review next&quot; card, and the &quot;One Reflection to Sit With&quot; card. The reflection card contains:</p>
-<ul>
-<li><strong>Compare Perspectives</strong> — expandable section with 4–5 key idea bullets and a model response</li>
-<li><strong>Learning Journal</strong> — optional textarea; saves entry to <code>localStorage[&quot;kmr-journal&quot;]</code> on &quot;Save This Insight&quot;</li>
-</ul>
-<h3><code>LessonReview.tsx</code></h3>
-<p>Walks through all 10 drill questions post-completion. Each card shows the question, all answer options (correct in green, learner&#39;s wrong answer in red), expandable wrong-answer coaching notes per option, and a &quot;Key Lesson Takeaways&quot; block at the bottom.</p>
-<h3><code>DashboardView.tsx</code></h3>
-<p>Client component that merges server-side Supabase data (logged-in users) with localStorage data (anonymous users). Renders <code>StreakBadge</code>, <code>ProgressStats</code>, <code>SessionHistory</code>, and <code>LearningJournal</code>. Detects which data source to use and handles the brief loading state for anonymous users.</p>
-<h3><code>LearningJournal.tsx</code></h3>
-<p>Reads <code>localStorage[&quot;kmr-journal&quot;]</code>, renders entries newest-first. Shows date, topic label, and insight text per entry. Displays topic filter pills automatically when entries span more than one topic. Includes empty state guiding the learner to &quot;Compare Perspectives&quot; after a drill. Architecture is ready for milestone celebrations at 25/50/100 entries.</p>
-<h3><code>InstructorDashboard.tsx</code></h3>
-<p>Admin-only analytics UI. Pure server component — no client state. Displays 9 metrics across 4 rows: stat cards, improvement/completion time, weekly trend bar chart, and most difficult topics / most missed questions panels.</p>
-<h3><code>NavUser.tsx</code></h3>
-<p>Client component in the root layout. Subscribes to <code>supabase.auth.onAuthStateChange</code> and shows either a &quot;Sign in&quot; link or the user&#39;s email with a &quot;Sign out&quot; button.</p>
-<hr>
-<h2>5. Supabase Setup</h2>
-<h3>Project creation</h3>
-<ol>
-<li>Create a new project at <a href="https://supabase.com">supabase.com</a></li>
-<li>Note the <strong>Project URL</strong> and <strong>anon key</strong> from Settings → Data API</li>
-<li>Note the <strong>service role key</strong> from Settings → Data API (keep strictly server-side)</li>
+</tbody>
+</table>
+<p>State tracked: <code>selectedAnswers</code> (array of 10),
+<code>score</code>, <code>currentIndex</code>, <code>phase</code>,
+<code>drillStartedAt</code>. On completion, syncs to Supabase via
+<code>/api/scores</code>.</p>
+<h3 id="lessoncard.tsx"><code>LessonCard.tsx</code></h3>
+<p>Displayed before the drill begins. Shows topic title, lesson text,
+why it matters, common confusion, and an encouragement message. Learner
+taps “Start Drill” to enter the <code>answering</code> phase.</p>
+<h3 id="scoredisplay.tsx"><code>ScoreDisplay.tsx</code></h3>
+<p>Results screen after all 10 questions. Shows score, a contextual
+coaching message, a “What to review next” card, and the “One Reflection
+to Sit With” card. The reflection card contains: - <strong>Compare
+Perspectives</strong> — expandable section with 4–5 key idea bullets and
+a model response - <strong>Learning Journal</strong> — optional
+textarea; saves entry to <code>localStorage["kmr-journal"]</code> on
+“Save This Insight”</p>
+<h3 id="lessonreview.tsx"><code>LessonReview.tsx</code></h3>
+<p>Walks through all 10 drill questions post-completion. Each card shows
+the question, all answer options (correct in green, learner’s wrong
+answer in red), expandable wrong-answer coaching notes per option, and a
+“Key Lesson Takeaways” block at the bottom.</p>
+<h3 id="dashboardview.tsx"><code>DashboardView.tsx</code></h3>
+<p>Client component that merges server-side Supabase data (logged-in
+users) with localStorage data (anonymous users). Renders
+<code>StreakBadge</code>, <code>ProgressStats</code>,
+<code>SessionHistory</code>, and <code>LearningJournal</code>. Detects
+which data source to use and handles the brief loading state for
+anonymous users.</p>
+<h3 id="learningjournal.tsx"><code>LearningJournal.tsx</code></h3>
+<p>Reads <code>localStorage["kmr-journal"]</code>, renders entries
+newest-first. Shows date, topic label, and insight text per entry.
+Displays topic filter pills automatically when entries span more than
+one topic. Includes empty state guiding the learner to “Compare
+Perspectives” after a drill. Architecture is ready for milestone
+celebrations at 25/50/100 entries.</p>
+<h3
+id="instructordashboard.tsx"><code>InstructorDashboard.tsx</code></h3>
+<p>Admin-only analytics UI. Pure server component — no client state.
+Displays 9 metrics across 4 rows: stat cards, improvement/completion
+time, weekly trend bar chart, and most difficult topics / most missed
+questions panels.</p>
+<h3 id="navuser.tsx"><code>NavUser.tsx</code></h3>
+<p>Client component in the root layout. Subscribes to
+<code>supabase.auth.onAuthStateChange</code> and shows either a “Sign
+in” link or the user’s email with a “Sign out” button.</p>
+<hr />
+<h2 id="supabase-setup">5. Supabase Setup</h2>
+<h3 id="project-creation">Project creation</h3>
+<ol type="1">
+<li>Create a new project at <a
+href="https://supabase.com">supabase.com</a></li>
+<li>Note the <strong>Project URL</strong> and <strong>anon key</strong>
+from Settings → Data API</li>
+<li>Note the <strong>service role key</strong> from Settings → Data API
+(keep strictly server-side)</li>
 </ol>
-<h3>Auth configuration</h3>
-<ol>
+<h3 id="auth-configuration">Auth configuration</h3>
+<ol type="1">
 <li>Go to <strong>Authentication → URL Configuration</strong></li>
-<li>Set <strong>Site URL</strong> to <code>https://keep-me-ready.vercel.app</code></li>
-<li>Add <code>https://keep-me-ready.vercel.app/auth/callback</code> to <strong>Redirect URLs</strong></li>
-<li>Email magic links are enabled by default — no additional provider setup required for MVP</li>
+<li>Set <strong>Site URL</strong> to
+<code>https://keep-me-ready.vercel.app</code></li>
+<li>Add <code>https://keep-me-ready.vercel.app/auth/callback</code> to
+<strong>Redirect URLs</strong></li>
+<li>Email magic links are enabled by default — no additional provider
+setup required for MVP</li>
 </ol>
-<h3>Running migrations</h3>
-<p>Both SQL migration files must be run manually in <strong>Supabase → SQL Editor</strong>:</p>
-<ol>
-<li>Run <code>supabase/migrations/001_init.sql</code> — creates the <code>drill_sessions</code> table with RLS</li>
-<li>Run <code>supabase/migrations/002_analytics.sql</code> — adds analytics columns and the <code>drill_question_answers</code> table</li>
+<h3 id="running-migrations">Running migrations</h3>
+<p>Both SQL migration files must be run manually in <strong>Supabase →
+SQL Editor</strong>:</p>
+<ol type="1">
+<li>Run <code>supabase/migrations/001_init.sql</code> — creates the
+<code>drill_sessions</code> table with RLS</li>
+<li>Run <code>supabase/migrations/002_analytics.sql</code> — adds
+analytics columns and the <code>drill_question_answers</code> table</li>
 </ol>
-<p><strong>Order matters.</strong> Migration 002 references the table created in 001.</p>
-<hr>
-<h2>6. Database Tables and Migrations</h2>
-<h3><code>drill_sessions</code> (created in 001, extended in 002)</h3>
+<p><strong>Order matters.</strong> Migration 002 references the table
+created in 001.</p>
+<hr />
+<h2 id="database-tables-and-migrations">6. Database Tables and
+Migrations</h2>
+<h3
+id="drill_sessions-created-in-001-extended-in-002"><code>drill_sessions</code>
+(created in 001, extended in 002)</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Column</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><code>id</code></td>
 <td>UUID</td>
 <td>Primary key, auto-generated</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>user_id</code></td>
 <td>UUID</td>
 <td>Foreign key → <code>auth.users</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>date</code></td>
 <td>DATE</td>
 <td>Drill date (YYYY-MM-DD)</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>score</code></td>
 <td>INTEGER</td>
 <td>Number of correct answers</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>total</code></td>
 <td>INTEGER</td>
 <td>Total questions in the drill</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>completed_at</code></td>
 <td>TIMESTAMPTZ</td>
 <td>Timestamp of completion</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>category</code></td>
 <td>TEXT</td>
 <td>Topic category slug <em>(added in 002)</em></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>started_at</code></td>
 <td>TIMESTAMPTZ</td>
 <td>Drill start time <em>(added in 002)</em></td>
 </tr>
-</tbody></table>
-<p><strong>RLS policies:</strong> Users can only SELECT and INSERT their own rows (<code>auth.uid() = user_id</code>).</p>
-<h3><code>drill_question_answers</code> (created in 002)</h3>
+</tbody>
+</table>
+<p><strong>RLS policies:</strong> Users can only SELECT and INSERT their
+own rows (<code>auth.uid() = user_id</code>).</p>
+<h3
+id="drill_question_answers-created-in-002"><code>drill_question_answers</code>
+(created in 002)</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>Column</th>
 <th>Type</th>
 <th>Description</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><code>id</code></td>
 <td>UUID</td>
 <td>Primary key, auto-generated</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>session_id</code></td>
 <td>UUID</td>
 <td>Foreign key → <code>drill_sessions</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>user_id</code></td>
 <td>UUID</td>
 <td>Foreign key → <code>auth.users</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>question_id</code></td>
 <td>TEXT</td>
 <td>Stable question identifier from JSON</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>category</code></td>
 <td>TEXT</td>
 <td>Topic category slug</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>was_correct</code></td>
 <td>BOOLEAN</td>
 <td>Whether the learner answered correctly</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>answered_at</code></td>
 <td>TIMESTAMPTZ</td>
 <td>Timestamp of the answer</td>
 </tr>
-</tbody></table>
-<p><strong>RLS policies:</strong> Users can only INSERT and SELECT their own rows.</p>
-<h3>Migration files</h3>
-<p><strong><code>supabase/migrations/001_init.sql</code></strong> — baseline schema<br><strong><code>supabase/migrations/002_analytics.sql</code></strong> — analytics extension</p>
-<p>Both files use <code>IF NOT EXISTS</code> guards and are safe to re-run.</p>
-<hr>
-<h2>7. Authentication Flow</h2>
-<p>Keep Me Ready uses <strong>Supabase email magic links</strong> with <strong>implicit flow</strong> (hash-fragment tokens).</p>
-<h3>Sign-in sequence</h3>
+</tbody>
+</table>
+<p><strong>RLS policies:</strong> Users can only INSERT and SELECT their
+own rows.</p>
+<h3 id="migration-files">Migration files</h3>
+<p><strong><code>supabase/migrations/001_init.sql</code></strong> —
+baseline schema<br />
+<strong><code>supabase/migrations/002_analytics.sql</code></strong> —
+analytics extension</p>
+<p>Both files use <code>IF NOT EXISTS</code> guards and are safe to
+re-run.</p>
+<hr />
+<h2 id="authentication-flow">7. Authentication Flow</h2>
+<p>Keep Me Ready uses <strong>Supabase email magic links</strong> with
+<strong>implicit flow</strong> (hash-fragment tokens).</p>
+<h3 id="sign-in-sequence">Sign-in sequence</h3>
 <pre><code>1. Learner enters email on /auth/login
 2. LoginForm calls supabase.auth.signInWithOtp({
      email,
@@ -362,140 +461,179 @@
 7. createBrowserClient detects the hash tokens automatically
 8. onAuthStateChange fires with event &quot;SIGNED_IN&quot; and a valid session
 9. The callback page calls router.replace(&quot;/dashboard&quot;)
-10. NavUser detects the new session and updates the header
-</code></pre>
-<h3>Session persistence</h3>
+10. NavUser detects the new session and updates the header</code></pre>
+<h3 id="session-persistence">Session persistence</h3>
 <ul>
-<li>Sessions are stored in browser cookies by <code>@supabase/ssr</code></li>
-<li><code>proxy.ts</code> (middleware) calls <code>supabase.auth.getUser()</code> on every request to refresh the session token before it expires</li>
-<li>Logging out hits <code>/auth/logout</code> which calls <code>supabase.auth.signOut()</code> and redirects to <code>/</code></li>
+<li>Sessions are stored in browser cookies by
+<code>@supabase/ssr</code></li>
+<li><code>proxy.ts</code> (middleware) calls
+<code>supabase.auth.getUser()</code> on every request to refresh the
+session token before it expires</li>
+<li>Logging out hits <code>/auth/logout</code> which calls
+<code>supabase.auth.signOut()</code> and redirects to
+<code>/</code></li>
 </ul>
-<h3>Admin authentication</h3>
-<p>The <code>/admin</code> page is a server component that:</p>
-<ol>
-<li>Calls <code>supabase.auth.getUser()</code> using the server-side client (reads session from request cookies)</li>
-<li>If no user → <code>redirect(&quot;/auth/login&quot;)</code></li>
-<li>Compares <code>user.email</code> to <code>process.env.ADMIN_EMAIL</code></li>
-<li>If no match → renders an &quot;Access Denied&quot; page showing which email is signed in (helps diagnose misconfiguration without leaking the admin email value)</li>
-<li>If match → renders <code>InstructorDashboard</code> with full analytics data</li>
-</ol>
-<hr>
-<h2>8. Admin Dashboard Logic</h2>
-<p>The Instructor Dashboard is accessible at <code>/admin</code> and is protected by the <code>ADMIN_EMAIL</code> environment variable.</p>
-<h3>Data sources</h3>
+<h3 id="admin-authentication">Admin authentication</h3>
+<p>The <code>/admin</code> page is a server component that: 1. Calls
+<code>supabase.auth.getUser()</code> using the server-side client (reads
+session from request cookies) 2. If no user →
+<code>redirect("/auth/login")</code> 3. Compares <code>user.email</code>
+to <code>process.env.ADMIN_EMAIL</code> 4. If no match → renders an
+“Access Denied” page showing which email is signed in (helps diagnose
+misconfiguration without leaking the admin email value) 5. If match →
+renders <code>InstructorDashboard</code> with full analytics data</p>
+<hr />
+<h2 id="admin-dashboard-logic">8. Admin Dashboard Logic</h2>
+<p>The Instructor Dashboard is accessible at <code>/admin</code> and is
+protected by the <code>ADMIN_EMAIL</code> environment variable.</p>
+<h3 id="data-sources">Data sources</h3>
 <ul>
-<li><strong><code>drill_sessions</code></strong> — queried via the Supabase service role client (bypasses RLS, sees all users&#39; data)</li>
-<li><strong><code>drill_question_answers</code></strong> — queried for per-question miss rate and topic difficulty</li>
-<li><strong><code>auth.users</code></strong> — user count and last-seen data</li>
+<li><strong><code>drill_sessions</code></strong> — queried via the
+Supabase service role client (bypasses RLS, sees all users’ data)</li>
+<li><strong><code>drill_question_answers</code></strong> — queried for
+per-question miss rate and topic difficulty</li>
+<li><strong><code>auth.users</code></strong> — user count and last-seen
+data</li>
 </ul>
-<h3>The 9 metrics</h3>
+<h3 id="the-9-metrics">The 9 metrics</h3>
 <table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Metric</th>
 <th>Source</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>Total Users</td>
 <td>Count of rows in <code>auth.users</code></td>
 </tr>
-<tr>
+<tr class="even">
 <td>Active Today</td>
 <td>Sessions with <code>date = today</code></td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Drills Completed</td>
 <td>Count of all <code>drill_sessions</code> rows</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Average Score</td>
 <td>Mean of <code>score / total</code> across all sessions</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>30-Day Active Rate</td>
 <td>Users with a session in the last 30 days ÷ total users</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Average Improvement</td>
-<td>Per-user: first-half session avg vs. second-half session avg</td>
+<td>Per-user: first-half session avg vs. second-half session avg</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Average Completion Time</td>
-<td>Mean of <code>completed_at - started_at</code> (requires migration 002)</td>
+<td>Mean of <code>completed_at - started_at</code> (requires migration
+002)</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Most Difficult Topics</td>
-<td>Categories ranked by lowest correct rate (requires migration 002)</td>
+<td>Categories ranked by lowest correct rate (requires migration
+002)</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>Most Missed Questions</td>
-<td>Questions ranked by highest incorrect rate, min 3 attempts (requires migration 002)</td>
+<td>Questions ranked by highest incorrect rate, min 3 attempts (requires
+migration 002)</td>
 </tr>
-</tbody></table>
-<h3>Service role client</h3>
-<p><code>lib/supabase/admin.ts</code> creates a Supabase client with the service role key. This client is <strong>never used on the client side</strong> — only in server components and route handlers. It bypasses all RLS policies, allowing cross-user analytics.</p>
-<h3>Graceful degradation</h3>
-<p>If migration 002 has not been applied, the admin page detects the absence of <code>drill_question_answers</code> data and displays an amber notice. Core metrics (total users, drills completed, average score) work from migration 001 alone.</p>
-<hr>
-<h2>9. Vercel Deployment Process</h2>
-<h3>Initial deployment</h3>
-<ol>
+</tbody>
+</table>
+<h3 id="service-role-client">Service role client</h3>
+<p><code>lib/supabase/admin.ts</code> creates a Supabase client with the
+service role key. This client is <strong>never used on the client
+side</strong> — only in server components and route handlers. It
+bypasses all RLS policies, allowing cross-user analytics.</p>
+<h3 id="graceful-degradation">Graceful degradation</h3>
+<p>If migration 002 has not been applied, the admin page detects the
+absence of <code>drill_question_answers</code> data and displays an
+amber notice. Core metrics (total users, drills completed, average
+score) work from migration 001 alone.</p>
+<hr />
+<h2 id="vercel-deployment-process">9. Vercel Deployment Process</h2>
+<h3 id="initial-deployment">Initial deployment</h3>
+<ol type="1">
 <li>Push the repository to GitHub</li>
 <li>Import the repository in the Vercel dashboard</li>
 <li>Vercel auto-detects Next.js — no build configuration needed</li>
-<li>Add all required environment variables (see Section 10) under <strong>Settings → Environment Variables</strong></li>
-<li>Set environment scope to <strong>Production</strong> (and optionally Preview)</li>
+<li>Add all required environment variables (see Section 10) under
+<strong>Settings → Environment Variables</strong></li>
+<li>Set environment scope to <strong>Production</strong> (and optionally
+Preview)</li>
 <li>Deploy</li>
 </ol>
-<h3>Subsequent deployments</h3>
-<p>Every push to the <code>main</code> branch triggers an automatic Vercel deployment. No manual steps required.</p>
-<h3>Triggering a manual redeploy</h3>
+<h3 id="subsequent-deployments">Subsequent deployments</h3>
+<p>Every push to the <code>main</code> branch triggers an automatic
+Vercel deployment. No manual steps required.</p>
+<h3 id="triggering-a-manual-redeploy">Triggering a manual redeploy</h3>
 <p>To pick up new environment variables without a code change, run:</p>
-<pre><code class="language-bash">git commit --allow-empty -m &quot;chore: trigger redeploy&quot; &amp;&amp; git push origin main
-</code></pre>
-<p>Or use the Vercel dashboard: <strong>Deployments → ⋯ → Redeploy</strong>.</p>
-<h3>Git remote</h3>
+<pre class="bash"><code>git commit --allow-empty -m &quot;chore: trigger redeploy&quot; &amp;&amp; git push origin main</code></pre>
+<p>Or use the Vercel dashboard: <strong>Deployments → ⋯ →
+Redeploy</strong>.</p>
+<h3 id="git-remote">Git remote</h3>
 <p>All pushes use SSH:</p>
-<pre><code class="language-bash">git remote set-url origin git@github.com:tshatiqua-bit/keep-me-ready.git
-</code></pre>
-<hr>
-<h2>10. Environment Variables</h2>
-<p>The following environment variables must be set in Vercel under <strong>Settings → Environment Variables</strong>. No secret values are documented here.</p>
+<pre class="bash"><code>git remote set-url origin git@github.com:tshatiqua-bit/keep-me-ready.git</code></pre>
+<hr />
+<h2 id="environment-variables">10. Environment Variables</h2>
+<p>The following environment variables must be set in Vercel under
+<strong>Settings → Environment Variables</strong>. No secret values are
+documented here.</p>
 <table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
 <thead>
-<tr>
+<tr class="header">
 <th>Variable</th>
 <th>Where used</th>
 <th>Required</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td><code>NEXT_PUBLIC_SUPABASE_URL</code></td>
 <td>All Supabase clients (browser + server)</td>
 <td>Yes</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td>
 <td>All Supabase clients (browser + server)</td>
 <td>Yes</td>
 </tr>
-<tr>
+<tr class="odd">
 <td><code>SUPABASE_SERVICE_ROLE_KEY</code></td>
-<td>Admin client only (<code>lib/supabase/admin.ts</code>) — server-side only, never exposed to browser</td>
+<td>Admin client only (<code>lib/supabase/admin.ts</code>) — server-side
+only, never exposed to browser</td>
 <td>Yes</td>
 </tr>
-<tr>
+<tr class="even">
 <td><code>ADMIN_EMAIL</code></td>
 <td><code>/admin</code> page auth gate — server-side only</td>
 <td>Yes</td>
 </tr>
-</tbody></table>
-<p><strong>Local development:</strong> Copy <code>.env.local.example</code> to <code>.env.local</code> and fill in real values. This file is gitignored and must never be committed.</p>
-<p><code>NEXT_PUBLIC_</code> prefixed variables are embedded in the browser bundle at build time. All others remain server-side only.</p>
-<hr>
-<h2>11. Current Learner Flow</h2>
-<h3>Anonymous learner (no account)</h3>
+</tbody>
+</table>
+<p><strong>Local development:</strong> Copy
+<code>.env.local.example</code> to <code>.env.local</code> and fill in
+real values. This file is gitignored and must never be committed.</p>
+<p><code>NEXT_PUBLIC_</code> prefixed variables are embedded in the
+browser bundle at build time. All others remain server-side only.</p>
+<hr />
+<h2 id="current-learner-flow">11. Current Learner Flow</h2>
+<h3 id="anonymous-learner-no-account">Anonymous learner (no
+account)</h3>
 <pre><code>Homepage → Start Drill
   → Lesson Card (topic overview)
   → 10 Questions (multiple choice, true/false, scenario)
@@ -503,67 +641,75 @@
       → Compare Perspectives (key ideas + model response)
       → Learning Journal (optional — saves to localStorage)
       → Review Lesson (per-question coaching)
-  → Dashboard (stats from localStorage)
-</code></pre>
-<p>Progress (streak, accuracy, session history) is stored in <code>localStorage[&quot;kmr-progress&quot;]</code>. A &quot;Sign in to save your progress&quot; prompt appears on the score screen.</p>
-<h3>Authenticated learner (signed in)</h3>
-<p>Same flow, with these additions:</p>
-<ul>
-<li>Drill completion syncs to Supabase via <code>POST /api/scores</code></li>
-<li>Dashboard stats are server-rendered from <code>drill_sessions</code></li>
-<li>Learning Journal entries remain in localStorage (Supabase sync planned for a future phase)</li>
-<li>Session history persists across devices</li>
-</ul>
-<h3>Question bank</h3>
+  → Dashboard (stats from localStorage)</code></pre>
+<p>Progress (streak, accuracy, session history) is stored in
+<code>localStorage["kmr_progress"]</code>. A “Sign in to save your
+progress” prompt appears on the score screen.</p>
+<h3 id="authenticated-learner-signed-in">Authenticated learner (signed
+in)</h3>
+<p>Same flow, with these additions: - Drill completion syncs to Supabase
+via <code>POST /api/scores</code> - Dashboard stats are server-rendered
+from <code>drill_sessions</code> - Learning Journal entries remain in
+localStorage (Supabase sync planned for a future phase) - Session
+history persists across devices</p>
+<h3 id="question-bank">Question bank</h3>
 <ul>
 <li><strong>72 beginner questions</strong> across 6 categories</li>
-<li>3 question types: multiple choice (4 options), true/false (2 options), scenario (4 options)</li>
-<li>10 questions selected per drill via <code>lib/questions/selector.ts</code></li>
-<li>Today&#39;s topic rotates daily based on <code>dayOfYear % 6</code> — learners always know what to expect</li>
-<li>Each question includes: explanation, per-option coaching notes (<code>optionExplanations</code>), and is tagged with <code>category</code>, <code>type</code>, and <code>level</code></li>
+<li>3 question types: multiple choice (4 options), true/false (2
+options), scenario (4 options)</li>
+<li>10 questions selected per drill via
+<code>lib/questions/selector.ts</code></li>
+<li>Today’s topic rotates daily based on <code>dayOfYear % 6</code> —
+learners always know what to expect</li>
+<li>Each question includes: explanation, per-option coaching notes
+(<code>optionExplanations</code>), and is tagged with
+<code>category</code>, <code>type</code>, and <code>level</code></li>
 </ul>
-<h3>Topic rotation</h3>
+<h3 id="topic-rotation">Topic rotation</h3>
 <table>
 <thead>
-<tr>
+<tr class="header">
 <th>#</th>
 <th>Category</th>
 <th>Focus</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr class="odd">
 <td>1</td>
 <td><code>debits_credits</code></td>
 <td>Debits &amp; Credits — The Foundation</td>
 </tr>
-<tr>
+<tr class="even">
 <td>2</td>
 <td><code>accounts</code></td>
 <td>Chart of Accounts</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>3</td>
 <td><code>financial_statements</code></td>
 <td>Financial Statements</td>
 </tr>
-<tr>
+<tr class="even">
 <td>4</td>
 <td><code>journal_entries</code></td>
 <td>Journal Entries</td>
 </tr>
-<tr>
+<tr class="odd">
 <td>5</td>
 <td><code>bank_reconciliation</code></td>
 <td>Bank Reconciliation</td>
 </tr>
-<tr>
+<tr class="even">
 <td>6</td>
 <td><code>payroll</code></td>
 <td>Payroll</td>
 </tr>
-</tbody></table>
-<hr>
-<h2>12. Current Instructor/Admin Flow</h2>
+</tbody>
+</table>
+<hr />
+<h2 id="current-instructoradmin-flow">12. Current Instructor/Admin
+Flow</h2>
 <pre><code>/admin (requires ADMIN_EMAIL match)
   → Server fetches all drill_sessions via service role client
   → Computes 9 metrics in TypeScript
@@ -572,104 +718,172 @@
       → Improvement + completion time cards
       → Weekly trend bar chart (last 8 weeks)
       → Most Difficult Topics (ranked by avg correct rate)
-      → Most Missed Questions (ranked by miss rate, min 3 attempts)
-</code></pre>
-<p>The dashboard is read-only. All data is computed at request time — there is no caching layer currently. The page re-fetches fresh data on every visit.</p>
-<p>If the admin visits before migration 002 is applied, an amber warning banner explains which features are inactive and what SQL to run.</p>
-<hr>
-<h2>13. Recent Features Implemented</h2>
-<h3>Authentication fixes (June 2026)</h3>
+      → Most Missed Questions (ranked by miss rate, min 3 attempts)</code></pre>
+<p>The dashboard is read-only. All data is computed at request time —
+there is no caching layer currently. The page re-fetches fresh data on
+every visit.</p>
+<p>If the admin visits before migration 002 is applied, an amber warning
+banner explains which features are inactive and what SQL to run.</p>
+<hr />
+<h2 id="recent-features-implemented">13. Recent Features
+Implemented</h2>
+<h3 id="authentication-fixes-june-2026">Authentication fixes (June
+2026)</h3>
 <ul>
-<li>Replaced the original server-side Route Handler callback with a client-side page (<code>app/auth/callback/page.tsx</code>) that handles both PKCE code exchange and implicit flow hash tokens via <code>onAuthStateChange</code></li>
-<li>Fixed admin gate to redirect to <code>/auth/login</code> (not <code>/</code>) when not logged in, and show a diagnostic &quot;Access Denied&quot; page with the signed-in email when the email doesn&#39;t match</li>
+<li>Replaced the original server-side Route Handler callback with a
+client-side page (<code>app/auth/callback/page.tsx</code>) that handles
+both PKCE code exchange and implicit flow hash tokens via
+<code>onAuthStateChange</code></li>
+<li>Fixed admin gate to redirect to <code>/auth/login</code> (not
+<code>/</code>) when not logged in, and show a diagnostic “Access
+Denied” page with the signed-in email when the email doesn’t match</li>
 </ul>
-<h3>Lesson Review System</h3>
+<h3 id="lesson-review-system">Lesson Review System</h3>
 <ul>
-<li>Post-drill review shows all 10 questions with correct/incorrect indicators</li>
-<li>Expandable per-option coaching notes explain why each wrong answer is incorrect and what misconception it represents</li>
-<li>&quot;Key Lesson Takeaways&quot; block at the bottom of the review</li>
+<li>Post-drill review shows all 10 questions with correct/incorrect
+indicators</li>
+<li>Expandable per-option coaching notes explain why each wrong answer
+is incorrect and what misconception it represents</li>
+<li>“Key Lesson Takeaways” block at the bottom of the review</li>
 </ul>
-<h3>Compare Perspectives (self-check)</h3>
+<h3 id="compare-perspectives-self-check">Compare Perspectives
+(self-check)</h3>
 <ul>
 <li>Expandable section on the score screen</li>
-<li>Each topic has 4–5 key idea bullets and a plain-English model response</li>
+<li>Each topic has 4–5 key idea bullets and a plain-English model
+response</li>
 <li>Framed as perspective comparison, not correct/incorrect grading</li>
 </ul>
-<h3>Learning Journal</h3>
+<h3 id="learning-journal">Learning Journal</h3>
 <ul>
 <li>Optional reflection textarea on the score screen</li>
-<li>Prompt: &quot;How has your thinking shifted after comparing perspectives?&quot;</li>
-<li>&quot;Save This Insight&quot; saves to <code>localStorage[&quot;kmr-journal&quot;]</code></li>
-<li>Entry shape: <code>{ id, category, conceptId, topicTitle, prompt, text, date, savedAt }</code></li>
-<li><code>conceptId</code> field future-proofs analytics and mastery tracking</li>
-<li>Confirmation: &quot;✅ Added to your Learning Journal / Every reflection you save becomes part of your professional growth.&quot;</li>
-<li><strong>Dashboard section:</strong> <code>LearningJournal.tsx</code> renders entries newest-first with topic filter pills</li>
+<li>Prompt: “How has your thinking shifted after comparing
+perspectives?”</li>
+<li>“Save This Insight” saves to
+<code>localStorage["kmr-journal"]</code></li>
+<li>Entry shape:
+<code>{ id, category, conceptId, topicTitle, prompt, text, date, savedAt }</code></li>
+<li><code>conceptId</code> field future-proofs analytics and mastery
+tracking</li>
+<li>Confirmation: “✅ Added to your Learning Journal / Every reflection
+you save becomes part of your professional growth.”</li>
+<li><strong>Dashboard section:</strong> <code>LearningJournal.tsx</code>
+renders entries newest-first with topic filter pills</li>
 </ul>
-<h3>Instructor Dashboard</h3>
+<h3 id="instructor-dashboard">Instructor Dashboard</h3>
 <ul>
 <li>9 analytics metrics across 4 visual rows</li>
-<li>Service role Supabase client bypasses RLS for cross-user queries</li>
+<li>Service role Supabase client bypasses RLS for cross-user
+queries</li>
 <li>Admin gate via <code>ADMIN_EMAIL</code> environment variable</li>
 <li>Graceful degradation when migration 002 is not applied</li>
 </ul>
-<h3>Dark mode heading contrast</h3>
+<h3 id="dark-mode-heading-contrast">Dark mode heading contrast</h3>
 <ul>
-<li>All primary headings use <code>dark:text-slate-400</code> or <code>dark:text-slate-300</code> throughout the app</li>
-<li>Input fields use explicit <code>text-slate-900 dark:text-slate-100</code> with matching dark backgrounds</li>
+<li>All primary headings use <code>dark:text-slate-400</code> or
+<code>dark:text-slate-300</code> throughout the app</li>
+<li>Input fields use explicit
+<code>text-slate-900 dark:text-slate-100</code> with matching dark
+backgrounds</li>
 </ul>
-<hr>
-<h2>14. Known Limitations</h2>
-<h3>Authentication</h3>
+<hr />
+<h2 id="known-limitations">14. Known Limitations</h2>
+<h3 id="authentication">Authentication</h3>
 <ul>
-<li><strong>Magic link only.</strong> Google, Apple, and Microsoft OAuth are deferred post-MVP. The login form currently shows only the email/magic link flow.</li>
-<li><strong>Implicit flow (not PKCE).</strong> Supabase delivers tokens as hash fragments. The callback handles this correctly, but it means auth cannot be completed server-side (requires JavaScript in the browser).</li>
-<li><strong>Single admin account.</strong> The <code>ADMIN_EMAIL</code> gate supports only one administrator email. A roles table would be needed to support multiple admins.</li>
+<li><strong>Magic link only.</strong> Google, Apple, and Microsoft OAuth
+are deferred post-MVP. The login form currently shows only the
+email/magic link flow.</li>
+<li><strong>Implicit flow (not PKCE).</strong> Supabase delivers tokens
+as hash fragments. The callback handles this correctly, but it means
+auth cannot be completed server-side (requires JavaScript in the
+browser).</li>
+<li><strong>Single admin account.</strong> The <code>ADMIN_EMAIL</code>
+gate supports only one administrator email. A roles table would be
+needed to support multiple admins.</li>
 </ul>
-<h3>Data and persistence</h3>
+<h3 id="data-and-persistence">Data and persistence</h3>
 <ul>
-<li><strong>Learning Journal is localStorage-only.</strong> Journal entries do not sync across devices and are lost if the browser&#39;s localStorage is cleared. Supabase sync is planned for a future phase.</li>
-<li><strong>Anonymous progress is device-specific.</strong> localStorage data cannot be merged with a Supabase account retroactively without a deliberate migration step.</li>
-<li><strong>Question bank is beginner-only.</strong> Intermediate and advanced JSON files exist but are empty placeholders.</li>
+<li><strong>Learning Journal is localStorage-only.</strong> Journal
+entries do not sync across devices and are lost if the browser’s
+localStorage is cleared. Supabase sync is planned for a future
+phase.</li>
+<li><strong>Anonymous progress is device-specific.</strong> localStorage
+data cannot be merged with a Supabase account retroactively without a
+deliberate migration step.</li>
+<li><strong>Question bank is beginner-only.</strong> Intermediate and
+advanced JSON files exist but are empty placeholders.</li>
 </ul>
-<h3>Analytics</h3>
+<h3 id="analytics">Analytics</h3>
 <ul>
-<li><strong>Admin metrics require migration 002.</strong> Per-question analytics, topic difficulty, and completion time are unavailable until both migrations are applied.</li>
-<li><strong>No caching on the admin dashboard.</strong> Every visit re-fetches all session data. This is acceptable at low user volumes but will need pagination or caching at scale.</li>
-<li><strong>No real-time updates.</strong> The admin dashboard is a static snapshot at the time of page load.</li>
+<li><strong>Admin metrics require migration 002.</strong> Per-question
+analytics, topic difficulty, and completion time are unavailable until
+both migrations are applied.</li>
+<li><strong>No caching on the admin dashboard.</strong> Every visit
+re-fetches all session data. This is acceptable at low user volumes but
+will need pagination or caching at scale.</li>
+<li><strong>No real-time updates.</strong> The admin dashboard is a
+static snapshot at the time of page load.</li>
 </ul>
-<h3>Architecture</h3>
+<h3 id="architecture">Architecture</h3>
 <ul>
-<li><strong>No test suite.</strong> There are no automated unit, integration, or end-to-end tests. All testing is manual.</li>
-<li><strong>No error monitoring.</strong> There is no Sentry, Datadog, or similar integration. Server errors surface only in Vercel function logs.</li>
-<li><strong>Question selection is random, not adaptive.</strong> Questions are selected randomly from the day&#39;s category. There is no spaced repetition or performance-based question weighting yet.</li>
+<li><strong>No test suite.</strong> There are no automated unit,
+integration, or end-to-end tests. All testing is manual.</li>
+<li><strong>No error monitoring.</strong> There is no Sentry, Datadog,
+or similar integration. Server errors surface only in Vercel function
+logs.</li>
+<li><strong>Question selection is random, not adaptive.</strong>
+Questions are selected randomly from the day’s category. There is no
+spaced repetition or performance-based question weighting yet.</li>
 </ul>
-<hr>
-<h2>15. Future Roadmap</h2>
-<h3>Near-term (next 1–3 sessions)</h3>
+<hr />
+<h2 id="future-roadmap">15. Future Roadmap</h2>
+<h3 id="near-term-next-13-sessions">Near-term (next 1–3 sessions)</h3>
 <ul>
-<li><strong>Learning Journal — Supabase sync.</strong> Persist journal entries to a new <code>learning_journal</code> table in Supabase. Preserve all existing localStorage entries on first sync. Enable cross-device access.</li>
-<li><strong>Learning Journal milestone celebrations.</strong> Quiet celebrations at 25, 50, 100, and 250 insights captured. Emphasis on accumulated understanding rather than streaks or scores.</li>
-<li><strong>Learning Journal dashboard timeline.</strong> Organize the journal view by date or topic. Show growth over time visually.</li>
+<li><strong>Learning Journal — Supabase sync.</strong> Persist journal
+entries to a new <code>learning_journal</code> table in Supabase.
+Preserve all existing localStorage entries on first sync. Enable
+cross-device access.</li>
+<li><strong>Learning Journal milestone celebrations.</strong> Quiet
+celebrations at 25, 50, 100, and 250 insights captured. Emphasis on
+accumulated understanding rather than streaks or scores.</li>
+<li><strong>Learning Journal dashboard timeline.</strong> Organize the
+journal view by date or topic. Show growth over time visually.</li>
 </ul>
-<h3>Medium-term</h3>
+<h3 id="medium-term">Medium-term</h3>
 <ul>
-<li><strong>Google / Apple / Microsoft OAuth.</strong> Reduce friction for learners who prefer social sign-in.</li>
-<li><strong>Intermediate and advanced question banks.</strong> 72+ questions per difficulty level, selectable by learner experience level.</li>
-<li><strong>Adaptive question selection.</strong> Weight questions toward areas where the learner has historically underperformed. Implement spaced repetition for missed concepts.</li>
-<li><strong>Mastery tracking per concept.</strong> Use <code>conceptId</code> (already stored in journal entries and question metadata) to show per-topic mastery levels on the dashboard.</li>
-<li><strong>Streak protection and reminders.</strong> Email or push reminders before a streak expires. Daily digest of tomorrow&#39;s topic.</li>
+<li><strong>Google / Apple / Microsoft OAuth.</strong> Reduce friction
+for learners who prefer social sign-in.</li>
+<li><strong>Intermediate and advanced question banks.</strong> 72+
+questions per difficulty level, selectable by learner experience
+level.</li>
+<li><strong>Adaptive question selection.</strong> Weight questions
+toward areas where the learner has historically underperformed.
+Implement spaced repetition for missed concepts.</li>
+<li><strong>Mastery tracking per concept.</strong> Use
+<code>conceptId</code> (already stored in journal entries and question
+metadata) to show per-topic mastery levels on the dashboard.</li>
+<li><strong>Streak protection and reminders.</strong> Email or push
+reminders before a streak expires. Daily digest of tomorrow’s
+topic.</li>
 </ul>
-<h3>Long-term</h3>
+<h3 id="long-term">Long-term</h3>
 <ul>
-<li><strong>Multi-admin support.</strong> Replace <code>ADMIN_EMAIL</code> with a <code>user_roles</code> table supporting multiple admin and instructor accounts.</li>
-<li><strong>Cohort / class management.</strong> Instructors can create groups, assign topics, and view aggregate performance for their cohort.</li>
-<li><strong>Content management.</strong> Admin UI for adding and editing questions, topics, and coaching notes without a code deploy.</li>
-<li><strong>Mobile app.</strong> React Native or PWA wrapper for offline drill capability.</li>
-<li><strong>Certification prep tracks.</strong> Curated question sequences aligned to QuickBooks, Xero, or bookkeeping certification exams.</li>
-<li><strong>Public API.</strong> Allow third-party accounting educators to integrate Keep Me Ready drills into their own platforms.</li>
+<li><strong>Multi-admin support.</strong> Replace
+<code>ADMIN_EMAIL</code> with a <code>user_roles</code> table supporting
+multiple admin and instructor accounts.</li>
+<li><strong>Cohort / class management.</strong> Instructors can create
+groups, assign topics, and view aggregate performance for their
+cohort.</li>
+<li><strong>Content management.</strong> Admin UI for adding and editing
+questions, topics, and coaching notes without a code deploy.</li>
+<li><strong>Mobile app.</strong> React Native or PWA wrapper for offline
+drill capability.</li>
+<li><strong>Certification prep tracks.</strong> Curated question
+sequences aligned to QuickBooks, Xero, or bookkeeping certification
+exams.</li>
+<li><strong>Public API.</strong> Allow third-party accounting educators
+to integrate Keep Me Ready drills into their own platforms.</li>
 </ul>
-<hr>
+<hr />
 <p><em>Keep Me Ready — Practice makes permanent.</em></p>
-
-</body>
-</html>
+</body></html>
