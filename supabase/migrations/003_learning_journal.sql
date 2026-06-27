@@ -27,3 +27,7 @@ CREATE POLICY "delete_own_journal" ON public.learning_journal
 
 CREATE INDEX IF NOT EXISTS idx_lj_user_id  ON public.learning_journal (user_id);
 CREATE INDEX IF NOT EXISTS idx_lj_saved_at ON public.learning_journal (saved_at DESC);
+
+-- Required: PostgREST only exposes tables that API roles have been granted access to.
+-- Without this, the table is invisible to the REST API even with RLS enabled.
+GRANT SELECT, INSERT, DELETE ON public.learning_journal TO authenticated;
