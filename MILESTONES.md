@@ -49,6 +49,14 @@ All core infrastructure that future features will build on top of is in place.
 - RLS verified: anonymous queries return zero rows, authenticated users see only their own data
 - `DELETE CASCADE` on `user_id` FK — deleting a user removes all their journal entries
 
+#### Anonymous → signed-in data merge (PRD v1.1)
+On sign-in, `app/auth/callback/page.tsx` runs two merges in parallel before redirecting:
+- **Journal merge** (`kmr-journal`): bulk POST to `/api/journal`, cleared on success; idempotent via upsert on `id`
+- **Session merge** (`kmr_progress`): parallel POST per session to `/api/scores`, cleared only when all succeed
+- Both merges are fire-and-forget with `.catch(() => {})` — a merge failure never blocks sign-in
+- Streak recalculates automatically from merged session dates when the dashboard next loads (`computeStreakFromDates` in `dashboard/page.tsx`)
+- Note: localStorage sessions store `questions: []` and `answers: []` — only `score`, `total`, and `date` are sent to `/api/scores`
+
 #### Sentry error monitoring (active in production)
 - `instrumentation.ts` — server-side init + `onRequestError` hook (Next.js 16 native API)
 - `instrumentation-client.ts` — client-side init with Session Replay (100% on errors, 5% on sessions)
@@ -91,9 +99,7 @@ Everything above is verified in production. Future features can rely on:
 ### What comes next
 
 From the PRD, remaining v1.1 priorities in order:
-1. **Anonymous → signed-in session merge** — merge `kmr_progress` localStorage data on first sign-in (mirrors the journal merge pattern now established)
-3. **Streak preservation** — recalculate streak from Supabase `drill_sessions` on sign-in
-4. **Instructor dashboard improvements** — richer analytics from `drill_question_answers`
+1. **Instructor dashboard improvements** — richer analytics from `drill_question_answers`
 
 ---
 
