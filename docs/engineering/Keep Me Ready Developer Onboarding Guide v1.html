@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>Keep Me Ready — Developer Onboarding Guide v1</title>
+<style>
+  @page { margin: 2.2cm 2.5cm; }
+  body { font-family: 'Georgia', serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
+  h1 { font-size: 1.9em; color: #1e1b4b; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; margin-top: 0; }
+  h2 { font-size: 1.35em; color: #312e81; margin-top: 2.4em; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; page-break-after: avoid; }
+  h3 { font-size: 1.05em; color: #3730a3; margin-top: 1.6em; page-break-after: avoid; }
+  p { margin: 0.7em 0; }
+  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.82em; color: #1e293b; }
+  pre { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 16px; overflow-x: auto; page-break-inside: avoid; margin: 1em 0; }
+  pre code { background: none; padding: 0; font-size: 0.8em; }
+  table { border-collapse: collapse; width: 100%; margin: 1.2em 0; page-break-inside: avoid; font-size: 0.9em; }
+  th { background: #4f46e5; color: #ffffff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  blockquote { border-left: 4px solid #4f46e5; margin: 1em 0; padding: 4px 16px; color: #475569; background: #f8f8ff; }
+  hr { border: none; border-top: 1px solid #cbd5e1; margin: 2em 0; }
+  a { color: #4338ca; text-decoration: none; }
+  ul, ol { padding-left: 1.6em; margin: 0.6em 0; }
+  li { margin: 0.35em 0; }
+  strong { color: #1e293b; }
+</style>
+</head>
+<body>
+<h1 id="keep-me-ready-developer-onboarding-guide-v1">Keep Me Ready —
+Developer Onboarding Guide v1</h1>
+<p><strong>Prepared:</strong> June 2026<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Folder:</strong> <code>docs/engineering/</code><br />
+<strong>Related documents:</strong> <a
+href="../founder/Keep%20Me%20Ready%20Founder%20Technical%20Blueprint%20v1.md">Founder
+Technical Blueprint v1</a> · <a
+href="../founder/Keep%20Me%20Ready%20PRD%20v1.md">PRD v1</a></p>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#1-before-you-start">Before You Start</a></li>
+<li><a href="#2-prerequisites">Prerequisites</a></li>
+<li><a href="#3-clone-the-repository">Clone the Repository</a></li>
+<li><a href="#4-install-dependencies">Install Dependencies</a></li>
+<li><a href="#5-set-up-supabase">Set Up Supabase</a></li>
+<li><a href="#6-configure-environment-variables">Configure Environment
+Variables</a></li>
+<li><a href="#7-run-the-database-migrations">Run the Database
+Migrations</a></li>
+<li><a href="#8-configure-supabase-auth">Configure Supabase
+Auth</a></li>
+<li><a href="#9-run-the-development-server">Run the Development
+Server</a></li>
+<li><a href="#10-smoke-test-the-app">Smoke Test the App</a></li>
+<li><a href="#11-project-orientation">Project Orientation</a></li>
+<li><a href="#12-nextjs-16--breaking-changes-to-know">Next.js 16 —
+Breaking Changes to Know</a></li>
+<li><a href="#13-working-in-this-codebase">Working in This
+Codebase</a></li>
+<li><a href="#14-deployment">Deployment</a></li>
+<li><a href="#15-common-issues-and-fixes">Common Issues and
+Fixes</a></li>
+</ol>
+<hr />
+<h2 id="before-you-start">1. Before You Start</h2>
+<p>Read the following documents before touching any code. This is not
+optional — the decisions encoded in this codebase only make sense in
+context, and working without that context leads to mistakes that are
+hard to undo.</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Document</th>
+<th>Time</th>
+<th>What you will learn</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><a
+href="../founder/Keep%20Me%20Ready%20Founder%20Vision%20v1.md">Founder
+Vision v1</a></td>
+<td>~15 min</td>
+<td>Why this product exists, who it serves, what it will never do</td>
+</tr>
+<tr class="even">
+<td><a href="../founder/Keep%20Me%20Ready%20PRD%20v1.md">PRD v1</a></td>
+<td>~30 min</td>
+<td>What is built, what is planned, acceptance criteria, risks</td>
+</tr>
+<tr class="odd">
+<td><a
+href="../founder/Keep%20Me%20Ready%20Founder%20Technical%20Blueprint%20v1.md">Technical
+Blueprint v1</a></td>
+<td>~30 min</td>
+<td>Architecture, every file explained, auth flow, database schema,
+deployment</td>
+</tr>
+</tbody>
+</table>
+<p>After reading those three documents, this onboarding guide will take
+you the rest of the way to a running local environment.</p>
+<hr />
+<h2 id="prerequisites">2. Prerequisites</h2>
+<p>You need the following installed before cloning the repository.</p>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tool</th>
+<th>Required version</th>
+<th>Check</th>
+<th>Install</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Node.js</strong></td>
+<td>20 or higher</td>
+<td><code>node --version</code></td>
+<td><a href="https://nodejs.org">nodejs.org</a></td>
+</tr>
+<tr class="even">
+<td><strong>npm</strong></td>
+<td>9 or higher</td>
+<td><code>npm --version</code></td>
+<td>Bundled with Node.js</td>
+</tr>
+<tr class="odd">
+<td><strong>Git</strong></td>
+<td>Any recent version</td>
+<td><code>git --version</code></td>
+<td><a href="https://git-scm.com">git-scm.com</a></td>
+</tr>
+</tbody>
+</table>
+<p>You also need:</p>
+<ul>
+<li>A <strong>Supabase account</strong> — free tier is sufficient. Sign
+up at <a href="https://supabase.com">supabase.com</a>.</li>
+<li>A <strong>GitHub account</strong> with access to the
+<code>tshatiqua-bit/keep-me-ready</code> repository.</li>
+<li>An <strong>SSH key</strong> configured for GitHub (the remote uses
+SSH, not HTTPS).</li>
+</ul>
+<p>To verify your SSH key works with GitHub:</p>
+<pre class="bash"><code>ssh -T git@github.com
+# Expected: Hi tshatiqua-bit! You&#39;ve successfully authenticated...</code></pre>
+<hr />
+<h2 id="clone-the-repository">3. Clone the Repository</h2>
+<pre class="bash"><code>git clone git@github.com:tshatiqua-bit/keep-me-ready.git
+cd keep-me-ready</code></pre>
+<p>Confirm you are on the <code>main</code> branch:</p>
+<pre class="bash"><code>git branch
+# * main</code></pre>
+<hr />
+<h2 id="install-dependencies">4. Install Dependencies</h2>
+<pre class="bash"><code>npm install</code></pre>
+<p>This installs all dependencies listed in <code>package.json</code>,
+including:</p>
+<ul>
+<li><code>next</code> 16.2.9 with React 19</li>
+<li><code>@supabase/supabase-js</code> and <code>@supabase/ssr</code>
+for auth and database</li>
+<li><code>tailwindcss</code> v4 and its PostCSS plugin</li>
+<li>TypeScript 5 and all type definitions</li>
+</ul>
+<p><strong>Do not use <code>npm install --legacy-peer-deps</code> or
+force-install.</strong> If you encounter peer dependency errors, check
+whether your Node version meets the requirement in Section 2 before
+trying anything else.</p>
+<hr />
+<h2 id="set-up-supabase">5. Set Up Supabase</h2>
+<p>You need a dedicated Supabase project for local development. Do not
+share credentials with the production project.</p>
+<h3 id="create-a-new-project">Create a new project</h3>
+<ol type="1">
+<li>Log in at <a href="https://supabase.com">supabase.com</a> and click
+<strong>New project</strong></li>
+<li>Choose an organisation, enter a project name
+(e.g. <code>keep-me-ready-dev</code>), set a database password, and
+select a region close to you</li>
+<li>Wait for the project to finish provisioning (about 60 seconds)</li>
+</ol>
+<h3 id="collect-your-credentials">Collect your credentials</h3>
+<p>You need four values from your project dashboard.</p>
+<p><strong>Project URL and anon key</strong> — go to <strong>Settings →
+Data API</strong>:</p>
+<ul>
+<li><code>NEXT_PUBLIC_SUPABASE_URL</code> — the Project URL (format:
+<code>https://xxxx.supabase.co</code>)</li>
+<li><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> — the <code>anon</code>
+<code>public</code> key</li>
+</ul>
+<p><strong>Service role key</strong> — on the same page, scroll down to
+find:</p>
+<ul>
+<li><code>SUPABASE_SERVICE_ROLE_KEY</code> — the
+<code>service_role</code> key (keep this strictly server-side; it
+bypasses all RLS policies)</li>
+</ul>
+<p>Keep this browser tab open — you will need these values in the next
+step.</p>
+<hr />
+<h2 id="configure-environment-variables">6. Configure Environment
+Variables</h2>
+<p>Copy the example env file:</p>
+<pre class="bash"><code>cp .env.local.example .env.local</code></pre>
+<p>Open <code>.env.local</code> and fill in your values:</p>
+<pre><code>NEXT_PUBLIC_SUPABASE_URL=https://your-project-id.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key-here
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key-here
+ADMIN_EMAIL=you@example.com</code></pre>
+<p><strong><code>ADMIN_EMAIL</code></strong> is the email address of the
+user who will have access to the <code>/admin</code> instructor
+dashboard. Set it to any email you control — you will use it to sign in
+and verify the admin route.</p>
+<p><code>.env.local</code> is gitignored and must never be committed.
+The <code>.env.local.example</code> file (which is committed) documents
+the shape without any real values.</p>
+<p><code>NEXT_PUBLIC_</code> prefixed variables are embedded in the
+browser bundle at build time. The other two are server-side only and are
+never exposed to the client.</p>
+<hr />
+<h2 id="run-the-database-migrations">7. Run the Database Migrations</h2>
+<p>The app requires two SQL migrations to be applied to your Supabase
+project. Both must be run manually in the Supabase SQL Editor — there is
+no CLI migration runner in this project.</p>
+<p>Go to your Supabase project dashboard → <strong>SQL Editor</strong> →
+<strong>New query</strong>.</p>
+<h3 id="migration-001-run-first">Migration 001 — run first</h3>
+<p>Copy and paste the entire contents of
+<code>supabase/migrations/001_init.sql</code> and click
+<strong>Run</strong>.</p>
+<p>This creates the <code>drill_sessions</code> table with Row Level
+Security enabled, and two RLS policies allowing users to read and write
+only their own rows.</p>
+<h3 id="migration-002-run-second">Migration 002 — run second</h3>
+<p>Copy and paste the entire contents of
+<code>supabase/migrations/002_analytics.sql</code> and click
+<strong>Run</strong>.</p>
+<p>This adds <code>category</code> and <code>started_at</code> columns
+to <code>drill_sessions</code>, creates the
+<code>drill_question_answers</code> table with its own RLS policies, and
+adds performance indexes.</p>
+<p><strong>Order matters.</strong> Migration 002 references the table
+created by 001. Running them out of order will produce an error.</p>
+<p>Both migrations use <code>IF NOT EXISTS</code> guards and are safe to
+re-run if needed.</p>
+<h3 id="verify">Verify</h3>
+<p>After running both migrations, go to <strong>Table Editor</strong> in
+Supabase and confirm that <code>drill_sessions</code> and
+<code>drill_question_answers</code> both appear.</p>
+<hr />
+<h2 id="configure-supabase-auth">8. Configure Supabase Auth</h2>
+<p>The app uses email magic links. You need to tell Supabase where to
+redirect users after they click a link.</p>
+<ol type="1">
+<li>In your Supabase project, go to <strong>Authentication → URL
+Configuration</strong></li>
+<li>Set <strong>Site URL</strong> to
+<code>http://localhost:3000</code></li>
+<li>Under <strong>Redirect URLs</strong>, add
+<code>http://localhost:3000/auth/callback</code></li>
+<li>Click <strong>Save</strong></li>
+</ol>
+<p>You will update these URLs to the production Vercel URL when
+deploying (see Section 14).</p>
+<p><strong>Email rate limits:</strong> Supabase’s free tier allows 3
+auth emails per hour. If you are testing the magic link flow repeatedly,
+you may hit this limit. Use the same email address across tests to
+minimise requests, or use the <strong>Supabase Auth admin UI</strong> to
+sign in directly without email.</p>
+<hr />
+<h2 id="run-the-development-server">9. Run the Development Server</h2>
+<pre class="bash"><code>npm run dev</code></pre>
+<p>The app starts at <a
+href="http://localhost:3000">http://localhost:3000</a>.</p>
+<p>Next.js 16 uses Turbopack by default in development. The first cold
+start takes a few seconds; subsequent page navigations are
+near-instant.</p>
+<p>To run a production build locally (useful for catching build-time
+errors before pushing):</p>
+<pre class="bash"><code>npm run build &amp;&amp; npm run start</code></pre>
+<p>A clean build with no errors produces output similar to:</p>
+<pre><code>Route (app)                              Size     First Load JS
+┌ ○ /                                   2.5 kB          105 kB
+├ ○ /admin                              3.8 kB          106 kB
+├ ○ /auth/callback                      1.2 kB          100 kB
+├ ○ /auth/login                         1.8 kB          102 kB
+├ ○ /auth/logout                        143 B           97.8 kB
+├ ○ /dashboard                          4.1 kB          108 kB
+└ ○ /drill                              6.2 kB          112 kB</code></pre>
+<p>If you see TypeScript or ESLint errors in the build output, fix them
+before pushing. The CI pipeline on Vercel runs the same build and will
+fail on the same errors.</p>
+<hr />
+<h2 id="smoke-test-the-app">10. Smoke Test the App</h2>
+<p>Walk through this checklist after getting the server running. It
+covers the full user journey and exercises every major system.</p>
+<h3 id="anonymous-drill-flow">Anonymous drill flow</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Navigate to
+<code>http://localhost:3000</code> — homepage loads with today’s topic
+and streak = 0</label></li>
+<li><label><input type="checkbox" />Click <strong>Start Today’s
+Drill</strong> — Lesson Card renders with topic title, lesson text, and
+“Start Drill” button</label></li>
+<li><label><input type="checkbox" />Click <strong>Start Drill</strong> —
+first question renders</label></li>
+<li><label><input type="checkbox" />Answer all 10 questions — each
+answer reveals the correct option and a coaching
+explanation</label></li>
+<li><label><input type="checkbox" />Click <strong>See Results</strong> —
+score screen renders with coaching message</label></li>
+<li><label><input type="checkbox" />Expand <strong>Compare
+Perspectives</strong> — key idea bullets and model response
+appear</label></li>
+<li><label><input type="checkbox" />Write text in the journal textarea
+and click <strong>Save This Insight</strong> — confirmation message
+appears</label></li>
+<li><label><input type="checkbox" />Click <strong>Review Lesson</strong>
+— all 10 questions render with expandable coaching notes</label></li>
+</ul>
+<h3 id="dashboard-anonymous">Dashboard (anonymous)</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Navigate to <code>/dashboard</code>
+— streak badge, stat cards, and session history render</label></li>
+<li><label><input type="checkbox" />Session from the drill above appears
+in session history</label></li>
+</ul>
+<h3 id="authentication">Authentication</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Navigate to <code>/auth/login</code>
+— email input renders</label></li>
+<li><label><input type="checkbox" />Enter your <code>ADMIN_EMAIL</code>
+address and click <strong>Send Magic Link</strong> — confirmation
+message appears</label></li>
+<li><label><input type="checkbox" />Open the magic link email and click
+the link — browser redirects to <code>/dashboard</code> signed
+in</label></li>
+<li><label><input type="checkbox" />Nav shows your email address and a
+<strong>Sign out</strong> button</label></li>
+</ul>
+<h3 id="admin-dashboard">Admin dashboard</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Navigate to <code>/admin</code>
+while signed in as <code>ADMIN_EMAIL</code> — instructor dashboard
+renders with metrics</label></li>
+<li><label><input type="checkbox" />Navigate to <code>/admin</code> in
+an incognito window (not signed in) — redirects to
+<code>/auth/login</code></label></li>
+</ul>
+<h3 id="sign-out">Sign out</h3>
+<ul class="task-list">
+<li><label><input type="checkbox" />Click <strong>Sign out</strong> —
+redirects to homepage, nav shows “Sign in” again</label></li>
+</ul>
+<p>If any step fails, see Section 15 (Common Issues and Fixes) before
+debugging further.</p>
+<hr />
+<h2 id="project-orientation">11. Project Orientation</h2>
+<p>After the smoke test you have a working app. Now orient yourself to
+the codebase.</p>
+<h3 id="the-files-you-will-touch-most-often">The files you will touch
+most often</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File / folder</th>
+<th>What it is</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>app/</code></td>
+<td>All pages and route handlers (Next.js App Router)</td>
+</tr>
+<tr class="even">
+<td><code>components/</code></td>
+<td>All React components, organised by feature (<code>drill/</code>,
+<code>dashboard/</code>, <code>admin/</code>)</td>
+</tr>
+<tr class="odd">
+<td><code>data/questions/beginner.json</code></td>
+<td>The question bank — 72 questions with coaching notes</td>
+</tr>
+<tr class="even">
+<td><code>lib/questions/selector.ts</code></td>
+<td>Picks 10 questions for a drill session</td>
+</tr>
+<tr class="odd">
+<td><code>lib/questions/topics.ts</code></td>
+<td>Topic metadata, lesson content, reflection prompts, Compare
+Perspectives content</td>
+</tr>
+<tr class="even">
+<td><code>lib/utils/streak.ts</code></td>
+<td>Computes streak from session dates</td>
+</tr>
+<tr class="odd">
+<td><code>lib/utils/progress.ts</code></td>
+<td>localStorage read/write for anonymous users</td>
+</tr>
+<tr class="even">
+<td><code>lib/supabase/</code></td>
+<td>Three Supabase clients: <code>client.ts</code> (browser),
+<code>server.ts</code> (server), <code>admin.ts</code> (service
+role)</td>
+</tr>
+<tr class="odd">
+<td><code>proxy.ts</code></td>
+<td>Session-refresh middleware (runs on every request)</td>
+</tr>
+<tr class="even">
+<td><code>types/index.ts</code></td>
+<td>Shared TypeScript types: <code>Question</code>,
+<code>DrillSession</code>, <code>UserProgress</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-dual-data-path">The dual data path</h3>
+<p>The single most important architectural concept in this codebase is
+the dual data path:</p>
+<ul>
+<li><strong>Anonymous users</strong> — all progress is stored in
+<code>localStorage</code> under the keys <code>kmr-progress</code>
+(sessions) and <code>kmr-journal</code> (journal entries).
+<code>lib/utils/progress.ts</code> handles reads and writes.</li>
+<li><strong>Signed-in users</strong> — all progress is stored in
+Supabase. The dashboard server component fetches it and passes it as
+props to <code>DashboardView</code>.</li>
+<li><strong><code>DashboardView.tsx</code></strong> merges these two
+sources. It receives server-fetched data as props and reads localStorage
+on mount. It handles both cases transparently without different UI
+layouts.</li>
+</ul>
+<p>When adding any feature that involves persisting data, ask yourself:
+does this need to work for anonymous users, signed-in users, or both?
+The answer determines which path you touch.</p>
+<h3 id="the-drill-state-machine">The drill state machine</h3>
+<p><code>components/drill/DrillClient.tsx</code> is the core of the app.
+It is a client-side state machine with five phases:</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Phase</th>
+<th>What renders</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lesson</code></td>
+<td><code>LessonCard</code> — topic overview before the drill
+starts</td>
+</tr>
+<tr class="even">
+<td><code>answering</code></td>
+<td><code>QuestionCard</code> + <code>AnswerOption</code> components —
+active question</td>
+</tr>
+<tr class="odd">
+<td><code>revealed</code></td>
+<td>Answer shown with <code>Explanation</code> — learner sees
+correct/incorrect</td>
+</tr>
+<tr class="even">
+<td><code>completed</code></td>
+<td><code>ScoreDisplay</code> — score, reflection, Learning Journal</td>
+</tr>
+<tr class="odd">
+<td><code>review</code></td>
+<td><code>LessonReview</code> — all 10 questions with per-option
+coaching</td>
+</tr>
+</tbody>
+</table>
+<p>On completion, <code>DrillClient</code> fires a
+<code>POST /api/scores</code> request (fire-and-forget) to sync the
+session to Supabase for signed-in users.</p>
+<h3 id="the-question-bank-shape">The question bank shape</h3>
+<p>Each question in <code>data/questions/beginner.json</code> has this
+shape:</p>
+<pre class="typescript"><code>{
+  id: string,               // stable identifier — referenced in drill_question_answers
+  type: &quot;multiple_choice&quot; | &quot;true_false&quot; | &quot;scenario&quot;,
+  category: string,         // one of 6 slugs: debits_credits, accounts, etc.
+  level: &quot;beginner&quot;,
+  text: string,
+  options: string[],        // 2 options for true/false, 4 for everything else
+  correctIndex: number,     // 0-based index into options[]
+  explanation: string,      // coaching explanation shown after the answer
+  optionExplanations: string[]  // one coaching note per option (why it&#39;s right or wrong)
+}</code></pre>
+<p><code>question.id</code> is stored in
+<code>drill_question_answers.question_id</code>. <strong>Never change or
+reuse an existing <code>id</code> value</strong> — doing so corrupts the
+analytics history for any user who has answered that question.</p>
+<hr />
+<h2 id="next.js-16-breaking-changes-to-know">12. Next.js 16 — Breaking
+Changes to Know</h2>
+<p>This project uses Next.js 16, which has several breaking changes from
+earlier versions. If your knowledge of Next.js comes from version 13 or
+14 training data, read <code>node_modules/next/dist/docs/</code> before
+writing any code. The most common surprises are documented here.</p>
+<h3 id="middleware-is-proxy.ts-not-middleware.ts">Middleware is
+<code>proxy.ts</code>, not <code>middleware.ts</code></h3>
+<p>Next.js 16 renames the middleware entry point from
+<code>middleware.ts</code> to <code>proxy.ts</code>. The file at the
+root of this project is <code>proxy.ts</code>. Do not create a
+<code>middleware.ts</code> file — it will be silently ignored.</p>
+<pre class="typescript"><code>// proxy.ts — runs on every request, refreshes the Supabase session
+export default async function proxy(request: NextRequest) { ... }
+export const config = { matcher: [...] }</code></pre>
+<h3 id="route-params-are-async-promise">Route params are async
+(Promise)</h3>
+<p>In Next.js 16, dynamic route params are wrapped in a Promise. You
+must <code>await</code> them before use.</p>
+<pre class="typescript"><code>// Next.js 16 — correct
+export default async function Page({ params }: { params: Promise&lt;{ id: string }&gt; }) {
+  const { id } = await params
+}
+
+// Earlier Next.js — no longer works
+export default function Page({ params }: { params: { id: string } }) {
+  const { id } = params  // will throw in Next.js 16
+}</code></pre>
+<h3 id="cookies-is-async"><code>cookies()</code> is async</h3>
+<p>The <code>cookies()</code> function from <code>next/headers</code> is
+now async.</p>
+<pre class="typescript"><code>// Next.js 16 — correct
+const cookieStore = await cookies()
+
+// Earlier Next.js — no longer works
+const cookieStore = cookies()</code></pre>
+<p><code>lib/supabase/server.ts</code> already handles this correctly —
+follow its pattern when creating server-side Supabase clients.</p>
+<h3 id="tailwind-v4-no-tailwind-directives">Tailwind v4 — no
+<code>@tailwind</code> directives</h3>
+<p>Tailwind v4 uses a single import instead of the three-directive
+pattern.</p>
+<pre class="css"><code>/* app/globals.css — Tailwind v4 (correct) */
+@import &quot;tailwindcss&quot;;
+
+/* Do NOT use the old pattern */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;</code></pre>
+<p>There is no <code>tailwind.config.ts</code> file in this project.
+Tailwind v4 auto-detects content files from the project structure.</p>
+<h3 id="no-separate-eslint.config.js-setup-needed">No separate
+<code>eslint.config.js</code> setup needed</h3>
+<p>ESLint 9 with flat config is used. The config lives in
+<code>eslint.config.mjs</code>. Run <code>npm run lint</code> to
+check.</p>
+<hr />
+<h2 id="working-in-this-codebase">13. Working in This Codebase</h2>
+<h3 id="before-starting-any-task">Before starting any task</h3>
+<ol type="1">
+<li><code>git pull origin main</code> to ensure you are on the latest
+code</li>
+<li>Read the relevant section of the Technical Blueprint for the area
+you are changing</li>
+<li>For significant changes, update the relevant document in
+<code>docs/</code> before writing code</li>
+</ol>
+<h3 id="running-a-build-before-pushing">Running a build before
+pushing</h3>
+<p>Always run a production build before pushing to
+<code>main</code>:</p>
+<pre class="bash"><code>npm run build</code></pre>
+<p>This catches TypeScript errors and missing imports that the dev
+server (which has more lenient checking) may not surface.</p>
+<h3 id="linting">Linting</h3>
+<pre class="bash"><code>npm run lint</code></pre>
+<p>Fix all lint errors before pushing. The Vercel build will fail on
+lint errors.</p>
+<h3 id="adding-questions-to-the-question-bank">Adding questions to the
+question bank</h3>
+<ol type="1">
+<li>Open <code>data/questions/beginner.json</code></li>
+<li>Add new questions to the array following the shape documented in
+Section 11</li>
+<li>Assign a new unique <code>id</code> (use a descriptive slug:
+<code>debits_credits_q13</code>)</li>
+<li>Ensure every question has a non-empty <code>explanation</code> and a
+non-empty <code>optionExplanations</code> entry for every option</li>
+<li>Run the build and check for TypeScript errors</li>
+<li>Manually play through a drill to verify the new questions render and
+the coaching notes display correctly</li>
+</ol>
+<h3 id="adding-a-new-topic-category">Adding a new topic category</h3>
+<p>Topic metadata — lesson text, reflection prompts, Compare
+Perspectives content — lives in <code>lib/questions/topics.ts</code>. To
+add a new category:</p>
+<ol type="1">
+<li>Add the new category slug to the <code>topics</code> record in
+<code>topics.ts</code></li>
+<li>Add questions tagged with the new category slug to the question
+bank</li>
+<li>Update the rotation formula in
+<code>lib/questions/selector.ts</code> if the total category count
+changes</li>
+<li>Update the topic rotation table in the Technical Blueprint</li>
+</ol>
+<h3 id="changing-the-database-schema">Changing the database schema</h3>
+<p>If your change requires a new table or column:</p>
+<ol type="1">
+<li>Write the SQL as a new migration file:
+<code>supabase/migrations/003_your_feature.sql</code></li>
+<li>Use <code>IF NOT EXISTS</code> / <code>IF NOT EXISTS</code> guards
+so the migration is safe to re-run</li>
+<li>Apply it manually in the Supabase SQL Editor for your local dev
+project</li>
+<li>Apply it to the production project after the code change is
+deployed</li>
+<li>Update the database schema section of the Technical Blueprint</li>
+</ol>
+<p>Never modify the existing migration files — they are the historical
+record of how the schema evolved.</p>
+<hr />
+<h2 id="deployment">14. Deployment</h2>
+<p>Every push to <code>main</code> triggers an automatic Vercel
+deployment. There is no staging environment in v1.0.</p>
+<h3 id="first-time-setup">First-time setup</h3>
+<p>If you are deploying to a new Vercel project:</p>
+<ol type="1">
+<li>Push the repository to GitHub</li>
+<li>Import the repository at <a
+href="https://vercel.com/new">vercel.com/new</a></li>
+<li>Vercel auto-detects Next.js — no build configuration needed</li>
+<li>Go to <strong>Settings → Environment Variables</strong> and add all
+four variables from <code>.env.local</code>:
+<ul>
+<li><code>NEXT_PUBLIC_SUPABASE_URL</code></li>
+<li><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></li>
+<li><code>SUPABASE_SERVICE_ROLE_KEY</code></li>
+<li><code>ADMIN_EMAIL</code></li>
+</ul></li>
+<li>Set scope to <strong>Production</strong> (and optionally
+Preview)</li>
+<li>Trigger a deploy</li>
+</ol>
+<h3 id="after-deploying-update-supabase-auth-urls">After deploying,
+update Supabase Auth URLs</h3>
+<p>Go to your Supabase project → <strong>Authentication → URL
+Configuration</strong>:</p>
+<ul>
+<li>Set <strong>Site URL</strong> to
+<code>https://your-app.vercel.app</code></li>
+<li>Add <code>https://your-app.vercel.app/auth/callback</code> to
+<strong>Redirect URLs</strong></li>
+</ul>
+<p>Magic links will not work in production until this step is done.</p>
+<h3 id="triggering-a-redeploy-without-a-code-change">Triggering a
+redeploy without a code change</h3>
+<p>To pick up new environment variables:</p>
+<pre class="bash"><code>git commit --allow-empty -m &quot;chore: trigger redeploy&quot; &amp;&amp; git push origin main</code></pre>
+<p>Or use the Vercel dashboard: <strong>Deployments → ··· →
+Redeploy</strong>.</p>
+<h3 id="checking-function-logs">Checking function logs</h3>
+<p>Server-side errors (route handlers, server components) appear in
+Vercel → <strong>Logs → Functions</strong>. There is no error monitoring
+service in v1.0 — check here when something appears broken in
+production.</p>
+<hr />
+<h2 id="common-issues-and-fixes">15. Common Issues and Fixes</h2>
+<h3 id="magic-link-arrives-but-clicking-it-gives-an-error">Magic link
+arrives but clicking it gives an error</h3>
+<p><strong>Symptom:</strong> The magic link redirects to
+<code>/auth/callback</code> but the page shows an error or redirects
+back to login.</p>
+<p><strong>Cause:</strong> The redirect URL in Supabase Auth is not
+whitelisted.</p>
+<p><strong>Fix:</strong> Go to <strong>Authentication → URL
+Configuration</strong> in Supabase and confirm that the URL you clicked
+the link from (including scheme and port,
+e.g. <code>http://localhost:3000/auth/callback</code>) is in the
+Redirect URLs list.</p>
+<hr />
+<h3
+id="admin-redirects-to-authlogin-even-when-signed-in"><code>/admin</code>
+redirects to <code>/auth/login</code> even when signed in</h3>
+<p><strong>Symptom:</strong> You are signed in and navigating to
+<code>/admin</code> sends you to the login page.</p>
+<p><strong>Cause:</strong> The session is not being read server-side,
+usually because <code>.env.local</code> is missing or
+<code>NEXT_PUBLIC_SUPABASE_URL</code> /
+<code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> are incorrect.</p>
+<p><strong>Fix:</strong> Verify your <code>.env.local</code> values
+match the Supabase project you configured. Restart the dev server after
+changing <code>.env.local</code> — Next.js does not hot-reload env
+changes.</p>
+<hr />
+<h3 id="admin-shows-access-denied-with-your-email"><code>/admin</code>
+shows “Access Denied” with your email</h3>
+<p><strong>Symptom:</strong> You are signed in, the page renders, and it
+says “Access Denied” with your email shown.</p>
+<p><strong>Cause:</strong> The <code>ADMIN_EMAIL</code> env var does not
+match the email you signed in with. This is by design — the page shows
+your email to help diagnose the mismatch.</p>
+<p><strong>Fix:</strong> Update <code>ADMIN_EMAIL</code> in
+<code>.env.local</code> to match your signed-in email exactly
+(case-sensitive), then restart the dev server.</p>
+<hr />
+<h3 id="dashboard-shows-no-data-after-completing-a-drill">Dashboard
+shows no data after completing a drill</h3>
+<p><strong>Symptom:</strong> You complete a drill, navigate to
+<code>/dashboard</code>, and see zeroed stats.</p>
+<p><strong>Cause (anonymous users):</strong> <code>localStorage</code>
+is blocked or unavailable. Check browser privacy settings — private
+browsing modes in some browsers disable localStorage.</p>
+<p><strong>Cause (signed-in users):</strong> The
+<code>drill_sessions</code> table may not exist yet. Confirm you ran
+both migrations (Section 7) and that the <code>drill_sessions</code>
+table appears in the Supabase Table Editor.</p>
+<hr />
+<h3 id="build-fails-with-module-not-found-for-supabase-imports">Build
+fails with “Module not found” for Supabase imports</h3>
+<p><strong>Symptom:</strong> <code>npm run build</code> fails with an
+error like <code>Cannot find module '@supabase/ssr'</code>.</p>
+<p><strong>Fix:</strong></p>
+<pre class="bash"><code>rm -rf node_modules
+npm install</code></pre>
+<hr />
+<h3 id="tailwind-styles-not-applying">Tailwind styles not applying</h3>
+<p><strong>Symptom:</strong> Pages render unstyled or partially
+styled.</p>
+<p><strong>Cause:</strong> Tailwind v4 auto-discovers class usage from
+source files. If you move files outside the standard <code>app/</code>,
+<code>components/</code>, or <code>lib/</code> folders, Tailwind may not
+scan them.</p>
+<p><strong>Fix:</strong> Ensure new files with Tailwind classes are
+inside one of those directories. If adding a new top-level folder, add
+it to the PostCSS config if necessary.</p>
+<hr />
+<h3
+id="cookies-throws-was-called-outside-a-request-scope"><code>cookies()</code>
+throws “was called outside a request scope”</h3>
+<p><strong>Symptom:</strong> A server component or route handler throws
+this error at runtime.</p>
+<p><strong>Cause:</strong> The Supabase server client is being
+initialised at module scope (outside a function body) rather than inside
+a request handler.</p>
+<p><strong>Fix:</strong> Follow the pattern in
+<code>lib/supabase/server.ts</code> — always create the server client
+inside the function that handles the request, never at the top level of
+a module.</p>
+<hr />
+<p><em>Keep Me Ready — Practice makes permanent.</em></p>
+</body></html>
