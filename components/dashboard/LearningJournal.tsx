@@ -58,23 +58,32 @@ function FilterPill({
   );
 }
 
-export default function LearningJournal() {
+export default function LearningJournal({ userId }: { userId: string | null }) {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [filter, setFilter] = useState<string>("all");
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    try {
-      const stored = JSON.parse(
-        localStorage.getItem("kmr-journal") ?? "[]"
-      ) as JournalEntry[];
-      // Newest first
-      setEntries([...stored].reverse());
-    } catch {
-      setEntries([]);
+    if (userId) {
+      fetch("/api/journal")
+        .then((r) => (r.ok ? r.json() : { entries: [] }))
+        .then(({ entries: rows }: { entries: JournalEntry[] }) => {
+          setEntries(rows); // API returns newest-first
+          setReady(true);
+        })
+        .catch(() => setReady(true));
+    } else {
+      try {
+        const stored = JSON.parse(
+          localStorage.getItem("kmr-journal") ?? "[]"
+        ) as JournalEntry[];
+        setEntries([...stored].reverse());
+      } catch {
+        setEntries([]);
+      }
+      setReady(true);
     }
-    setReady(true);
-  }, []);
+  }, [userId]);
 
   if (!ready) return null;
 

@@ -4,6 +4,37 @@ import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
+interface JournalEntry {
+  id: string;
+  category: string;
+  conceptId: string;
+  topicTitle: string;
+  prompt: string;
+  text: string;
+  date: string;
+  savedAt: string;
+}
+
+async function mergeLocalJournalToDb(): Promise<void> {
+  let entries: JournalEntry[];
+  try {
+    entries = JSON.parse(localStorage.getItem("kmr-journal") ?? "[]");
+    if (!entries.length) return;
+  } catch {
+    return;
+  }
+
+  const res = await fetch("/api/journal", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ entries }),
+  });
+
+  if (res.ok) {
+    localStorage.removeItem("kmr-journal");
+  }
+}
+
 export default function AuthCallbackPage() {
   const router = useRouter();
 
@@ -16,7 +47,11 @@ export default function AuthCallbackPage() {
     if (code) {
       // PKCE flow: Supabase sent ?code= — exchange it for a session.
       supabase.auth.exchangeCodeForSession(code).then(({ error }) => {
-        router.replace(!error ? next : "/auth/login?error=auth_failed");
+        if (error) {
+          router.replace("/auth/login?error=auth_failed");
+          return;
+        }
+        mergeLocalJournalToDb().catch(() => {}).finally(() => router.replace(next));
       });
       return;
     }
@@ -32,7 +67,7 @@ export default function AuthCallbackPage() {
       if (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
         clearTimeout(timeoutId);
         subscription.unsubscribe();
-        router.replace(next);
+        mergeLocalJournalToDb().catch(() => {}).finally(() => router.replace(next));
       }
     });
 

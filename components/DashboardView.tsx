@@ -103,7 +103,7 @@ export default function DashboardView({ user, dbData }: Props) {
       )}
 
       <div className="mt-6">
-        <LearningJournal />
+        <LearningJournal userId={user?.id ?? null} />
       </div>
     </div>
   );

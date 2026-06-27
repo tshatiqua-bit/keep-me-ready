@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import SaveProgressPrompt from "@/components/SaveProgressPrompt";
+import { createClient } from "@/lib/supabase/client";
 import type { Topic } from "@/lib/questions/topics";
 
 interface ScoreDisplayProps {
@@ -54,7 +55,7 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
   const [journalText, setJournalText] = useState("");
   const [saved, setSaved] = useState(false);
 
-  function saveToJournal() {
+  async function saveToJournal() {
     if (!journalText.trim() || saved) return;
     const entry: JournalEntry = {
       id: `${topic.category}-${Date.now()}`,
@@ -66,6 +67,8 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
       date: new Date().toISOString().slice(0, 10),
       savedAt: new Date().toISOString(),
     };
+
+    // Always write to localStorage first — works offline and for anonymous users
     try {
       const existing: JournalEntry[] = JSON.parse(
         localStorage.getItem("kmr-journal") ?? "[]"
@@ -75,6 +78,22 @@ export default function ScoreDisplay({ score, total, topic, onRestart, onReview 
     } catch {
       // localStorage unavailable (private browsing, storage full, etc.)
     }
+
+    // Fire-and-forget sync to Supabase for signed-in users
+    syncJournalEntry(entry).catch(() => {});
+  }
+
+  async function syncJournalEntry(entry: JournalEntry): Promise<void> {
+    const supabase = createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+    if (!user) return;
+    await fetch("/api/journal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ entries: [entry] }),
+    });
   }
 
   return (
