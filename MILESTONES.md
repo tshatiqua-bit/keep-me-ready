@@ -49,12 +49,12 @@ All core infrastructure that future features will build on top of is in place.
 - RLS verified: anonymous queries return zero rows, authenticated users see only their own data
 - `DELETE CASCADE` on `user_id` FK — deleting a user removes all their journal entries
 
-#### Sentry error monitoring (groundwork)
+#### Sentry error monitoring (active in production)
 - `instrumentation.ts` — server-side init + `onRequestError` hook (Next.js 16 native API)
-- `instrumentation-client.ts` — client-side init with Session Replay
+- `instrumentation-client.ts` — client-side init with Session Replay (100% on errors, 5% on sessions)
 - `next.config.ts` wrapped with `withSentryConfig`
-- Gracefully no-ops when `SENTRY_DSN` env var is absent
-- Ready to activate: add `NEXT_PUBLIC_SENTRY_DSN` and `SENTRY_DSN` to Vercel env vars
+- `NEXT_PUBLIC_SENTRY_DSN` and `SENTRY_DSN` set in Vercel — both Production and Preview
+- Verified: test event confirmed received in Sentry dashboard (2026-06-27)
 
 #### Documentation system
 All documents live in `docs/`. Reading order for new contributors:
@@ -85,14 +85,13 @@ Everything above is verified in production. Future features can rely on:
 - The `drill_sessions` and `drill_question_answers` tables
 - The auth flow (magic link → callback → session)
 - The localStorage → Supabase merge pattern (reuse for other data types)
-- The Sentry instrumentation hooks (just add the DSN to activate)
+- Sentry error monitoring (server + client, Session Replay enabled)
 - The documentation system (update docs when features change)
 
 ### What comes next
 
 From the PRD, remaining v1.1 priorities in order:
-1. **Activate Sentry** — add DSN to Vercel, verify errors surface in the dashboard
-2. **Anonymous → signed-in session merge** — merge `kmr_progress` localStorage data on first sign-in (mirrors the journal merge pattern now established)
+1. **Anonymous → signed-in session merge** — merge `kmr_progress` localStorage data on first sign-in (mirrors the journal merge pattern now established)
 3. **Streak preservation** — recalculate streak from Supabase `drill_sessions` on sign-in
 4. **Instructor dashboard improvements** — richer analytics from `drill_question_answers`
 
