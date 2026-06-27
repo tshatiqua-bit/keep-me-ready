@@ -15,6 +15,16 @@ interface JournalEntry {
   savedAt: string;
 }
 
+interface LocalSession {
+  score: number;
+  total: number;
+  date: string;
+}
+
+interface LocalProgress {
+  sessions?: LocalSession[];
+}
+
 async function mergeLocalJournalToDb(): Promise<void> {
   let entries: JournalEntry[];
   try {
@@ -35,6 +45,42 @@ async function mergeLocalJournalToDb(): Promise<void> {
   }
 }
 
+async function mergeLocalProgressToDb(): Promise<void> {
+  let progress: LocalProgress;
+  try {
+    const raw = localStorage.getItem("kmr_progress");
+    if (!raw) return;
+    progress = JSON.parse(raw);
+    if (!progress.sessions?.length) return;
+  } catch {
+    return;
+  }
+
+  // POST each session to /api/scores in parallel — score/total/date are all
+  // localStorage holds (questions/answers arrays are always empty there).
+  const results = await Promise.allSettled(
+    progress.sessions.map((session) =>
+      fetch("/api/scores", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          score: session.score,
+          total: session.total,
+          date: session.date,
+        }),
+      })
+    )
+  );
+
+  const allOk = results.every(
+    (r) => r.status === "fulfilled" && r.value.ok
+  );
+
+  if (allOk) {
+    localStorage.removeItem("kmr_progress");
+  }
+}
+
 export default function AuthCallbackPage() {
   const router = useRouter();
 
@@ -51,7 +97,10 @@ export default function AuthCallbackPage() {
           router.replace("/auth/login?error=auth_failed");
           return;
         }
-        mergeLocalJournalToDb().catch(() => {}).finally(() => router.replace(next));
+        Promise.all([
+          mergeLocalJournalToDb().catch(() => {}),
+          mergeLocalProgressToDb().catch(() => {}),
+        ]).finally(() => router.replace(next));
       });
       return;
     }
@@ -67,7 +116,10 @@ export default function AuthCallbackPage() {
       if (session && (event === "SIGNED_IN" || event === "INITIAL_SESSION")) {
         clearTimeout(timeoutId);
         subscription.unsubscribe();
-        mergeLocalJournalToDb().catch(() => {}).finally(() => router.replace(next));
+        Promise.all([
+          mergeLocalJournalToDb().catch(() => {}),
+          mergeLocalProgressToDb().catch(() => {}),
+        ]).finally(() => router.replace(next));
       }
     });
 
