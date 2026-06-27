@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+<meta charset='utf-8'>
+<title>Keep Me Ready — AI Context Book v1</title>
+<style>
+  @page { margin: 2.2cm 2.5cm; }
+  body { font-family: 'Georgia', serif; color: #0f172a; line-height: 1.75; font-size: 13.5px; }
+  h1 { font-size: 1.9em; color: #1e1b4b; border-bottom: 3px solid #4f46e5; padding-bottom: 10px; margin-top: 0; }
+  h2 { font-size: 1.35em; color: #312e81; margin-top: 2.4em; border-bottom: 1px solid #e2e8f0; padding-bottom: 5px; page-break-after: avoid; }
+  h3 { font-size: 1.05em; color: #3730a3; margin-top: 1.6em; page-break-after: avoid; }
+  p { margin: 0.7em 0; }
+  code { background: #f1f5f9; padding: 2px 5px; border-radius: 3px; font-family: 'Courier New', monospace; font-size: 0.82em; color: #1e293b; }
+  pre { background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 6px; padding: 14px 16px; overflow-x: auto; page-break-inside: avoid; margin: 1em 0; }
+  pre code { background: none; padding: 0; font-size: 0.8em; }
+  table { border-collapse: collapse; width: 100%; margin: 1.2em 0; page-break-inside: avoid; font-size: 0.9em; }
+  th { background: #4f46e5; color: #ffffff; padding: 8px 12px; text-align: left; font-weight: 600; }
+  td { padding: 7px 12px; border-bottom: 1px solid #e2e8f0; vertical-align: top; }
+  tr:nth-child(even) td { background: #f8fafc; }
+  blockquote { border-left: 4px solid #4f46e5; margin: 1em 0; padding: 4px 16px; color: #475569; background: #f8f8ff; }
+  hr { border: none; border-top: 1px solid #cbd5e1; margin: 2em 0; }
+  a { color: #4338ca; text-decoration: none; }
+  ul, ol { padding-left: 1.6em; margin: 0.6em 0; }
+  li { margin: 0.35em 0; }
+  strong { color: #1e293b; }
+</style>
+</head>
+<body>
+<h1 id="keep-me-ready-ai-context-book-v1">Keep Me Ready — AI Context
+Book v1</h1>
+<p><strong>Prepared:</strong> June 2026<br />
+<strong>Version:</strong> 1.0<br />
+<strong>Folder:</strong> <code>docs/engineering/</code><br />
+<strong>Audience:</strong> AI coding assistants working in this
+repository</p>
+<blockquote>
+<p>This document is written specifically for AI. It front-loads
+everything an AI needs to work in this codebase correctly, without
+re-deriving it from first principles. Read this before opening any
+source file.</p>
+</blockquote>
+<hr />
+<h2 id="table-of-contents">Table of Contents</h2>
+<ol type="1">
+<li><a href="#1-project-snapshot">Project Snapshot</a></li>
+<li><a href="#2-critical-non-obvious-constraints">Critical Non-Obvious
+Constraints</a></li>
+<li><a href="#3-complete-file-inventory">Complete File
+Inventory</a></li>
+<li><a href="#4-typescript-types--full-source">TypeScript Types — Full
+Source</a></li>
+<li><a href="#5-data-model">Data Model</a></li>
+<li><a href="#6-component-inventory">Component Inventory</a></li>
+<li><a href="#7-api-routes">API Routes</a></li>
+<li><a href="#8-exact-code-patterns-to-follow">Exact Code Patterns to
+Follow</a></li>
+<li><a href="#9-product-rules">Product Rules</a></li>
+<li><a href="#10-copy-and-tone-rules">Copy and Tone Rules</a></li>
+</ol>
+<hr />
+<h2 id="project-snapshot">1. Project Snapshot</h2>
+<p><strong>What it is:</strong> Keep Me Ready is a daily bookkeeping
+practice platform. Learners complete a 10-question drill on a rotating
+topic, receive per-answer coaching explanations, optionally write a
+Learning Journal entry, and track progress over time on a dashboard.</p>
+<p><strong>Stack:</strong> Next.js 16.2.9 · React 19 · TypeScript 5 ·
+Tailwind CSS v4 · Supabase (Auth + PostgreSQL) · Vercel</p>
+<p><strong>Live URL:</strong>
+<code>https://keep-me-ready.vercel.app</code><br />
+<strong>Repository:</strong>
+<code>git@github.com:tshatiqua-bit/keep-me-ready.git</code></p>
+<p><strong>Three-sentence architecture summary:</strong><br />
+All pages use the Next.js App Router. Anonymous users have their
+progress stored in <code>localStorage</code>; signed-in users have it
+stored in Supabase. The drill engine is a single client-side state
+machine (<code>DrillClient.tsx</code>) that cycles through five phases:
+<code>lesson → answering → revealed → completed → review</code>.</p>
+<p><strong>6 topic categories</strong> (rotate daily by
+<code>dayOfYear % 6</code>):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Slug</th>
+<th>Title</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>debits_credits</code></td>
+<td>Debits &amp; Credits</td>
+</tr>
+<tr class="even">
+<td><code>accounts</code></td>
+<td>Chart of Accounts</td>
+</tr>
+<tr class="odd">
+<td><code>financial_statements</code></td>
+<td>Financial Statements</td>
+</tr>
+<tr class="even">
+<td><code>journal_entries</code></td>
+<td>Journal Entries</td>
+</tr>
+<tr class="odd">
+<td><code>bank_reconciliation</code></td>
+<td>Bank Reconciliation</td>
+</tr>
+<tr class="even">
+<td><code>payroll</code></td>
+<td>Payroll</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="critical-non-obvious-constraints">2. Critical Non-Obvious
+Constraints</h2>
+<p>These are the things an AI is most likely to get wrong. Read every
+point.</p>
+<hr />
+<h3 id="c1-middleware-is-proxy.ts-not-middleware.ts">C1 — Middleware is
+<code>proxy.ts</code>, not <code>middleware.ts</code></h3>
+<p>Next.js 16 renames the middleware entry point. The file at the
+project root is <code>proxy.ts</code>. <strong>Do not create
+<code>middleware.ts</code></strong> — it will be silently ignored.</p>
+<pre class="typescript"><code>// proxy.ts — correct
+export default async function proxy(request: NextRequest) { ... }
+export const config = { matcher: [...] }</code></pre>
+<hr />
+<h3 id="c2-route-params-and-cookies-are-async">C2 — Route params and
+<code>cookies()</code> are async</h3>
+<p>In Next.js 16, dynamic route params are
+<code>Promise&lt;{...}&gt;</code> and <code>cookies()</code> from
+<code>next/headers</code> is async.</p>
+<pre class="typescript"><code>// CORRECT in Next.js 16
+export default async function Page({ params }: { params: Promise&lt;{ id: string }&gt; }) {
+  const { id } = await params
+}
+const cookieStore = await cookies()
+
+// WRONG — will throw at runtime
+const { id } = params          // no await
+const cookieStore = cookies()  // no await</code></pre>
+<hr />
+<h3 id="c3-tailwind-v4-uses-import-not-tailwind-directives">C3 —
+Tailwind v4 uses <code>@import</code>, not <code>@tailwind</code>
+directives</h3>
+<pre class="css"><code>/* app/globals.css — CORRECT */
+@import &quot;tailwindcss&quot;;
+
+/* WRONG — do not write these */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;</code></pre>
+<p>There is no <code>tailwind.config.ts</code>. Tailwind v4
+auto-discovers classes from <code>app/</code>, <code>components/</code>,
+and <code>lib/</code>.</p>
+<hr />
+<h3 id="c4-three-supabase-clients-use-the-right-one">C4 — Three Supabase
+clients; use the right one</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>File</th>
+<th>Usage</th>
+<th>Key used</th>
+<th>Server or client?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>lib/supabase/client.ts</code></td>
+<td>Browser (client components, event handlers)</td>
+<td><code>anon</code></td>
+<td>Client only</td>
+</tr>
+<tr class="even">
+<td><code>lib/supabase/server.ts</code></td>
+<td>Server components, route handlers</td>
+<td><code>anon</code></td>
+<td>Server only</td>
+</tr>
+<tr class="odd">
+<td><code>lib/supabase/admin.ts</code></td>
+<td>Admin analytics (bypasses RLS)</td>
+<td><code>service_role</code></td>
+<td>Server only — never expose to client</td>
+</tr>
+</tbody>
+</table>
+<p><code>createAdminClient()</code> must never be called from a client
+component or imported into the browser bundle. It only appears in
+<code>app/admin/page.tsx</code>.</p>
+<hr />
+<h3 id="c5-localstorage-key-inconsistency-known">C5 — localStorage key
+inconsistency (known)</h3>
+<p>Two different key formats are used — this is an existing
+inconsistency, not a pattern to follow:</p>
+<table>
+<thead>
+<tr class="header">
+<th>Data</th>
+<th>Key</th>
+<th>Format</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Session progress</td>
+<td><code>kmr_progress</code></td>
+<td>underscore</td>
+</tr>
+<tr class="even">
+<td>Learning Journal</td>
+<td><code>kmr-journal</code></td>
+<td>hyphen</td>
+</tr>
+</tbody>
+</table>
+<p>When adding new localStorage keys, use <strong>hyphen format</strong>
+(<code>kmr-something</code>) to match the journal key. Do not change the
+existing keys — doing so will corrupt data for existing users.</p>
+<hr />
+<h3 id="c6-never-change-or-reuse-a-question.id">C6 — Never change or
+reuse a <code>question.id</code></h3>
+<p><code>question.id</code> values from
+<code>data/questions/beginner.json</code> are stored permanently in
+<code>drill_question_answers.question_id</code> in Supabase. Changing or
+reusing an ID corrupts the analytics history for all users who answered
+that question.</p>
+<p>New question IDs must follow the format:
+<code>{category_slug}_q{number}</code>,
+e.g. <code>debits_credits_q13</code>.</p>
+<hr />
+<h3
+id="c7-optionexplanations-is-parallel-to-options-entry-at-correctindex-should-be-null">C7
+— <code>optionExplanations</code> is parallel to <code>options[]</code>;
+entry at <code>correctIndex</code> should be <code>null</code></h3>
+<pre class="json"><code>{
+  &quot;options&quot;: [&quot;A&quot;, &quot;B&quot;, &quot;C&quot;, &quot;D&quot;],
+  &quot;correctIndex&quot;: 2,
+  &quot;optionExplanations&quot;: [
+    &quot;Why A is wrong...&quot;,
+    &quot;Why B is wrong...&quot;,
+    null,
+    &quot;Why D is wrong...&quot;
+  ]
+}</code></pre>
+<p>The UI skips rendering a coaching note when the value is
+<code>null</code>. An empty string <code>""</code> is not the same as
+<code>null</code> — it will render an empty coaching note box.</p>
+<hr />
+<h3 id="c8-the-dual-data-path-is-intentional-do-not-collapse-it">C8 —
+The dual data path is intentional; do not collapse it</h3>
+<p>Anonymous users: all progress from <code>localStorage</code> via
+<code>lib/utils/progress.ts</code>.<br />
+Signed-in users: all progress from Supabase, fetched server-side in
+<code>app/dashboard/page.tsx</code>.<br />
+<code>DashboardView.tsx</code> receives <code>user</code> and
+<code>dbData</code> props and selects the right source.</p>
+<p>Adding a new dashboard feature means implementing it for <strong>both
+paths</strong>, not just one.</p>
+<hr />
+<h3 id="c9-session-sync-to-supabase-is-fire-and-forget">C9 — Session
+sync to Supabase is fire-and-forget</h3>
+<p><code>DrillClient.tsx</code> calls <code>syncToDb()</code> after
+drill completion with <code>.catch(() =&gt; {})</code>. Failures are
+silently swallowed — this is intentional. Do not add retry logic or
+error UI for sync failures without a deliberate product decision.</p>
+<hr />
+<h3 id="c10-the-auth-callback-handles-both-pkce-and-implicit-flows">C10
+— The auth callback handles both PKCE and implicit flows</h3>
+<p><code>app/auth/callback/page.tsx</code> checks for
+<code>?code=</code> (PKCE) and falls back to listening for hash tokens
+(implicit). Do not simplify this to one path — both flows exist in
+production.</p>
+<hr />
+<h3 id="c11-next_public_-env-vars-are-baked-into-the-browser-bundle">C11
+— <code>NEXT_PUBLIC_</code> env vars are baked into the browser
+bundle</h3>
+<p><code>NEXT_PUBLIC_SUPABASE_URL</code> and
+<code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code> are safe to use in client
+code. <code>SUPABASE_SERVICE_ROLE_KEY</code> and
+<code>ADMIN_EMAIL</code> are server-side only. Never reference a
+non-<code>NEXT_PUBLIC_</code> env var from a file marked
+<code>"use client"</code> or from any client component.</p>
+<hr />
+<h3 id="c12-no-test-suite-no-error-monitoring">C12 — No test suite; no
+error monitoring</h3>
+<p>There are no automated tests (Vitest, Jest, Playwright). All testing
+is manual. There is no Sentry, Datadog, or equivalent. Do not write code
+that assumes tests will catch regressions — test manually after every
+non-trivial change.</p>
+<hr />
+<h2 id="complete-file-inventory">3. Complete File Inventory</h2>
+<p>Every file in the project with its exact purpose. Files marked
+<strong>[SC]</strong> are Server Components. Files marked
+<strong>[CC]</strong> are Client Components. Files marked
+<strong>[RH]</strong> are Route Handlers.</p>
+<pre><code>keep-me-ready/
+│
+├── proxy.ts                    [SC] Middleware — refreshes Supabase session on every request
+├── next.config.ts                   Standard Next.js config (minimal, no customisation)
+├── postcss.config.mjs               Tailwind v4 PostCSS plugin wiring
+├── eslint.config.mjs                ESLint 9 flat config
+├── tsconfig.json                    TypeScript config — path alias &quot;@/&quot; maps to project root
+│
+├── app/
+│   ├── layout.tsx              [SC] Root layout — wraps all pages with &lt;nav&gt; and &lt;footer&gt;
+│   ├── page.tsx                [SC] Homepage — hero, CTA links, HomeStats, feature cards
+│   ├── globals.css                  Tailwind v4 import + global base styles
+│   │
+│   ├── admin/
+│   │   └── page.tsx            [SC] Instructor dashboard — ADMIN_EMAIL gate, fetches all
+│   │                                sessions via admin client, computes 9 metrics, renders
+│   │                                InstructorDashboard
+│   │
+│   ├── api/
+│   │   ├── scores/route.ts     [RH] POST — saves a drill session to Supabase; graceful
+│   │   │                            fallback if migration 002 not yet applied
+│   │   └── progress/route.ts   [RH] GET — returns aggregated stats for signed-in user
+│   │
+│   ├── auth/
+│   │   ├── callback/page.tsx   [CC] Handles both PKCE (?code=) and implicit (#token) flows;
+│   │   │                            redirects to /dashboard on success
+│   │   ├── login/page.tsx      [SC] Thin wrapper around LoginForm
+│   │   └── logout/route.ts     [RH] GET — calls signOut(), redirects to /
+│   │
+│   ├── dashboard/
+│   │   └── page.tsx            [SC] Fetches drill_sessions for signed-in user server-side,
+│   │                                passes data to DashboardView as props
+│   │
+│   └── drill/
+│       └── page.tsx            [SC] Thin wrapper — renders DrillClient inside a max-width
+│                                    container
+│
+├── components/
+│   ├── DashboardView.tsx       [CC] Merges server-fetched DB data (signed-in) with
+│   │                                localStorage data (anonymous); renders all 4 dashboard
+│   │                                sections
+│   ├── HomeStats.tsx           [CC] Reads localStorage on mount, shows streak/accuracy on
+│   │                                homepage; renders &quot;—&quot; during SSR, real values on hydrate
+│   ├── LoginForm.tsx           [CC] Magic link email form; Google OAuth button present but
+│   │                                inactive in v1.0
+│   ├── NavUser.tsx             [CC] Subscribes to onAuthStateChange; shows email+signout or
+│   │                                sign-in link
+│   ├── SaveProgressPrompt.tsx  [CC] Shown on score screen for anonymous users after a drill
+│   │
+│   ├── admin/
+│   │   └── InstructorDashboard.tsx [SC] Pure display — renders 9 metrics from DashboardData
+│   │                                    props; no client state
+│   │
+│   ├── dashboard/
+│   │   ├── LearningJournal.tsx [CC] Reads &quot;kmr-journal&quot; from localStorage; renders entries
+│   │   │                            newest-first with topic filter pills
+│   │   ├── ProgressStats.tsx   [SC] 4-stat grid card (drills, questions, correct, accuracy)
+│   │   ├── SessionHistory.tsx  [SC] Recent sessions list with accuracy bars
+│   │   └── StreakBadge.tsx     [SC] Streak number + contextual message
+│   │
+│   └── drill/
+│       ├── AnswerOption.tsx    [SC] Single answer button; green/red/dimmed on reveal
+│       ├── DrillClient.tsx     [CC] Core state machine — 5 phases, manages all drill state,
+│       │                            syncs to Supabase on completion
+│       ├── DrillProgress.tsx   [SC] &quot;Q n of 10&quot; counter + live score bar (role=&quot;progressbar&quot;)
+│       ├── Explanation.tsx     [SC] Coaching explanation shown after answer reveal
+│       ├── LessonCard.tsx      [SC] Pre-drill topic overview card
+│       ├── LessonReview.tsx    [CC] Post-drill per-question review with expandable coaching
+│       ├── QuestionCard.tsx    [SC] Question text + type/category badges
+│       └── ScoreDisplay.tsx    [CC] Score screen — Compare Perspectives, journal textarea,
+│                                    &quot;Save This Insight&quot; — writes to &quot;kmr-journal&quot;
+│
+├── data/
+│   └── questions/
+│       ├── beginner.json            72 questions, 6 categories, 12 per category. ACTIVE.
+│       ├── intermediate.json        Empty placeholder. NOT ACTIVE.
+│       └── advanced.json            Empty placeholder. NOT ACTIVE.
+│
+├── lib/
+│   ├── questions/
+│   │   ├── selector.ts              selectDrillQuestions(), getQuestionById(),
+│   │   │                            getQuestionsByCategory(), getTotalQuestionCount()
+│   │   └── topics.ts                TOPICS record, getTodaysTopic(), getTodaysMeta(),
+│   │                                ENCOURAGEMENTS, TOTAL_TOPICS (= 6)
+│   │
+│   ├── supabase/
+│   │   ├── admin.ts                 createAdminClient() — service role, server-only
+│   │   ├── client.ts                createClient() — browser, client components
+│   │   └── server.ts                createClient() — server components, route handlers
+│   │
+│   └── utils/
+│       ├── progress.ts              loadProgress(), saveSession(), getAccuracyPct()
+│       │                            localStorage key: &quot;kmr_progress&quot;
+│       └── streak.ts                computeStreakFromDates(dates: string[]): number
+│
+├── supabase/
+│   └── migrations/
+│       ├── 001_init.sql             drill_sessions table + RLS policies
+│       └── 002_analytics.sql        Adds category/started_at columns, drill_question_answers
+│                                    table + RLS + indexes
+│
+├── types/
+│   └── index.ts                     QuestionType, DifficultyLevel, QuestionCategory,
+│                                    Question, DrillSession, UserProgress
+│
+└── docs/                            All project documentation (see docs/README.md)</code></pre>
+<hr />
+<h2 id="typescript-types-full-source">4. TypeScript Types — Full
+Source</h2>
+<p>These are the exact types from <code>types/index.ts</code>. Do not
+invent variations.</p>
+<pre class="typescript"><code>export type QuestionType = &quot;multiple_choice&quot; | &quot;true_false&quot; | &quot;scenario&quot;;
+export type DifficultyLevel = &quot;beginner&quot; | &quot;intermediate&quot; | &quot;advanced&quot;;
+
+export type QuestionCategory =
+  | &quot;debits_credits&quot;
+  | &quot;accounts&quot;
+  | &quot;financial_statements&quot;
+  | &quot;journal_entries&quot;
+  | &quot;bank_reconciliation&quot;
+  | &quot;payroll&quot;;
+
+export interface Question {
+  id: string;
+  type: QuestionType;
+  level: DifficultyLevel;
+  category: QuestionCategory;
+  text: string;
+  options: string[];           // 2 for true_false, 4 for multiple_choice / scenario
+  correctIndex: number;        // 0-based index into options[]
+  explanation: string;
+  optionExplanations?: (string | null)[];  // parallel to options[]; null at correctIndex
+}
+
+export interface DrillSession {
+  id: string;
+  date: string;                // &quot;YYYY-MM-DD&quot;
+  questions: string[];         // Question IDs
+  answers: number[];           // Selected indices, parallel to questions[]
+  score: number;
+  total: number;               // default 10
+  completedAt: string | null;  // ISO datetime string
+}
+
+export interface UserProgress {
+  totalAnswered: number;
+  totalCorrect: number;
+  currentStreak: number;
+  lastDrillDate: string | null;  // &quot;YYYY-MM-DD&quot;
+  sessions: DrillSession[];      // capped at 30 in localStorage
+}</code></pre>
+<hr />
+<h2 id="data-model">5. Data Model</h2>
+<h3 id="localstorage-anonymous-users">localStorage — anonymous
+users</h3>
+<table>
+<colgroup>
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+<col style="width: 25%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Key</th>
+<th>Type</th>
+<th>Written by</th>
+<th>Read by</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>kmr_progress</code></td>
+<td><code>UserProgress</code> (JSON)</td>
+<td><code>lib/utils/progress.ts → saveSession()</code></td>
+<td><code>lib/utils/progress.ts → loadProgress()</code>,
+<code>DashboardView.tsx</code></td>
+</tr>
+<tr class="even">
+<td><code>kmr-journal</code></td>
+<td><code>JournalEntry[]</code> (JSON)</td>
+<td><code>components/drill/ScoreDisplay.tsx</code></td>
+<td><code>components/dashboard/LearningJournal.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>JournalEntry shape</strong> (defined inline in
+<code>ScoreDisplay.tsx</code>, not in <code>types/index.ts</code>):</p>
+<pre class="typescript"><code>interface JournalEntry {
+  id: string;           // `${Date.now()}`
+  category: string;     // QuestionCategory slug
+  topicTitle: string;   // e.g. &quot;Debits &amp; Credits — The Foundation...&quot;
+  prompt: string;       // The reflection prompt from topics.ts
+  text: string;         // Free-text insight written by the learner
+  date: string;         // &quot;YYYY-MM-DD&quot;
+  savedAt: string;      // ISO datetime string
+  conceptId: string;    // Same as category slug (future-proofs mastery analytics)
+}</code></pre>
+<hr />
+<h3 id="supabase-signed-in-users">Supabase — signed-in users</h3>
+<p><strong><code>drill_sessions</code></strong> (created by 001,
+extended by 002):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td>UUID PK</td>
+<td>auto-generated</td>
+</tr>
+<tr class="even">
+<td><code>user_id</code></td>
+<td>UUID FK → <code>auth.users</code></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>date</code></td>
+<td>DATE</td>
+<td>“YYYY-MM-DD”</td>
+</tr>
+<tr class="even">
+<td><code>score</code></td>
+<td>INTEGER</td>
+<td>correct answers</td>
+</tr>
+<tr class="odd">
+<td><code>total</code></td>
+<td>INTEGER</td>
+<td>questions in drill</td>
+</tr>
+<tr class="even">
+<td><code>completed_at</code></td>
+<td>TIMESTAMPTZ</td>
+<td>defaults to NOW()</td>
+</tr>
+<tr class="odd">
+<td><code>category</code></td>
+<td>TEXT</td>
+<td>added by migration 002; nullable</td>
+</tr>
+<tr class="even">
+<td><code>started_at</code></td>
+<td>TIMESTAMPTZ</td>
+<td>added by migration 002; nullable</td>
+</tr>
+</tbody>
+</table>
+<p>RLS: users can only SELECT and INSERT their own rows.</p>
+<p><strong><code>drill_question_answers</code></strong> (created by
+002):</p>
+<table>
+<thead>
+<tr class="header">
+<th>Column</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>id</code></td>
+<td>UUID PK</td>
+<td>auto-generated</td>
+</tr>
+<tr class="even">
+<td><code>session_id</code></td>
+<td>UUID FK → <code>drill_sessions</code></td>
+<td>CASCADE DELETE</td>
+</tr>
+<tr class="odd">
+<td><code>user_id</code></td>
+<td>UUID FK → <code>auth.users</code></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><code>question_id</code></td>
+<td>TEXT</td>
+<td>stable ID from beginner.json</td>
+</tr>
+<tr class="odd">
+<td><code>category</code></td>
+<td>TEXT</td>
+<td>QuestionCategory slug</td>
+</tr>
+<tr class="even">
+<td><code>was_correct</code></td>
+<td>BOOLEAN</td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><code>answered_at</code></td>
+<td>TIMESTAMPTZ</td>
+<td>defaults to NOW()</td>
+</tr>
+</tbody>
+</table>
+<p>RLS: users can only INSERT and SELECT their own rows. Admin client
+bypasses both tables’ RLS.</p>
+<hr />
+<h3 id="environment-variables">Environment variables</h3>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Variable</th>
+<th>Visible to client?</th>
+<th>Purpose</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>NEXT_PUBLIC_SUPABASE_URL</code></td>
+<td>Yes (baked at build time)</td>
+<td>All Supabase clients</td>
+</tr>
+<tr class="even">
+<td><code>NEXT_PUBLIC_SUPABASE_ANON_KEY</code></td>
+<td>Yes (baked at build time)</td>
+<td>All Supabase clients</td>
+</tr>
+<tr class="odd">
+<td><code>SUPABASE_SERVICE_ROLE_KEY</code></td>
+<td>No — server only</td>
+<td>Admin client in <code>lib/supabase/admin.ts</code></td>
+</tr>
+<tr class="even">
+<td><code>ADMIN_EMAIL</code></td>
+<td>No — server only</td>
+<td>Admin gate in <code>app/admin/page.tsx</code></td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="component-inventory">6. Component Inventory</h2>
+<p>Every component with its props interface, client/server status, and
+what it renders.</p>
+<h3
+id="drillclient-componentsdrilldrillclient.tsx-cc"><code>DrillClient</code>
+— <code>components/drill/DrillClient.tsx</code> [CC]</h3>
+<p>No props. Fully self-contained. Calls <code>getTodaysMeta()</code> on
+mount to get today’s topic and <code>selectDrillQuestions()</code> to
+get 10 questions.</p>
+<p>Internal state:</p>
+<pre class="typescript"><code>type Phase = &quot;lesson&quot; | &quot;answering&quot; | &quot;revealed&quot; | &quot;completed&quot; | &quot;review&quot;;
+
+// key state variables:
+meta: { topic: Topic; topicIndex: number; dayOfYear: number }
+questions: Question[]           // 10 questions for this session
+selectedAnswers: (number | null)[]  // length 10, parallel to questions
+score: number
+currentIndex: number
+phase: Phase
+drillStartedAt: string | null</code></pre>
+<p>On completion: calls <code>saveSession(score, total)</code>
+(localStorage) then <code>syncToDb()</code> (Supabase,
+fire-and-forget).</p>
+<hr />
+<h3
+id="dashboardview-componentsdashboardview.tsx-cc"><code>DashboardView</code>
+— <code>components/DashboardView.tsx</code> [CC]</h3>
+<pre class="typescript"><code>interface DbDashboardData {
+  totalAnswered: number;
+  totalCorrect: number;
+  accuracy: number | null;
+  currentStreak: number;
+  drillsCompleted: number;
+  sessions: SessionRow[];
+}
+
+interface Props {
+  user: User | null;          // from @supabase/supabase-js
+  dbData: DbDashboardData | null;
+}</code></pre>
+<p>If <code>user</code> is non-null, uses <code>dbData</code>
+(server-fetched). If <code>user</code> is null, reads localStorage on
+mount and constructs the same shape. Shows a pulse skeleton while
+localStorage loads.</p>
+<hr />
+<h3
+id="instructordashboard-componentsadmininstructordashboard.tsx-sc"><code>InstructorDashboard</code>
+— <code>components/admin/InstructorDashboard.tsx</code> [SC]</h3>
+<pre class="typescript"><code>interface DashboardData {
+  totalUsers: number;
+  activeToday: number;
+  drillsCompleted: number;
+  avgScore: number;
+  completionRate: number;
+  avgImprovement: number | null;
+  avgCompletionSec: number | null;
+  weeklyTrend: { label: string; avgPct: number; sessions: number }[];
+  topicDifficulty: { category: string; label: string; avgPct: number; attempts: number }[];
+  missedQuestions: { questionId: string; text: string; missRate: number; attempts: number }[];
+  hasAnswerData: boolean;
+  generatedAt: string;
+}</code></pre>
+<p>Pure display component. All data is computed in
+<code>app/admin/page.tsx</code> and passed in.</p>
+<hr />
+<h3 id="navuser-componentsnavuser.tsx-cc"><code>NavUser</code> —
+<code>components/NavUser.tsx</code> [CC]</h3>
+<p>No props. Subscribes to
+<code>supabase.auth.onAuthStateChange()</code>. Shows email + “Sign out”
+when signed in, “Sign in” link when not.</p>
+<hr />
+<h3
+id="learningjournal-componentsdashboardlearningjournal.tsx-cc"><code>LearningJournal</code>
+— <code>components/dashboard/LearningJournal.tsx</code> [CC]</h3>
+<p>No props. Reads <code>localStorage["kmr-journal"]</code> on mount.
+Renders entries newest-first. Shows topic filter pills when entries span
+&gt;1 category.</p>
+<hr />
+<h3 id="homestats-componentshomestats.tsx-cc"><code>HomeStats</code> —
+<code>components/HomeStats.tsx</code> [CC]</h3>
+<p>No props. Reads <code>localStorage["kmr_progress"]</code> on mount.
+Shows streak, accuracy %, and total questions answered. Server-renders
+“—” as placeholder values.</p>
+<hr />
+<h3
+id="scoredisplay-componentsdrillscoredisplay.tsx-cc"><code>ScoreDisplay</code>
+— <code>components/drill/ScoreDisplay.tsx</code> [CC]</h3>
+<pre class="typescript"><code>interface Props {
+  score: number;
+  total: number;
+  topic: Topic;
+  onRestart: () =&gt; void;
+  onReview: () =&gt; void;
+}</code></pre>
+<p>Renders score, coaching message, Compare Perspectives section,
+reflection prompt, journal textarea. On “Save This Insight”, writes to
+<code>localStorage["kmr-journal"]</code>.</p>
+<hr />
+<h3
+id="lessonreview-componentsdrilllessonreview.tsx-cc"><code>LessonReview</code>
+— <code>components/drill/LessonReview.tsx</code> [CC]</h3>
+<pre class="typescript"><code>interface Props {
+  questions: Question[];
+  selectedAnswers: (number | null)[];
+  topic: Topic;
+  onRestart: () =&gt; void;
+}</code></pre>
+<p>Renders all 10 questions with expandable per-option coaching notes
+and “Key Lesson Takeaways” block.</p>
+<hr />
+<h3 id="other-drill-components-all-sc-no-complex-props">Other drill
+components (all SC, no complex props)</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Component</th>
+<th>Props summary</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><code>LessonCard</code></td>
+<td><code>topic: Topic, encouragement: string, onStart: () =&gt; void</code></td>
+</tr>
+<tr class="even">
+<td><code>QuestionCard</code></td>
+<td><code>question: Question, index: number, total: number</code></td>
+</tr>
+<tr class="odd">
+<td><code>AnswerOption</code></td>
+<td><code>text: string, index: number, state: "default"|"correct"|"wrong"|"dimmed", onClick: (i: number) =&gt; void</code></td>
+</tr>
+<tr class="even">
+<td><code>Explanation</code></td>
+<td><code>text: string</code></td>
+</tr>
+<tr class="odd">
+<td><code>DrillProgress</code></td>
+<td><code>current: number, total: number, score: number</code></td>
+</tr>
+<tr class="even">
+<td><code>ProgressStats</code></td>
+<td><code>data: DbDashboardData</code></td>
+</tr>
+<tr class="odd">
+<td><code>SessionHistory</code></td>
+<td><code>sessions: SessionRow[]</code></td>
+</tr>
+<tr class="even">
+<td><code>StreakBadge</code></td>
+<td><code>streak: number</code></td>
+</tr>
+<tr class="odd">
+<td><code>LoginForm</code></td>
+<td>no props</td>
+</tr>
+<tr class="even">
+<td><code>SaveProgressPrompt</code></td>
+<td>no props</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="api-routes">7. API Routes</h2>
+<h3 id="post-apiscores"><code>POST /api/scores</code></h3>
+<p><strong>Auth required:</strong> Yes (401 if no session)</p>
+<p><strong>Request body:</strong></p>
+<pre class="typescript"><code>{
+  score: number;          // correct answers (≥0)
+  total: number;          // total questions (&gt;0)
+  date: string;           // &quot;YYYY-MM-DD&quot;
+  category?: string;      // QuestionCategory slug (requires migration 002)
+  startedAt?: string;     // ISO datetime (requires migration 002)
+  answers?: {
+    questionId: string;
+    category: string;
+    wasCorrect: boolean;
+  }[];
+}</code></pre>
+<p><strong>Response (201):</strong>
+<code>{ session: { id, date, score, total, completed_at } }</code></p>
+<p><strong>Behaviour:</strong> Tries the extended insert (with
+<code>category</code> and <code>started_at</code>). If migration 002 is
+not applied, falls back to basic insert. Per-question answers are
+silently skipped if <code>drill_question_answers</code> does not
+exist.</p>
+<hr />
+<h3 id="get-apiprogress"><code>GET /api/progress</code></h3>
+<p><strong>Auth required:</strong> Yes (401 if no session)</p>
+<p><strong>Response (200):</strong></p>
+<pre class="typescript"><code>{
+  totalAnswered: number;
+  totalCorrect: number;
+  accuracy: number | null;
+  currentStreak: number;
+  drillsCompleted: number;
+  sessions: { id: string; date: string; score: number; total: number; completed_at: string }[];
+}</code></pre>
+<p>Fetches the last 30 sessions ordered by
+<code>completed_at DESC</code>. Streak is computed from session dates
+using <code>computeStreakFromDates</code>.</p>
+<hr />
+<h3 id="get-authlogout"><code>GET /auth/logout</code></h3>
+<p><strong>Auth required:</strong> No (safe to call when signed out)</p>
+<p>Calls <code>supabase.auth.signOut()</code> and redirects to
+<code>/</code>.</p>
+<hr />
+<h2 id="exact-code-patterns-to-follow">8. Exact Code Patterns to
+Follow</h2>
+<p>Copy these patterns exactly when adding new functionality. Deviate
+only when a constraint requires it.</p>
+<h3 id="pattern-a-create-a-server-side-supabase-client">Pattern A —
+Create a server-side Supabase client</h3>
+<pre class="typescript"><code>// In a Server Component or Route Handler
+import { createClient } from &quot;@/lib/supabase/server&quot;;
+
+const supabase = await createClient();
+const { data: { user } } = await supabase.auth.getUser();</code></pre>
+<hr />
+<h3
+id="pattern-b-create-a-client-side-supabase-client-in-an-effect-or-handler-never-at-module-scope">Pattern
+B — Create a client-side Supabase client (in an effect or handler, never
+at module scope)</h3>
+<pre class="typescript"><code>// In a Client Component — inside useEffect or an event handler only
+import { createClient } from &quot;@/lib/supabase/client&quot;;
+
+useEffect(() =&gt; {
+  const supabase = createClient();
+  // ...
+}, []);</code></pre>
+<hr />
+<h3
+id="pattern-c-protect-a-server-component-with-auth-admin-check">Pattern
+C — Protect a server component with auth + admin check</h3>
+<pre class="typescript"><code>import { redirect } from &quot;next/navigation&quot;;
+import { createClient } from &quot;@/lib/supabase/server&quot;;
+
+export default async function ProtectedPage() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) redirect(&quot;/auth/login&quot;);
+
+  const adminEmail = process.env.ADMIN_EMAIL;
+  if (!adminEmail || user.email !== adminEmail) {
+    return &lt;div&gt;Access Denied&lt;/div&gt;;
+  }
+  // ...
+}</code></pre>
+<hr />
+<h3 id="pattern-d-read-from-localstorage-safely-guards-for-ssr">Pattern
+D — Read from localStorage safely (guards for SSR)</h3>
+<pre class="typescript"><code>// lib/utils/progress.ts pattern — always guard typeof window
+export function loadProgress(): UserProgress {
+  if (typeof window === &quot;undefined&quot;) return { ...DEFAULT_PROGRESS };
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return { ...DEFAULT_PROGRESS };
+    return JSON.parse(raw) as UserProgress;
+  } catch {
+    return { ...DEFAULT_PROGRESS };
+  }
+}</code></pre>
+<hr />
+<h3 id="pattern-e-add-a-new-question-to-the-question-bank">Pattern E —
+Add a new question to the question bank</h3>
+<pre class="json"><code>{
+  &quot;id&quot;: &quot;debits_credits_q13&quot;,
+  &quot;type&quot;: &quot;multiple_choice&quot;,
+  &quot;level&quot;: &quot;beginner&quot;,
+  &quot;category&quot;: &quot;debits_credits&quot;,
+  &quot;text&quot;: &quot;Your question text here.&quot;,
+  &quot;options&quot;: [&quot;Option A&quot;, &quot;Option B&quot;, &quot;Option C&quot;, &quot;Option D&quot;],
+  &quot;correctIndex&quot;: 2,
+  &quot;explanation&quot;: &quot;Coaching explanation shown after the answer. Written in mentor tone, second person. Explains the concept, not just &#39;C is correct because...&#39;&quot;,
+  &quot;optionExplanations&quot;: [
+    &quot;Why A is the wrong choice and what misconception it reflects.&quot;,
+    &quot;Why B is the wrong choice and what misconception it reflects.&quot;,
+    null,
+    &quot;Why D is the wrong choice and what misconception it reflects.&quot;
+  ]
+}</code></pre>
+<p>Rules: - <code>id</code> must be globally unique across the entire
+question bank. Never reuse. - <code>correctIndex</code> is 0-based.
+Validate it is within <code>options.length - 1</code>. -
+<code>optionExplanations[correctIndex]</code> must be <code>null</code>.
+- <code>explanation</code> must be non-empty and coaching-toned (see
+Section 10). - All <code>optionExplanations</code> except at
+<code>correctIndex</code> must be non-empty strings.</p>
+<hr />
+<h3 id="pattern-f-add-a-new-database-column-migration-file">Pattern F —
+Add a new database column (migration file)</h3>
+<pre class="sql"><code>-- supabase/migrations/003_your_feature.sql
+-- Run this in the Supabase SQL Editor after 002_analytics.sql
+
+ALTER TABLE public.drill_sessions ADD COLUMN IF NOT EXISTS new_column TEXT;</code></pre>
+<p>Rules: - Always use <code>IF NOT EXISTS</code> /
+<code>IF NOT EXISTS</code> guards. - Never modify existing migration
+files — they are the historical record. - Number sequentially:
+<code>003_</code>, <code>004_</code>, etc. - Apply to the dev Supabase
+project first; apply to production after the code change deploys.</p>
+<hr />
+<h3 id="pattern-g-compute-todays-topic-the-only-correct-way">Pattern G —
+Compute today’s topic (the only correct way)</h3>
+<pre class="typescript"><code>import { getTodaysTopic, getTodaysMeta } from &quot;@/lib/questions/topics&quot;;
+
+// Just the topic:
+const topic = getTodaysTopic();
+
+// Topic + index + dayOfYear (needed for DrillClient):
+const { topic, topicIndex, dayOfYear } = getTodaysMeta();</code></pre>
+<p>Do not recompute the day rotation formula inline. All callers must go
+through <code>lib/questions/topics.ts</code>.</p>
+<hr />
+<h3 id="pattern-h-streak-computation-the-only-correct-way">Pattern H —
+Streak computation (the only correct way)</h3>
+<pre class="typescript"><code>import { computeStreakFromDates } from &quot;@/lib/utils/streak&quot;;
+
+const streak = computeStreakFromDates(sessions.map(s =&gt; s.date));
+// dates is string[] of &quot;YYYY-MM-DD&quot; values (duplicates are handled internally)</code></pre>
+<p>Do not write streak logic inline. The function handles: no sessions →
+0; most recent session older than yesterday → 0; consecutive days →
+increments; same-day duplicates → deduped automatically.</p>
+<hr />
+<h2 id="product-rules">9. Product Rules</h2>
+<p>These rules reflect deliberate product decisions. Do not override
+them without an explicit instruction to do so.</p>
+<h3 id="what-to-build">What to build</h3>
+<ul>
+<li>Features that serve one of the five personas: Sarah (job seeker),
+Marcus (freelancer), Priya (career changer), David (small business
+owner), Instructor</li>
+<li>Features that are consistent with the coaching-not-assessment
+philosophy</li>
+<li>Features that make the daily habit more visible or sustainable
+(streak calendar, journal milestones, etc.)</li>
+<li>Features that deepen the existing experience (better explanations,
+more question types, mastery tracking)</li>
+</ul>
+<h3 id="what-not-to-build-without-explicit-instruction">What NOT to
+build without explicit instruction</h3>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Feature</th>
+<th>Reason</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Countdown timers during questions</td>
+<td>Creates anxiety incompatible with coaching mindset</td>
+</tr>
+<tr class="even">
+<td>Point deductions for wrong answers</td>
+<td>Penalises the learning process</td>
+</tr>
+<tr class="odd">
+<td>Competitive leaderboards or rankings</td>
+<td>Undermines personal practice framing</td>
+</tr>
+<tr class="even">
+<td>“Your streak is about to break!” notifications</td>
+<td>Anxiety-driven manipulation</td>
+</tr>
+<tr class="odd">
+<td>Paywalled explanations or coaching notes</td>
+<td>Betrays the core educational value</td>
+</tr>
+<tr class="even">
+<td>AI-generated question content</td>
+<td>All questions are human-authored for quality</td>
+</tr>
+<tr class="odd">
+<td>Social profiles or public scores</td>
+<td>Not part of the personal practice model</td>
+</tr>
+</tbody>
+</table>
+<h3 id="anonymous-users-must-have-the-full-experience">Anonymous users
+must have the full experience</h3>
+<p>Anonymous users get 100% of the drill and feedback experience. Never
+degrade the anonymous experience to force sign-up. The “Save your
+progress” prompt is an offer, not a gate.</p>
+<hr />
+<h2 id="copy-and-tone-rules">10. Copy and Tone Rules</h2>
+<p>Every user-facing string must follow these rules. They are not style
+preferences — they are product requirements.</p>
+<h3 id="coaching-voice-not-assessment-voice">Coaching voice, not
+assessment voice</h3>
+<p>The product speaks like a skilled mentor who wants you to understand,
+not a teacher marking your paper.</p>
+<p><strong>Wrong (assessment):</strong> &gt; “Incorrect. The correct
+answer is C.”</p>
+<p><strong>Right (coaching):</strong> &gt; “Almost — the key here is
+that debits always increase asset accounts. Once that clicks, the rest
+of the debit/credit rules fall into place.”</p>
+<hr />
+<h3
+id="explanations-address-the-concept-not-the-answer-choice">Explanations
+address the concept, not the answer choice</h3>
+<p>Coaching notes explain <em>why</em> the concept works, not just
+<em>why option X was wrong</em>.</p>
+<p><strong>Wrong:</strong> &gt; “A is wrong because debit does not mean
+decrease.”</p>
+<p><strong>Right:</strong> &gt; “Debit and credit don’t carry positive
+or negative meaning in bookkeeping — they only describe which side of an
+account is affected. An asset account increases with a debit, which is
+actually a good thing for cash.”</p>
+<hr />
+<h3 id="score-screen-messages-acknowledge-the-work-without-shame">Score
+screen messages acknowledge the work without shame</h3>
+<p>Do not use language that implies failure. Even a low score is a
+coaching opportunity.</p>
+<p><strong>Wrong:</strong> &gt; “You failed this drill. Try harder next
+time.”</p>
+<p><strong>Right (for a low score):</strong> &gt; “This topic is still
+building in your mind — that’s exactly what drills are for. Come back
+tomorrow and watch it get clearer.”</p>
+<hr />
+<h3 id="journal-confirmations-emphasise-growth-not-completion">Journal
+confirmations emphasise growth, not completion</h3>
+<p><strong>Wrong:</strong> &gt; “Saved!”</p>
+<p><strong>Right:</strong> &gt; “Added to your Learning Journal. Every
+reflection you save becomes part of your professional growth.”</p>
+<hr />
+<h3 id="second-person-present-tense">Second person, present tense</h3>
+<p>All explanations and coaching notes are written to “you” in the
+present tense.</p>
+<p><strong>Wrong:</strong> &gt; “Students often confuse Accounts
+Receivable with Accounts Payable.”</p>
+<p><strong>Right:</strong> &gt; “These two accounts are easy to mix up —
+Accounts Receivable is money owed to <em>you</em>, while Accounts
+Payable is money <em>you</em> owe others.”</p>
+<hr />
+<p><em>Keep Me Ready — Practice makes permanent.</em></p>
+</body></html>
